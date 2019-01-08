@@ -30,7 +30,7 @@ export default class ExplorePalette extends Component {
     render(){
         return(
             <GridDiv>
-                <GridList cellHeight={'10vh'} cols={3} spacing={20}>
+                <GridList cellHeight={'auto'} cols={3} spacing={20}>
                     {testData.map(tile => (
                         <GridListTile key={tile.img} cols={tile.cols || 1}>
                             <Card>
