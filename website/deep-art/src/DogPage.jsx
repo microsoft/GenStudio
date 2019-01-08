@@ -27,6 +27,10 @@ export default class DogPage extends Component {
 
     };
 
+    getDogPicture() {
+
+    }
+
     render(){
         return(
             <ColumnsDiv>
