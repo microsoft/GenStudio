@@ -7,7 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 
 const StyledCard = styled(Card)`
     &&{
-        margin: 10vw;
+        margin: 5vw;
 
     }`
 
