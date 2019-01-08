@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-rout
 import logo from './logo.svg';
 import './App.css';
 
+import SearchPage from './SearchPage/SearchPage.jsx';
 import ExplorePage from './ExplorePage/ExplorePage.jsx';
 import DogPage from './DogPage.jsx';
 
@@ -13,7 +14,8 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route exact path="/" component={ExplorePage}/>
+          <Route exact path="/" component={SearchPage}/>
+          <Route exact path="/search" component={SearchPage}/>
           <Route exact path="/explore" component={ExplorePage}/>
           <Route exact path="/dogs" component={DogPage}/>
         </div>
