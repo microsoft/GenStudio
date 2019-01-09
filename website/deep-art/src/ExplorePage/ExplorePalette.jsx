@@ -25,16 +25,16 @@ export default class ExplorePalette extends Component {
     render(){
         return(
             <Grid
-                columns={["medium","medium","medium"]}
-                rows={"medium"}
+                columns={["small", "small","small"]}
+                rows={"meduim"}
                 gap="small"
             >
                 {testData.map(tile => (
-                    <Box>
-                        <Box>
+                    <Box border= {{ color: "brand", size: "medium" }} round="small" height="small" width="small">
+                        <Box >
                             <Image src={tile.img} fit="cover" />
                         </Box>
-                        <Box>
+                        <Box direction = "row">
                             <RemoveButton/>
                             <AddButton/>
                         </Box>
