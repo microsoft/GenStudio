@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import styled from "styled-components";
 
-import IconButton from '@material-ui/core/IconButton';
-import RemoveIcon from '@material-ui/icons/Remove';
+
+import { Box, Button} from 'grommet';
+import { Subtract } from "grommet-icons";
 
 export default class RemoveButton extends Component {
     condtructor(props){
@@ -11,9 +12,9 @@ export default class RemoveButton extends Component {
 
     render(){
         return(
-            <IconButton>
-                <RemoveIcon/>
-            </IconButton>
+            <Box align="center" pad="large">
+                <Button icon={<Subtract />} hoverIndicator />
+            </Box>
         );
     }
 }
