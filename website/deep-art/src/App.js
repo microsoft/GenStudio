@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Grommet } from 'grommet';
+import { Grommet, Box } from 'grommet';
+import styled from "styled-components";
 
 import {BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 
@@ -8,6 +9,7 @@ import './App.css';
 
 import SearchPage from './SearchPage/SearchPage.jsx';
 import ExplorePage from './ExplorePage/ExplorePage.jsx';
+import NavBar from './NavBar/NavBar.jsx';
 import DogPage from './DogPage.jsx';
 
 //GLOBAL THEME
@@ -21,15 +23,31 @@ const theme = {
   },
 };
 
+
+
+const Body = styled.section`
+
+  height: fit-content;
+`;
+
 class App extends Component {
   render() {
     return (
       <Router>
         <Grommet theme={theme}>
-          <Route exact path="/" component={SearchPage}/>
-          <Route exact path="/search" component={SearchPage}/>
-          <Route exact path="/explore" component={ExplorePage}/>
-          <Route exact path="/dogs" component={DogPage}/>
+          <Box
+            direction="column"
+          >
+            <header>
+              <NavBar />
+            </header>
+            <Body>
+              <Route exact path="/" component={SearchPage}/>
+              <Route exact path="/search" component={SearchPage}/>
+              <Route exact path="/explore" component={ExplorePage}/>
+              <Route exact path="/dogs" component={DogPage}/>
+            </Body>
+          </Box>
         </Grommet>
       </Router>
     );

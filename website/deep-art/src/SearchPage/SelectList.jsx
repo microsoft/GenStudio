@@ -7,15 +7,19 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
+const SearchListBox = styled(Box)`
+    background-color: #f3f3f3
+    `
+
 const MenuButton = ({ label, ...rest }) => {
     return (
       <Button hoverIndicator="background" {...rest}>
         <Box
           direction="row"
           align="center"
-          pad="xsmall"
+          pad="medium"
         >
-          <Text size="small">{label}</Text>
+          <Text size="xxlarge">{label}</Text>
         </Box>
       </Button>
     );
@@ -37,34 +41,7 @@ export default class SelectList extends Component {
     render(){
         return(
         <div>
-            {/* <List>
-
-                <ListItem
-                    button
-                    selected={this.state.selectedIndex === 0}
-                    onClick={event => this.handleListItemClick(event, 0)}
-                >
-                    <ListItemText primary="Vase" />
-                </ListItem>
-
-                <ListItem
-                    button
-                    selected={this.state.selectedIndex === 1}
-                    onClick={event => this.handleListItemClick(event, 1)}
-                >
-                    <ListItemText primary="Landscape" />
-                </ListItem>
-
-                <ListItem
-                    button
-                    selected={this.state.selectedIndex === 2}
-                    onClick={event => this.handleListItemClick(event, 2)}
-                >
-                    <ListItemText primary="Portrait" />
-                </ListItem>
-
-            </List> */}
-            <Box>
+            <SearchListBox>
                 <MenuButton
                     label="Vase"
                     selected={this.state.selectedIndex === 0}
@@ -80,7 +57,7 @@ export default class SelectList extends Component {
                     selected={this.state.selectedIndex === 2}
                     onClick={event => this.handleListItemClick(event, 2)}
                 />
-            </Box>
+            </SearchListBox>
 
         </div>    
         );

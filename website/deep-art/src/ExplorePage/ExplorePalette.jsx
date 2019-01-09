@@ -73,7 +73,10 @@ export default class ExplorePalette extends Component {
                         <Box>
                             <Image src={tile.img} fit="cover" />
                         </Box>
-                        <Box>
+                        <Box
+                            direction="row"
+                            
+                        >
                             <RemoveButton/>
                             <AddButton/>
                         </Box>
