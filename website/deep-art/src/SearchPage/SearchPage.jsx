@@ -44,11 +44,7 @@ export default class SearchPage extends Component {
     }
 
     render(){
-        
         let result = this.genResult();
-
-
-
         return(
             <ColumnsDiv>
                 <SelectList changeSelect={this.changeSelect}/>
