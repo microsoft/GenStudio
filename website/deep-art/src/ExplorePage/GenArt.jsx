@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import styled from "styled-components";
 import { Box, Image} from 'grommet';
-import vase from '../images/testVase.jpg';
 
 export default class GenArt extends Component {
     constructor(props){

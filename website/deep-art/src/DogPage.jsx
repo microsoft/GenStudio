@@ -8,7 +8,6 @@ const ColumnsDiv = styled.div`
 `
 const Http = new XMLHttpRequest();
 const url = 'https://dog.ceo/api/breeds/image/random';
-let imageUrl = "placeholder";
 
 export default class DogPage extends Component {
     constructor(props) {

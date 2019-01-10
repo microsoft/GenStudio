@@ -3,8 +3,6 @@ import { Grommet, Box } from 'grommet';
 import styled from "styled-components";
 
 import {BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
-
-import logo from './logo.svg';
 import './App.css';
 
 import SearchPage from './SearchPage/SearchPage.jsx';

@@ -4,7 +4,6 @@ import styled from "styled-components";
 import SelectList from './SelectList.jsx';
 import ResultArt from './ResultArt.jsx';
 
-import { Image } from 'grommet';
 
 import landscape from '../images/testLandscape.jpg';
 import portrait from '../images/testPortrait.jpg';
@@ -42,9 +41,6 @@ export default class SearchPage extends Component {
      * @return {String[]} - An array of image urls from the met API.
      */
     objIDsToImages(objIDs){
-
-        console.log(objIDs);
-
         
         const baseURL = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
         
@@ -53,7 +49,7 @@ export default class SearchPage extends Component {
              id: ID}
         ));
 
-        console.log(apiURLs.toString());
+        //console.log(apiURLs.toString());
 
         for (let i = 0; i < apiURLs.length; i++){
             const Http = new XMLHttpRequest();
@@ -95,9 +91,7 @@ export default class SearchPage extends Component {
 
     render(){
 
-        console.log(this.state.imgURLs);
-
-        let result = this.genResult();
+        //let result = this.genResult();
         return(
             <ColumnsDiv>
                 <SelectList changeSelect={this.changeSelect}/>

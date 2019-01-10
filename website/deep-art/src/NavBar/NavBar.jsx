@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import styled from "styled-components";
 
-import { Box, Layer, Text } from 'grommet';
+import { Box, Text } from 'grommet';
 
 const NavBox = styled(Box)`
     padding: 2rem;

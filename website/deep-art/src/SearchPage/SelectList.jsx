@@ -3,10 +3,6 @@ import styled from "styled-components";
 
 import { Box, Button, Text} from 'grommet';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-
 const SearchListBox = styled(Box)`
     background-color: #f3f3f3
     `

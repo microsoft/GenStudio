@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import styled from "styled-components";
 import { grommet } from "grommet/themes";
 
 import { Box, Button, Grommet} from 'grommet';
