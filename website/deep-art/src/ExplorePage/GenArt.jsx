@@ -11,7 +11,14 @@ export default class GenArt extends Component {
     render(){
 
         const ImageBox = () => (
-            <Box height="medium" width="medium" border>
+            <Box
+                height="medium"
+                width="medium"
+                border=
+                {{ color: "black", size: "3px" }}
+                round="small"
+                style={{ padding: "5px", marginTop: "10px", marginLeft: "10px", zIndex: "-1"}}
+            >
                 <Image src={vase} fit="cover" />
             </Box>
           );
