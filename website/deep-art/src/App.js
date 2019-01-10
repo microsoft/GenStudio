@@ -44,7 +44,7 @@ class App extends Component {
             <Body>
               <Route exact path="/" component={SearchPage}/>
               <Route exact path="/search" component={SearchPage}/>
-              <Route exact path="/explore" component={ExplorePage}/>
+              <Route exact path="/explore/:id" component={ExplorePage}/>
               <Route exact path="/dogs" component={DogPage}/>
             </Body>
           </Box>

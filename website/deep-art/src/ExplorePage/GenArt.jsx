@@ -4,8 +4,8 @@ import { Box, Image} from 'grommet';
 import vase from '../images/testVase.jpg';
 
 export default class GenArt extends Component {
-    condtructor(props){
-
+    constructor(props){
+        super(props);
     };
 
     render(){
@@ -19,7 +19,7 @@ export default class GenArt extends Component {
                 round="small"
                 style={{ padding: "5px", marginTop: "10px", marginLeft: "10px", zIndex: "-1"}}
             >
-                <Image src={vase} fit="cover" />
+                <Image src={this.props.image} fit="cover" />
             </Box>
           );
 

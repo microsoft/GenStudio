@@ -45,6 +45,7 @@ export default class ExplorePalette extends Component {
                         <Box
                             direction="row"
                             alignSelf = "center"
+                            margin="xsmall"
                         >
                             <RemoveButton/>
                             <AddButton/>

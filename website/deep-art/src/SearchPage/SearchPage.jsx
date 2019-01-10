@@ -33,6 +33,7 @@ export default class SearchPage extends Component {
 
     changeSelect(index){
         this.setState({ selectedIndex: index });
+        //Call CSV API and change imgURLs accordingly
     }
 
     /**
@@ -48,14 +49,15 @@ export default class SearchPage extends Component {
         const baseURL = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
         
         let apiURLs = objIDs.map(ID => (
-            baseURL+ID.toString()
+            {url: baseURL+ID.toString(),
+             id: ID}
         ));
 
         console.log(apiURLs.toString());
 
         for (let i = 0; i < apiURLs.length; i++){
             const Http = new XMLHttpRequest();
-            Http.open("GET", apiURLs[i]);
+            Http.open("GET", apiURLs[i].url);
             Http.send();
             Http.onreadystatechange = (e) => {
                 if (Http.readyState === 4){
@@ -63,7 +65,10 @@ export default class SearchPage extends Component {
                         let response = JSON.parse(Http.responseText);
     
                         this.setState((oldState) => {
-                            return oldState.imgURLs.push(response.primaryImage)
+                            return oldState.imgURLs.push(
+                                {img: response.primaryImage,
+                                 id: apiURLs[i].id} 
+                                )
                         })
                     } catch (e) {
                         console.log('malformed request:' + Http.responseText);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Box, Image, Grid} from 'grommet';
+import { Box, Button, Image, Grid} from 'grommet';
 import styled from "styled-components";
 
 const GridWrapper = styled(Box)`
@@ -27,19 +27,23 @@ export default class ResultArt extends Component {
                     margin="40px"
                 >
                     {this.props.images.map(image => (
+                        <Button fill={false} href={"/explore/"+image.id.toString()}>
                         <Box border=
                             {{ color: "black", size: "3px" }}
                             round="small"
                             height="small"
                             width="small"
-                            key={image}
+                            key={image.id}
                         >
-                            <Image
-                                src={image}
-                                fit="cover"
-                                style={{ zIndex: "-1"}}
-                            />
+                            
+                                <Image
+                                    src={image.img}
+                                    fit="cover"
+                                    style={{ zIndex: "-1"}}
+                                />
+                            
                         </Box>
+                        </Button>
                     ))}
                 </Grid>
             </GridWrapper>    
