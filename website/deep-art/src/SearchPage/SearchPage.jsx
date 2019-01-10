@@ -28,7 +28,7 @@ export default class SearchPage extends Component {
 
         this.changeSelect = this.changeSelect.bind(this);
 
-        this.objIDsToImages([69, 438099]);
+        this.objIDsToImages([69, 438099, 140, 298, 7198, 71297]);
     };
 
     changeSelect(index){
@@ -96,9 +96,7 @@ export default class SearchPage extends Component {
         return(
             <ColumnsDiv>
                 <SelectList changeSelect={this.changeSelect}/>
-                <Image src={this.state.imgURLs[0]} fit="contain"/>
-                <Image src={this.state.imgURLs[1]} fit="contain"/>
-                {result}
+                <ResultArt images={this.state.imgURLs} />
                 
             </ColumnsDiv>
         );
