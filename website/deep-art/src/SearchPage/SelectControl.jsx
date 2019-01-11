@@ -45,7 +45,6 @@ export default class SearchControl extends Component {
     generateURL(category) {
         let url = "https://met-art-api.azurewebsites.net/GetIDsByCategory";
         url = url + "?category=" + category + "&numids=" + NUM_IMAGES_SEARCH_PAGE +"&resulttype=first";
-        console.log("URL = " + url);
         return url;
     }
 
@@ -59,14 +58,12 @@ export default class SearchControl extends Component {
                 try {
                     let response = JSON.parse(Http.responseText);
                     let IDs = response.results.ObjectIds;
+                    this.props.clearOldImages();
                     this.props.sendObjectIds(IDs);
-                    console.log("IDS: " + IDs);
-
                 } catch (e) {
                     console.log('malformed request:' + Http.responseText);
                 }
             }
-
         }
     }
   
@@ -76,7 +73,6 @@ export default class SearchControl extends Component {
             "Birds", "Architecture", "Profiles", "Embroidery", "Women", "Flowers",
             "Bridges", "Bodies of Water", "Buildings", "Trees", "Jars"];
         return (
-        // <Grommet full theme={customRoundedTheme}>
           <Box align="center" justify="start" pad="small">
             <Select
               size="medium"
@@ -93,7 +89,6 @@ export default class SearchControl extends Component {
               }}
             />
           </Box>
-        //</Grommet>
       );
     }
   }

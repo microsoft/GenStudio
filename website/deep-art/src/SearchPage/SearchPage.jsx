@@ -26,10 +26,12 @@ export default class SearchPage extends Component {
         this.changeSelect = this.changeSelect.bind(this);
         this.changeSelectedImage = this.changeSelectedImage.bind(this);
         this.getImageIDs = this.getImageIDs.bind(this);
+        this.clearOldImages = this.clearOldImages.bind(this);
     };
 
+    //these are the initial images that are displayed when the page loads
     componentDidMount(){
-        this.objIDsToImages([69, 438099, 140, 298, 7198, 71297]);
+        this.objIDsToImages([34, 1439, 2134, 2348, 2392, 2393, 2552, 3110, 3297, 3315, 3318, 4401]);
     }
 
     changeSelect(index){
@@ -42,8 +44,12 @@ export default class SearchPage extends Component {
     }
 
     getImageIDs(imageIDs) {
-        console.log("in getImageIDs()")
         this.objIDsToImages(imageIDs);
+    }
+
+    clearOldImages() {
+        this.state.imgURLs = [];
+        
     }
 
     /**
@@ -68,7 +74,6 @@ export default class SearchPage extends Component {
                 if (Http.readyState === 4){
                     try {
                         let response = JSON.parse(Http.responseText);
-    
                         this.setState((oldState) => {
                             return oldState.imgURLs.push(
                                 {img: response.primaryImage,
@@ -79,7 +84,6 @@ export default class SearchPage extends Component {
                         console.log('malformed request:' + Http.responseText);
                     }
                 }
-
             }
         }
     }
@@ -112,7 +116,10 @@ export default class SearchPage extends Component {
                     <Text>
                         Choose a category:
                     </Text>
-                    <SelectControl sendObjectIds={this.getImageIDs}/>
+                    <SelectControl
+                        sendObjectIds={this.getImageIDs}
+                        clearOldImages={this.clearOldImages}
+                    />
                 </Box>
                 <Box gridArea='select'>
                     <ResultArt
