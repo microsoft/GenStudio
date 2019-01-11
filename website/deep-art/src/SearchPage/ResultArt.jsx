@@ -12,9 +12,14 @@ const GridWrapper = styled(Box)`
 export default class ResultArt extends Component {
     constructor(props){
         super(props);
+
+        this.state = {
+            selectedID: 0,
+        }
     };
 
 
+    //href={"/explore/"+image.id.toString()
 
     render(){
 
@@ -27,15 +32,14 @@ export default class ResultArt extends Component {
                     margin="40px"
                 >
                     {this.props.images.map(image => (
-                        <Button fill={false} href={"/explore/"+image.id.toString()}>
+                        <Button hoverIndicator onClick={()=>{this.props.selectImage(image.id)}}>
                         <Box border=
-                            {{ color: "black", size: "3px" }}
+                            {this.props.selectedImage === image.id ? { color: "black", size: "3px" } : {color: "blue", size: "3px"}}
                             round="small"
                             height="small"
                             width="small"
                             key={image.id}
                         >
-                            
                                 <Image
                                     src={image.img}
                                     fit="cover"

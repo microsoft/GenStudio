@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import SelectList from './SelectList.jsx';
 import ResultArt from './ResultArt.jsx';
+import { Box, Button } from 'grommet';
 
 
 import landscape from '../images/testLandscape.jpg';
@@ -22,17 +23,27 @@ export default class SearchPage extends Component {
 
         this.state = {
             selectedIndex: 0,
+            selectedImage: 0,
             imgURLs: []
         };
 
         this.changeSelect = this.changeSelect.bind(this);
+        this.changeSelectedImage = this.changeSelectedImage.bind(this);
 
-        this.objIDsToImages([69, 438099, 140, 298, 7198, 71297]);
+        //this.objIDsToImages([69, 438099, 140, 298, 7198, 71297]);
     };
+
+    componentDidMount(){
+        this.objIDsToImages([69, 438099, 140, 298, 7198, 71297]);
+    }
 
     changeSelect(index){
         this.setState({ selectedIndex: index });
         //Call CSV API and change imgURLs accordingly
+    }
+
+    changeSelectedImage(ID){
+        this.setState({selectedImage: ID});
     }
 
     /**
@@ -95,7 +106,17 @@ export default class SearchPage extends Component {
         return(
             <ColumnsDiv>
                 <SelectList changeSelect={this.changeSelect}/>
-                <ResultArt images={this.state.imgURLs} />
+                <Box direction='column'>
+                    <ResultArt images={this.state.imgURLs} selectedImage={this.state.selectedImage} selectImage={this.changeSelectedImage} />
+                    <Box direction='row'>
+                        <Button>
+                            Expolore
+                        </Button>
+                        <Button>
+                            Graph
+                        </Button>
+                    </Box>
+                </Box>
                 
             </ColumnsDiv>
         );
