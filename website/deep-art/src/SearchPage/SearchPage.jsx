@@ -116,13 +116,16 @@ export default class SearchPage extends Component {
                 <Box gridArea='select'>
                     <ResultArt images={this.state.imgURLs} selectedImage={this.state.selectedImage} selectImage={this.changeSelectedImage} />
                 </Box>
-                <Box gridArea='buttons' direction='row' justify='center'>
-                    <Box>
-                        <Button label='Generate Image' href={"/explore/"+this.state.selectedImage.toString()} />
+                <Box gridArea='buttons'>
+                    <Box direction='row' style={{justifyContent: 'space-around'}}>
+                        <Box>
+                            <Button label='Generate Image' href={"/explore/"+this.state.selectedImage.toString()} />
+                        </Box>
+                        <Box>
+                            <Button label='Explore Similar'/>
+                        </Box>
                     </Box>
-                    <Box>
-                        <Button label='Explore Similar'/>
-                    </Box>
+
                     
                 </Box>
                 <Box gridArea='left'/>
