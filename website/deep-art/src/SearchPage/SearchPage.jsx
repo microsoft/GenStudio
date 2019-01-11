@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import styled from "styled-components";
 
-import SelectList from './SelectList.jsx';
+import SelectControl from './SelectControl.jsx';
 import ResultArt from './ResultArt.jsx';
-import { Box, Button } from 'grommet';
+
+import { Box, Button, Grid, Paragraph, Text } from 'grommet';
+
 
 
 import landscape from '../images/testLandscape.jpg';
@@ -11,11 +13,6 @@ import portrait from '../images/testPortrait.jpg';
 import vase from '../images/testVase.jpg';
 import error from '../images/testError.png';
 
-
-const ColumnsDiv = styled.div`
-    display: flex;
-    flex-flow: row wrap;
-`
 
 export default class SearchPage extends Component {
     constructor(props){
@@ -87,38 +84,50 @@ export default class SearchPage extends Component {
         //console.log(imgURLs.toString());
     }
 
-    genResult(){
-        switch(this.state.selectedIndex){
-            case 0:
-                return <ResultArt image={vase} title={'Vase'}/>;
-            case 1:
-                return <ResultArt image={landscape} title={'Landscape'}/>;
-            case 2:
-                return <ResultArt image={portrait} title={'Portrait'}/>;
-            default:
-                return <ResultArt image={error} title={'Error'}/>; 
-        }
-    }
-
     render(){
 
         //let result = this.genResult();
         return(
-            <ColumnsDiv>
-                <SelectList changeSelect={this.changeSelect}/>
-                <Box direction='column'>
-                    <ResultArt images={this.state.imgURLs} selectedImage={this.state.selectedImage} selectImage={this.changeSelectedImage} />
-                    <Box direction='row'>
-                        <Button>
-                            Expolore
-                        </Button>
-                        <Button>
-                            Graph
-                        </Button>
-                    </Box>
+
+            <Grid
+                areas={[
+                    { name: 'left', start: [0, 0], end: [0, 3] },
+                    { name: 'desc', start: [1, 0], end: [1, 0] },
+                    { name: 'tags', start: [1, 1], end: [1, 1] },
+                    { name: 'select', start: [1, 2], end: [1, 2] },
+                    { name: 'buttons', start: [1, 3], end: [1, 3]},
+                    { name: 'right', start: [2, 0], end: [2, 3] },
+                ]}
+                columns={['flex','large','flex']}
+                rows={['small','xsmall','large','xsmall']}
+                gap='small'
+            >
+                <Box gridArea='desc'>
+                    <Paragraph style={{textAlign: 'center'}} alignSelf={"center"} size={"large"}>
+                    Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
+                    </Paragraph>
                 </Box>
-                
-            </ColumnsDiv>
+                <Box gridArea='tags' direction='row' align='center' justify="center">
+                    <Text>
+                        Choose a category:
+                    </Text>
+                    <SelectControl/>
+                </Box>
+                <Box gridArea='select'>
+                    <ResultArt images={this.state.imgURLs} selectedImage={this.state.selectedImage} selectImage={this.changeSelectedImage} />
+                </Box>
+                <Box gridArea='buttons' direction='row' justify='center'>
+                    <Box>
+                        <Button label='Generate Image' href={"/explore/"+this.state.selectedImage.toString()} />
+                    </Box>
+                    <Box>
+                        <Button label='Explore Similar'/>
+                    </Box>
+                    
+                </Box>
+                <Box gridArea='left'/>
+                <Box gridArea='right' />
+            </Grid>
         );
     }
 }
