@@ -1,2 +1,3 @@
 Flask
 Pandas
+flask-cors
