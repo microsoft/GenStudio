@@ -17,7 +17,6 @@ import error from '../images/testError.png';
 export default class SearchPage extends Component {
     constructor(props){
         super(props);
-
         this.state = {
             selectedIndex: 0,
             selectedImage: 0,
@@ -26,8 +25,7 @@ export default class SearchPage extends Component {
 
         this.changeSelect = this.changeSelect.bind(this);
         this.changeSelectedImage = this.changeSelectedImage.bind(this);
-
-        //this.objIDsToImages([69, 438099, 140, 298, 7198, 71297]);
+        this.getImageIDs = this.getImageIDs.bind(this);
     };
 
     componentDidMount(){
@@ -43,6 +41,11 @@ export default class SearchPage extends Component {
         this.setState({selectedImage: ID});
     }
 
+    getImageIDs(imageIDs) {
+        console.log("in getImageIDs()")
+        this.objIDsToImages(imageIDs);
+    }
+
     /**
      * 
      * @param {Int[]} objIDs - An array of object IDs from the met API to convert to an array of image urls
@@ -56,8 +59,6 @@ export default class SearchPage extends Component {
             {url: baseURL+ID.toString(),
              id: ID}
         ));
-
-        //console.log(apiURLs.toString());
 
         for (let i = 0; i < apiURLs.length; i++){
             const Http = new XMLHttpRequest();
@@ -81,14 +82,10 @@ export default class SearchPage extends Component {
 
             }
         }
-        //console.log(imgURLs.toString());
     }
 
     render(){
-
-        //let result = this.genResult();
         return(
-
             <Grid
                 areas={[
                     { name: 'left', start: [0, 0], end: [0, 3] },
@@ -102,8 +99,12 @@ export default class SearchPage extends Component {
                 rows={['small','xsmall','large','xsmall']}
                 gap='small'
             >
-                <Box gridArea='desc'>
-                    <Paragraph style={{textAlign: 'center'}} alignSelf={"center"} size={"large"}>
+                <Box gridArea='desc' >
+                    <Paragraph
+                        style={{ textAlign: 'center', marginTop: '20px' }}
+                        alignSelf={"center"}
+                        size={"large"}
+                    >
                     Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
                     </Paragraph>
                 </Box>
@@ -111,14 +112,21 @@ export default class SearchPage extends Component {
                     <Text>
                         Choose a category:
                     </Text>
-                    <SelectControl/>
+                    <SelectControl sendObjectIds={this.getImageIDs}/>
                 </Box>
                 <Box gridArea='select'>
-                    <ResultArt images={this.state.imgURLs} selectedImage={this.state.selectedImage} selectImage={this.changeSelectedImage} />
+                    <ResultArt
+                        images={this.state.imgURLs}
+                        selectedImage={this.state.selectedImage}
+                        selectImage={this.changeSelectedImage}
+                    />
                 </Box>
                 <Box gridArea='buttons' direction='row' justify='center'>
                     <Box>
-                        <Button label='Generate Image' href={"/explore/"+this.state.selectedImage.toString()} />
+                        <Button
+                            label='Generate Image'
+                            href={"/explore/" + this.state.selectedImage.toString()}
+                        />
                     </Box>
                     <Box>
                         <Button label='Explore Similar'/>

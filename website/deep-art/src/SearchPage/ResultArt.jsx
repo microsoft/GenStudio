@@ -26,19 +26,24 @@ export default class ResultArt extends Component {
         return(
             <GridWrapper>
                 <Grid
-                    columns={["small", "small","small"]}
+                    columns={["small", "small","small", "small"]}
                     rows={"meduim"}
                     gap="medium"
                     margin="40px"
                 >
                     {this.props.images.map(image => (
-                        <Button hoverIndicator onClick={()=>{this.props.selectImage(image.id)}}>
-                        <Box border=
-                            {this.props.selectedImage === image.id ? { color: "black", size: "3px" } : {color: "blue", size: "3px"}}
-                            round="small"
-                            height="small"
-                            width="small"
-                            key={image.id}
+                        <Button
+                            hoverIndicator
+                            style={{ outline: 'none' }}
+                            onClick={() => { this.props.selectImage(image.id) }}
+                        >
+                            <Box border=
+                                {this.props.selectedImage === image.id ? { color: "blue", size: "3px" } : { color: "black", size: "3px" }}
+                                round="small"
+                                height="small"
+                                width="small"
+                                key={image.id}
+                                style={{focus: {outline:0}}}
                         >
                                 <Image
                                     src={image.img}

@@ -32,24 +32,58 @@ const customRoundedTheme = deepMerge(grommet, {
   }
 });
 
+const NUM_IMAGES_SEARCH_PAGE = 12;
+
 export default class SearchControl extends Component {
     state = {
-      options: ["Vase","Landscape","Portrait"],
-      value: ""
+        options: ["Vases", "Landscapes", "Portraits", "Men", "Boats",
+            "Birds", "Architecture", "Profiles", "Embroidery", "Women", "Flowers",
+            "Bridges", "Bodies of Water", "Buildings", "Trees", "Jars"],
+        selectedValue: ""
     };
+
+    generateURL(category) {
+        let url = "https://met-art-api.azurewebsites.net/GetIDsByCategory";
+        url = url + "?category=" + category + "&numids=" + NUM_IMAGES_SEARCH_PAGE +"&resulttype=first";
+        console.log("URL = " + url);
+        return url;
+    }
+
+    onSelection(option) {
+        this.setState({ value: option })
+        const Http = new XMLHttpRequest();
+        Http.open("GET", this.generateURL(option));
+        Http.send();
+        Http.onreadystatechange = (e) => {
+            if (Http.readyState === 4) {
+                try {
+                    let response = JSON.parse(Http.responseText);
+                    let IDs = response.results.ObjectIds;
+                    this.props.sendObjectIds(IDs);
+                    console.log("IDS: " + IDs);
+
+                } catch (e) {
+                    console.log('malformed request:' + Http.responseText);
+                }
+            }
+
+        }
+    }
   
     render() {
-      const { options, value } = this.state;
-      const defaultOptions = ["Vase","Landscape","Portrait"];
-      return (
+        const { options, value } = this.state;
+        const defaultOptions = ["Vases", "Landscapes", "Portraits", "Men", "Boats",
+            "Birds", "Architecture", "Profiles", "Embroidery", "Women", "Flowers",
+            "Bridges", "Bodies of Water", "Buildings", "Trees", "Jars"];
+        return (
         // <Grommet full theme={customRoundedTheme}>
           <Box align="center" justify="start" pad="small">
             <Select
               size="medium"
-              placeholder="Tags"
+              placeholder="Categories"
               value={value}
               options={options}
-              onChange={({ option }) => this.setState({ value: option })}
+              onChange={({ option }) => this.onSelection(option)}
               onClose={() => this.setState({ options: defaultOptions })}
               onSearch={text => {
                 const exp = new RegExp(text, "i");
