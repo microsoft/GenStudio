@@ -128,7 +128,6 @@ export default class SearchPage extends Component {
                         selectImage={this.changeSelectedImage}
                     />
                 </Box>
-<<<<<<< HEAD
                 <Box gridArea='buttons'>
                     <Box direction='row' style={{justifyContent: 'space-around'}}>
                         <Box>
@@ -137,17 +136,6 @@ export default class SearchPage extends Component {
                         <Box>
                             <Button label='Explore Similar'/>
                         </Box>
-=======
-                <Box gridArea='buttons' direction='row' justify='center'>
-                    <Box>
-                        <Button
-                            label='Generate Image'
-                            href={"/explore/" + this.state.selectedImage.toString()}
-                        />
-                    </Box>
-                    <Box>
-                        <Button label='Explore Similar'/>
->>>>>>> dbe201443b1af25acf7c3dd663ced412b2a54b8e
                     </Box>
 
                     

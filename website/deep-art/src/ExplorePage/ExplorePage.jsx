@@ -60,17 +60,14 @@ export default class ExplorePage extends Component {
         const data = new FormData();
         data.append('seed', seedArr);
 
+        Http.responseType = "arraybuffer"
         Http.open("POST", apiURL);
         Http.send(data);
         Http.onreadystatechange = (e) => {
             if (Http.readyState === 4){
                 try{
-                    console.log("Me"+Http.responseType);
-                    //console.log(Http.response);
-                    // console.log(Http.responseText);
-                    //console.log(String.fromCharCode.apply(Http.response));
-
-                    this.setState({genImg: Http.response});
+                    let imgData = btoa(String.fromCharCode.apply(null, new Uint8Array(Http.response)));
+                    this.setState({genImg: imgData});
 
                 } catch (e) {
                     console.log('malformed request:'+Http.responseText);
@@ -82,12 +79,6 @@ export default class ExplorePage extends Component {
 
     render(){
         return(
-            // <ColumnsDiv>
-            //     <GenArt image={this.state.imgURL}/>
-            //     <ExplorePalette/>
-            // </ColumnsDiv>
-
-
             <Grid
                 areas={[
                     { name: 'left', start: [0, 0], end: [0, 1] },

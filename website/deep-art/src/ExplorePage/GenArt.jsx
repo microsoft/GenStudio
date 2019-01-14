@@ -6,24 +6,10 @@ export default class GenArt extends Component {
         super(props);
 
         this.state = {
-            image: 0
+            image: 0,
         }
     };
-
     render(){
-        console.log("Hello\n"+this.props.image);
-        let imgBlob = new Blob([this.props.image],{type: 'image/jpeg'});
-        let fr = new FileReader();
-        let img = null;
-        fr.onload = function(e) {
-            console.log("Monkey"+e.target.result);
-            img = e.target.result;
-        }
-        fr.readAsDataURL(imgBlob);
-        console.log("Hawk "+fr.result);
-
-
-
 
         const ImageBox = () => (
             <Box
@@ -34,7 +20,8 @@ export default class GenArt extends Component {
                 round="small"
                 style={{ padding: "5px", marginTop: "10px", marginLeft: "10px", zIndex: "-1"}}
             >
-                <Image src={img} fit="cover" />
+
+                <Image src={"data:image/jpeg;base64," + this.props.image} fit="cover" />
             </Box>
           );
 
