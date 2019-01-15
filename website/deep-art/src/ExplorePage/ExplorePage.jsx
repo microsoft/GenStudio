@@ -20,8 +20,12 @@ export default class ExplorePage extends Component {
         this.state = {
             imgURL: '',
             apiData: {},
-            genImg: 0
+            genImg: 0,
+            genSeed: []
         };
+
+        this.addSeed = this.addSeed.bind(this);
+        this.subSeed = this.subSeed.bind(this);
 
     };
 
@@ -57,7 +61,11 @@ export default class ExplorePage extends Component {
                                 let response = JSON.parse(Http2.responseText);
                                 console.log(response);
                                 let seed = [response.seed].toString();
-                                this.getGenImage("[[" + seed + "]]");
+                                seed = "[[" + seed + "]]";
+                                this.getGenImage(seed);
+                                this.setState({
+                                    genSeed: this.twoDArrayStringToOneDArray(seed)
+                                });
 
                             } catch {
                                 console.log('malformed request:' + Http2.responseText);
@@ -94,7 +102,76 @@ export default class ExplorePage extends Component {
                 }
             }
         }
+    }
 
+    twoDArrayStringToOneDArray(arrayString){
+        let numbers = arrayString.substring(2,arrayString.length -2);
+        let arrayNum = numbers.split(',').map(function(item) {
+            return parseInt(item, 10);
+        });
+        return(arrayNum);
+    }
+
+    findDiff(genSeed, otherSeed){
+        let diffVec = [];
+        for (let i = 0; i < 512; i++){
+            let diff = Math.floor((genSeed[i] - otherSeed[i])/10);
+            diffVec.push(diff);
+        }
+        return(diffVec);
+    }
+
+    addVec(genSeed, diffVec){
+        let newSeed = [];
+        for (let i = 0; i < 512; i++){
+            let newVal = genSeed[i] + diffVec[i];
+            if (newVal > 1000){
+                newVal = 1000;
+            } else if (newVal < 0){
+                newVal = 0;
+            }
+            newSeed.push(newVal);
+        }
+        return(newSeed);
+    }
+
+    subVec(genSeed, diffVec){
+        let newSeed = [];
+        for (let i = 0; i < 512; i++){
+            let newVal = genSeed[i] - diffVec[i];
+            if (newVal > 1000){
+                newVal = 1000;
+            } else if (newVal < 0){
+                newVal = 0;
+            }
+            newSeed.push(newVal);
+        }
+        return(newSeed);
+    }
+
+
+    addSeed(seed){
+        console.log("ADD");
+        //console.log(seed);
+        let diffVec = this.findDiff(this.state.genSeed, seed);
+        let newSeed = this.addVec(this.state.genSeed, diffVec);
+        this.setState({
+            genSeed: newSeed
+        });
+        let strSeed = "[["+newSeed.toString()+"]]";
+        this.getGenImage(strSeed);
+    }
+
+    subSeed(seed){
+        console.log("SUBTRACT");
+        //console.log(seed);
+        let diffVec = this.findDiff(this.state.genSeed, seed);
+        let newSeed = this.subVec(this.state.genSeed, diffVec);
+        this.setState({
+            genSeed: newSeed
+        });
+        let strSeed = "[["+newSeed.toString()+"]]";
+        this.getGenImage(strSeed);
     }
 
     render(){
@@ -107,18 +184,19 @@ export default class ExplorePage extends Component {
                     { name: 'right', start: [2, 0], end: [2, 1] },
                 ]}
                 columns={['flex','xlarge','flex']}
-                rows={['medium','large']}
+                rows={['small','large']}
                 gap='small'
+                style={{padding: '1rem'}}
             >
-                <Box gridArea='info' direction='row' justify="center">
+                <Box gridArea='info' direction='row' justify="center" align="center">
                     <Box direction='column' justify="center" pad="medium">
-                        <Paragraph style={{textAlign: 'center'}} alignSelf={"center"} size={"large"}>
+                        <Paragraph style={{textAlign: 'center'}} alignSelf={"center"} size={"medium"}>
                         {this.state.apiData.title}
                         </Paragraph>
-                        <Paragraph style={{textAlign: 'center'}} alignSelf={"center"} size={"large"}>
+                        <Paragraph style={{textAlign: 'center'}} alignSelf={"center"} size={"medium"}>
                         {this.state.apiData.objectDate}
                         </Paragraph>
-                        <Paragraph style={{textAlign: 'center'}} alignSelf={"center"} size={"large"}>
+                        <Paragraph style={{textAlign: 'center'}} alignSelf={"center"} size={"medium"}>
                         Artist: {this.state.apiData.artistDisplayName}
                         </Paragraph>
                     </Box>
@@ -128,7 +206,7 @@ export default class ExplorePage extends Component {
                         <GenArt image={this.state.genImg}/>
                     
                     <Box>
-                        <ExplorePalette/>
+                        <ExplorePalette addSeed={this.addSeed} subSeed={this.subSeed}/>
                     </Box>
                     
                 </Box>

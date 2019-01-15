@@ -38,7 +38,7 @@ export default class ResultArt extends Component {
                             onClick={() => { this.props.selectImage(image.id) }}
                         >
                             <Box border=
-                                {this.props.selectedImage === image.id ? { color: "blue", size: "3px" } : { color: "black", size: "3px" }}
+                                {this.props.selectedImage === image.id ? { color: "accent-1", size: "3px" } : { color: "black", size: "3px" }}
                                 round="small"
                                 height="small"
                                 width="small"

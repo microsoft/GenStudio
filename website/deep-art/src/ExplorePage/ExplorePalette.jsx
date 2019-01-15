@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import AddButton from './AddButton.jsx';
 import RemoveButton from './RemoveButton.jsx';
+import PaletteBox from './PaletteBox.jsx';
+
 import { Box, Grid, Image} from 'grommet';
 import testData from './testData.js';
 
@@ -18,26 +20,7 @@ export default class ExplorePalette extends Component {
                 margin="40px"
             >
                 {testData.map(tile => (
-                    <Box border=
-                        {{ color: "black", size: "3px" }}
-                        round="small"
-                        height="small"
-                        width="small"
-                    >
-                        <Image
-                            src={tile.img}
-                            fit="cover"
-                            style={{ zIndex: "-1"}}
-                        />
-                        <Box
-                            direction="row"
-                            alignSelf = "center"
-                            margin="xsmall"
-                        >
-                            <RemoveButton/>
-                            <AddButton/>
-                        </Box>
-                    </Box>
+                    <PaletteBox key={tile.key} img={tile.img} addSeed={this.props.addSeed}  subSeed={this.props.subSeed}/>
                 ))}
             </Grid>
         );

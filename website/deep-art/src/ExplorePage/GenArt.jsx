@@ -16,12 +16,12 @@ export default class GenArt extends Component {
                 height="medium"
                 width="medium"
                 border=
-                {{ color: "black", size: "3px" }}
+                {{ color: "black", size: "4px" }}
                 round="small"
-                style={{ padding: "5px", marginTop: "10px", marginLeft: "10px", zIndex: "-1"}}
+                style={{ padding: "0px", marginTop: "10px", marginLeft: "10px",}}
             >
 
-                <Image src={"data:image/jpeg;base64," + this.props.image} fit="cover" />
+                <Image src={"data:image/jpeg;base64," + this.props.image} fit="cover" style={{zIndex: "-1"}} />
             </Box>
           );
 

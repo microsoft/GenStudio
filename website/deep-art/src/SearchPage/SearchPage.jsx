@@ -40,7 +40,13 @@ export default class SearchPage extends Component {
     }
 
     changeSelectedImage(ID){
-        this.setState({selectedImage: ID});
+        //Unclear if this is a better system or not
+        if (ID === this.state.selectedImage){
+            this.setState({selectedImage: 0});
+        }else{
+            this.setState({selectedImage: ID});
+        }
+        
     }
 
     getImageIDs(imageIDs) {

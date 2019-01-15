@@ -10,21 +10,19 @@ export default class InfoArt extends Component {
 
         const ImageBox = () => (
             <Box
-                height="medium"
-                width="medium"
+                height="small"
+                width="small"
                 border=
                 {{ color: "black", size: "3px" }}
                 round="small"
-                style={{ padding: "5px", marginTop: "10px", marginLeft: "10px", zIndex: "-1"}}
+                style={{ padding: "0px", marginTop: "10px", marginLeft: "10px",}}
             >
-                <Image src={this.props.image} fit="cover" />
+                <Image src={this.props.image} fit="cover" style={{ zIndex: "-1"}} />
             </Box>
           );
 
         return(
-        <div>
-            <ImageBox />
-        </div>    
+            <ImageBox />   
         );
     }
 }
