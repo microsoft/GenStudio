@@ -30,9 +30,11 @@ export default class ExplorePalette extends Component {
                             style={{ zIndex: "-1"}}
                         />
                         <Box
+                            fill="horizontal"
                             direction="row"
                             alignSelf = "center"
                             margin="xsmall"
+                            style={{"justify-content": "space-around"}}
                         >
                             <RemoveButton/>
                             <AddButton/>

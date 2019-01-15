@@ -87,18 +87,19 @@ export default class ExplorePage extends Component {
                     { name: 'right', start: [2, 0], end: [2, 1] },
                 ]}
                 columns={['flex','xlarge','flex']}
-                rows={['medium','large']}
+                rows={['small','large']}
                 gap='small'
+                style={{padding: '1rem'}}
             >
-                <Box gridArea='info' direction='row' justify="center">
+                <Box gridArea='info' direction='row' justify="center" align="center">
                     <Box direction='column' justify="center" pad="medium">
-                        <Paragraph style={{textAlign: 'center'}} alignSelf={"center"} size={"large"}>
+                        <Paragraph style={{textAlign: 'center'}} alignSelf={"center"} size={"medium"}>
                         {this.state.apiData.title}
                         </Paragraph>
-                        <Paragraph style={{textAlign: 'center'}} alignSelf={"center"} size={"large"}>
+                        <Paragraph style={{textAlign: 'center'}} alignSelf={"center"} size={"medium"}>
                         {this.state.apiData.objectDate}
                         </Paragraph>
-                        <Paragraph style={{textAlign: 'center'}} alignSelf={"center"} size={"large"}>
+                        <Paragraph style={{textAlign: 'center'}} alignSelf={"center"} size={"medium"}>
                         Artist: {this.state.apiData.artistDisplayName}
                         </Paragraph>
                     </Box>

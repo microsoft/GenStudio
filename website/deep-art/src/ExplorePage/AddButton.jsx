@@ -4,6 +4,14 @@ import { grommet } from "grommet/themes";
 import { Box, Button, Grommet} from 'grommet';
 import { Add } from "grommet-icons";
 
+const customTheme = {
+    button: {
+        extend:{
+            "border-radius": "12px",
+            background: "#d49e49"
+        }
+    }
+}
 
 export default class AddButton extends Component {
     condtructor(props){
@@ -12,10 +20,8 @@ export default class AddButton extends Component {
 
     render(){
         return (
-            <Grommet theme={grommet}>
-                <Box >
-                <Button icon={<Add />} hoverIndicator />
-                </Box>
+            <Grommet theme={customTheme}>
+                <Button icon={<Add />} hoverIndicator="#b6802b" />
             </Grommet>
         );
     }
