@@ -53,7 +53,7 @@ export default class ExplorePage extends Component {
                     Http2.open("GET", imageToSeedUrl);
                     let requestBody = new FormData();
                     requestBody.append("url", "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/70-water-lilies-claude-monet.jpg");
-                    Http2.send();
+                    Http2.send(requestBody);
                     Http2.onreadystatechange = (e) => {
                         if (Http2.readyState === 4) {
                             try {

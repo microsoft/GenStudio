@@ -11,10 +11,7 @@ CORS(app)
 
 @app.route("/url")
 def handleRequest():
-    url = request.files['url'].read()
-    #print("URL: " , url)
-    #request_data = json.loads(request.data.decode('utf-8'))
-    #url = request_data['url']
+    url = request.form['url']
     seed = np.random.rand(512).tolist()
     response = {"seed": seed}
     response = json.dumps(response)
