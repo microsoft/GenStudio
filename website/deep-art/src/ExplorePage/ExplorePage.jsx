@@ -53,8 +53,10 @@ export default class ExplorePage extends Component {
                     Http2.onreadystatechange = (e) => {
                         if (Http2.readyState === 4) {
                             try {
+                                console.log("here");
                                 let response = JSON.parse(Http2.responseText);
-                                let seed = [response.response.test.seed].toString();
+                                console.log(response);
+                                let seed = [response.seed].toString();
                                 this.getGenImage("[[" + seed + "]]");
 
                             } catch {
