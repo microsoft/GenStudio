@@ -4,47 +4,47 @@ export const testData = [
     {
         img: landscape,
         title: 'Landscape',
-        cols: 1
+        key: 1
     },
     {
         img: landscape,
         title: 'Landscape',
-        cols: 1
+        key: 2
     },
     {
         img: landscape,
         title: 'Landscape',
-        cols: 1
+        key: 3
     },
     {
         img: landscape,
         title: 'Landscape',
-        cols: 1
+        key: 4
     },
     {
         img: landscape,
         title: 'Landscape',
-        cols: 1
+        key: 5
     },
     {
         img: landscape,
         title: 'Landscape',
-        cols: 1
+        key: 6
     },
     {
         img: landscape,
         title: 'Landscape',
-        cols: 1
+        key: 7
     },
     {
         img: landscape,
         title: 'Landscape',
-        cols: 1
+        key: 8
     },
     {
         img: landscape,
         title: 'Landscape',
-        cols: 1
+        key: 9
     },           
 ];
 

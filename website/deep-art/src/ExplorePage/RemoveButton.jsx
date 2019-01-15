@@ -23,7 +23,7 @@ export default class RemoveButton extends Component {
     render() {
         return (
             <Grommet theme={customTheme}>
-                <Button align="center" icon={<Subtract />} hoverIndicator="#b6802b" />
+                <Button align="center" icon={<Subtract />} onClick={() => {this.props.subClick()}} hoverIndicator="#b6802b" />
             </Grommet>
         );
     }

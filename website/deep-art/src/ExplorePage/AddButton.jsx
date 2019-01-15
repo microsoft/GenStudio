@@ -21,7 +21,7 @@ export default class AddButton extends Component {
     render(){
         return (
             <Grommet theme={customTheme}>
-                <Button icon={<Add />} hoverIndicator="#b6802b" />
+                <Button icon={<Add />} onClick={() => {this.props.addClick()}} hoverIndicator="#b6802b" />
             </Grommet>
         );
     }
