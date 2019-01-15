@@ -62,10 +62,11 @@ export default class ExplorePage extends Component {
                                 console.log(response);
                                 let seed = [response.seed].toString();
                                 seed = "[[" + seed + "]]";
-                                this.getGenImage(seed);
                                 this.setState({
                                     genSeed: this.twoDArrayStringToOneDArray(seed)
                                 });
+                                this.getGenImage(seed);
+
 
                             } catch {
                                 console.log('malformed request:' + Http2.responseText);
@@ -104,10 +105,11 @@ export default class ExplorePage extends Component {
         }
     }
 
+
     twoDArrayStringToOneDArray(arrayString){
-        let numbers = arrayString.substring(2,arrayString.length -2);
+        let numbers = arrayString.substring(2,arrayString.length -2); //cut off the "[[]]"
         let arrayNum = numbers.split(',').map(function(item) {
-            return parseInt(item, 10);
+            return parseFloat(item);
         });
         return(arrayNum);
     }
@@ -115,7 +117,7 @@ export default class ExplorePage extends Component {
     findDiff(genSeed, otherSeed){
         let diffVec = [];
         for (let i = 0; i < 512; i++){
-            let diff = Math.floor((genSeed[i] - otherSeed[i])/10);
+            let diff = ((genSeed[i] - otherSeed[i])/10); //Magic number 10, works well
             diffVec.push(diff);
         }
         return(diffVec);
@@ -125,10 +127,10 @@ export default class ExplorePage extends Component {
         let newSeed = [];
         for (let i = 0; i < 512; i++){
             let newVal = genSeed[i] + diffVec[i];
-            if (newVal > 1000){
-                newVal = 1000;
-            } else if (newVal < 0){
-                newVal = 0;
+            if (newVal > 1){
+                newVal = 1;
+            } else if (newVal < -1){
+                newVal = -1;
             }
             newSeed.push(newVal);
         }
@@ -139,10 +141,10 @@ export default class ExplorePage extends Component {
         let newSeed = [];
         for (let i = 0; i < 512; i++){
             let newVal = genSeed[i] - diffVec[i];
-            if (newVal > 1000){
-                newVal = 1000;
-            } else if (newVal < 0){
-                newVal = 0;
+            if (newVal > 1){
+                newVal = 1;
+            } else if (newVal < -1){
+                newVal = -1;
             }
             newSeed.push(newVal);
         }

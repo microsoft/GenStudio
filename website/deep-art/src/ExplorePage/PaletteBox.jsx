@@ -22,7 +22,7 @@ export default class PaletteBox extends Component {
     makeRandomSeed(){
         let seed = [];
         for (let i = 0; i<512; i++){
-            let seedNum = Math.floor(1000* Math.random());
+            let seedNum = (2.0 * Math.random()) - 1.0;
             seed.push(seedNum);
         }
         this.setState({
