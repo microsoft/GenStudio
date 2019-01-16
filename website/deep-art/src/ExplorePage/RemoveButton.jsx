@@ -13,9 +13,12 @@ const customTheme = {
     }
 }
 
+/**
+ * Remove Icon Button with 'subClick' prop 
+ */
 export default class RemoveButton extends Component {
-    condtructor(props){
-
+    constructor(props){
+        super(props);
     };
 
 

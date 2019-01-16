@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { Box, Button, Image} from 'grommet';
 
+/**
+ * The box containing the generated image
+ * 'image' prop: The generated image, in base64 encoded ArrayBuffer format
+ */
 export default class GenArt extends Component {
     constructor(props){
         super(props);

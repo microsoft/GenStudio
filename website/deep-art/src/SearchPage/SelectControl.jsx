@@ -34,6 +34,11 @@ const customRoundedTheme = deepMerge(grommet, {
 
 const NUM_IMAGES_SEARCH_PAGE = 12;
 
+/**
+ * The search bar for art tags
+ * 'clearOldImages' prop: callback to clear out old images
+ * 'snedObjectIds' prop: callback to send the Object IDs to the parent
+ */
 export default class SearchControl extends Component {
     state = {
         options: ["Vases", "Landscapes", "Portraits", "Men", "Boats",

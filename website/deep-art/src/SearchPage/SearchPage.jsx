@@ -13,7 +13,9 @@ import portrait from '../images/testPortrait.jpg';
 import vase from '../images/testVase.jpg';
 import error from '../images/testError.png';
 
-
+/**
+ * Page for the Tag Search Feature
+ */
 export default class SearchPage extends Component {
     constructor(props){
         super(props);
