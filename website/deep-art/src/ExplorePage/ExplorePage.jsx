@@ -25,7 +25,7 @@ export default class ExplorePage extends Component {
             apiData: {},
             genImg: 0,
             genSeed: [],
-            imgObjects: []
+            imgObjectsExplore: []
         };
 
         this.addSeed = this.addSeed.bind(this);
@@ -33,7 +33,7 @@ export default class ExplorePage extends Component {
 
     };
 
-    objIDsToImages(objIDs) {
+    objIDsToImagesTest(objIDs) {
 
         const baseURL = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
 
@@ -53,7 +53,7 @@ export default class ExplorePage extends Component {
                     try {
                         let response = JSON.parse(Http.responseText);
                         this.setState((oldState) => {
-                            return oldState.imgObjects.push(
+                            return oldState.imgObjectsExplore.push(
                                 {
                                     img: response.primaryImage,
                                     id: apiURLs[i].id,
@@ -77,7 +77,7 @@ export default class ExplorePage extends Component {
         let artArr = url.split('&')[1].slice(4);
         artArr = JSON.parse(artArr);
         const id  = selectedArt;
-        this.objIDsToImages(artArr);
+        this.objIDsToImagesTest(artArr);
         
 
         //Eventually replaced with call to GAN
@@ -131,7 +131,7 @@ export default class ExplorePage extends Component {
      * This function directly saves the ArrayBuffer to state
      * @param {string} seedArr - string version of a 1x512 array of floats between -1,1  
      */
-    getGenImage(seedArr){
+    getGenImage(seedArr) {
         const apiURL = 'http://artgan.eastus2.cloudapp.azure.com:8080/seed2image';
         const Http = new XMLHttpRequest();
         const data = new FormData();
@@ -247,7 +247,7 @@ export default class ExplorePage extends Component {
         this.getGenImage(strSeed);
     }
 
-    render(){
+    render() {
         return(
             <Grid
                 areas={[
@@ -279,7 +279,7 @@ export default class ExplorePage extends Component {
                         <GenArt image={this.state.genImg}/>
                     
                     <Box>
-                        <ExplorePalette images={this.state.imgObjects} addSeed={this.addSeed} subSeed={this.subSeed}/>
+                        <ExplorePalette images={this.state.imgObjectsExplore} addSeed={this.addSeed} subSeed={this.subSeed}/>
                     </Box>
                     
                 </Box>

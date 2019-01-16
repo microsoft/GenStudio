@@ -13,9 +13,7 @@ import portrait from '../images/testPortrait.jpg';
 import vase from '../images/testVase.jpg';
 import error from '../images/testError.png';
 
-/**
- * Page for the Tag Search Feature
- */
+
 export default class SearchPage extends Component {
     constructor(props){
         super(props);
@@ -45,7 +43,7 @@ export default class SearchPage extends Component {
         //Unclear if this is a better system or not
         if (ID === this.state.selectedImage){
             this.setState({selectedImage: 0});
-        }else{
+        } else {
             this.setState({selectedImage: ID});
         }
         
@@ -53,6 +51,7 @@ export default class SearchPage extends Component {
 
     getImageIDs(imageIDs) {
         this.objIDsToImages(imageIDs);
+        console.log("imgObjects: " + this.state.imgObjects);
     }
 
     clearOldImages() {
@@ -72,7 +71,7 @@ export default class SearchPage extends Component {
             {url: baseURL+ID.toString(),
              id: ID}
         ));
-
+        console.log("making the API call in obIDs to Images fn");
         for (let i = 0; i < apiURLs.length; i++){
             const Http = new XMLHttpRequest();
             Http.open("GET", apiURLs[i].url);
@@ -82,11 +81,13 @@ export default class SearchPage extends Component {
                     try {
                         let response = JSON.parse(Http.responseText);
                         this.setState((oldState) => {
+                            
+                            //console.log("data: " + response.primaryImage);
                             return oldState.imgObjects.push(
                                 {
                                     img: response.primaryImage,
                                     id: apiURLs[i].id,
-                                    key: apiURLs[i].id
+                                    key: i
                                 });
                         });
                     } catch (e) {
@@ -100,7 +101,7 @@ export default class SearchPage extends Component {
     generateArtUrlSuffix() {
         const NUMBER_OF_SEARCH_IMAGES = 12;
         let urlBase = "/explore/";
-        if (this.state.imgObjects.length === NUMBER_OF_SEARCH_IMAGES) {
+        if (this.state.imgObjects.length = NUMBER_OF_SEARCH_IMAGES) {
             //generates a random index for which to eliminate the extra met art
             //idea is we randomly select which curated art to move to the explore page
             let currentSelection = this.state.selectedImage;
@@ -121,6 +122,7 @@ export default class SearchPage extends Component {
     }
 
     render() {
+        console.log("test val: " + this.state.imgObjects);
         return(
             <Grid
                 areas={[
