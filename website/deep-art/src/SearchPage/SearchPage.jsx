@@ -83,10 +83,12 @@ export default class SearchPage extends Component {
                         let response = JSON.parse(Http.responseText);
                         this.setState((oldState) => {
                             return oldState.imgObjects.push(
-                                {img: response.primaryImage,
-                                 id: apiURLs[i].id} 
-                                )
-                        })
+                                {
+                                    img: response.primaryImage,
+                                    id: apiURLs[i].id,
+                                    key: apiURLs[i].id
+                                });
+                        });
                     } catch (e) {
                         console.log('malformed request:' + Http.responseText);
                     }
@@ -111,9 +113,6 @@ export default class SearchPage extends Component {
 
             let url = "?id=" + this.state.selectedImage.toString() + "&ids=[" + idList.toString() + "]";
             url = encodeURIComponent(url);
-            console.log("url:" + url);
-            //url = decodeURIComponent(url);
-            //console.log("url:" + url);
             return urlBase + url;
         }
         

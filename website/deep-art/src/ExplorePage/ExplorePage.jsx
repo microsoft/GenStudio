@@ -4,6 +4,7 @@ import styled from "styled-components";
 import GenArt from './GenArt.jsx';
 import ExplorePalette from './ExplorePalette.jsx';
 import InfoArt from './InfoArt.jsx';
+import APIHelper from '../APIHelper.jsx';
 
 import {Box, Text, Grid, Paragraph} from 'grommet';
 
@@ -16,10 +17,9 @@ const ColumnsDiv = styled.div`
  * Pulls data from the URL in props.match.params
  */
 export default class ExplorePage extends Component {
-    constructor(props){
+    constructor(props) {
 
         super(props);
-
         this.state = {
             imgURL: '',
             apiData: {},

@@ -10,7 +10,6 @@ import './App.css';
 import SearchPage from './SearchPage/SearchPage.jsx';
 import ExplorePage from './ExplorePage/ExplorePage.jsx';
 import NavBar from './NavBar/NavBar.jsx';
-import DogPage from './DogPage.jsx';
 
 //GLOBAL THEME
 const gTheme = {
@@ -76,7 +75,6 @@ class App extends Component {
               <Route exact path="/" component={SearchPage}/>
               <Route exact path="/search" component={SearchPage}/>
               <Route exact path="/explore/:id" component={ExplorePage}/>
-              <Route exact path="/dogs" component={DogPage}/>
             </Body>
           </Box>
         </Grommet>
