@@ -4,6 +4,7 @@ import styled from "styled-components";
 import GenArt from './GenArt.jsx';
 import ExplorePalette from './ExplorePalette.jsx';
 import InfoArt from './InfoArt.jsx';
+import APIHelper from '../APIHelper.jsx';
 
 import {Box, Text, Grid, Paragraph} from 'grommet';
 
@@ -16,15 +17,15 @@ const ColumnsDiv = styled.div`
  * Pulls data from the URL in props.match.params
  */
 export default class ExplorePage extends Component {
-    constructor(props){
+    constructor(props) {
 
         super(props);
-
         this.state = {
             imgURL: '',
             apiData: {},
             genImg: 0,
-            genSeed: []
+            genSeed: [],
+            imgObjectsExplore: []
         };
 
         this.addSeed = this.addSeed.bind(this);
@@ -32,12 +33,56 @@ export default class ExplorePage extends Component {
 
     };
 
-    componentDidMount () {
-        const { id } = this.props.match.params;
+    objIDsToImagesTest(objIDs) {
+
+        const baseURL = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
+
+        let apiURLs = objIDs.map(ID => (
+            {
+                url: baseURL + ID.toString(),
+                id: ID
+            }
+        ));
+
+        for (let i = 0; i < apiURLs.length; i++) {
+            const Http = new XMLHttpRequest();
+            Http.open("GET", apiURLs[i].url);
+            Http.send();
+            Http.onreadystatechange = (e) => {
+                if (Http.readyState === 4) {
+                    try {
+                        let response = JSON.parse(Http.responseText);
+                        this.setState((oldState) => {
+                            return oldState.imgObjectsExplore.push(
+                                {
+                                    img: response.primaryImage,
+                                    id: apiURLs[i].id,
+                                    key: i
+                                }
+                            )
+                        })
+                    } catch (e) {
+                        console.log('malformed request:' + Http.responseText);
+                    }
+                }
+            }
+        }
+    }
+
+    componentDidMount() {
+        let url = this.props.match.params.id.toString();
+        //console.log("url encoded: " + url);
+        url = decodeURIComponent(url);
+        let selectedArt = url.split('&')[0].slice(4);
+        let artArr = url.split('&')[1].slice(4);
+        artArr = JSON.parse(artArr);
+        const id  = selectedArt;
+        this.objIDsToImagesTest(artArr);
+        
 
         //Eventually replaced with call to GAN
         const baseMetUrl = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
-        let metApiUrl = baseMetUrl + id.toString();
+        let metApiUrl = baseMetUrl + id;
 
         const Http = new XMLHttpRequest();
         Http.open("GET", metApiUrl);
@@ -86,7 +131,7 @@ export default class ExplorePage extends Component {
      * This function directly saves the ArrayBuffer to state
      * @param {string} seedArr - string version of a 1x512 array of floats between -1,1  
      */
-    getGenImage(seedArr){
+    getGenImage(seedArr) {
         const apiURL = 'http://artgan.eastus2.cloudapp.azure.com:8080/seed2image';
         const Http = new XMLHttpRequest();
         const data = new FormData();
@@ -202,7 +247,7 @@ export default class ExplorePage extends Component {
         this.getGenImage(strSeed);
     }
 
-    render(){
+    render() {
         return(
             <Grid
                 areas={[
@@ -234,7 +279,7 @@ export default class ExplorePage extends Component {
                         <GenArt image={this.state.genImg}/>
                     
                     <Box>
-                        <ExplorePalette addSeed={this.addSeed} subSeed={this.subSeed}/>
+                        <ExplorePalette images={this.state.imgObjectsExplore} addSeed={this.addSeed} subSeed={this.subSeed}/>
                     </Box>
                     
                 </Box>

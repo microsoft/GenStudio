@@ -63,6 +63,7 @@ export default class SearchControl extends Component {
                 try {
                     let response = JSON.parse(Http.responseText);
                     let IDs = response.results.ObjectIds;
+                    console.log("in select control code");
                     this.props.clearOldImages();
                     this.props.sendObjectIds(IDs);
                 } catch (e) {
@@ -80,7 +81,7 @@ export default class SearchControl extends Component {
         return (
           <Box align="center" justify="start" pad="small">
             <Select
-              focusIndicator="false"
+              focusIndicator={false}
               size="medium"
               placeholder="Categories"
               value={value}
