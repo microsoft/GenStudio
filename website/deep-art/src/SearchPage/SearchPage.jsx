@@ -13,9 +13,7 @@ import portrait from '../images/testPortrait.jpg';
 import vase from '../images/testVase.jpg';
 import error from '../images/testError.png';
 
-/**
- * Page for the Tag Search Feature
- */
+
 export default class SearchPage extends Component {
     constructor(props){
         super(props);
@@ -64,7 +62,7 @@ export default class SearchPage extends Component {
      * @param {Int[]} objIDs - An array of object IDs from the met API to convert to an array of image urls
      * @return {String[]} - An array of image urls from the met API.
      */
-    objIDsToImages(objIDs) {
+    objIDsToImages(objIDs){
         
         const baseURL = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
         
@@ -84,7 +82,9 @@ export default class SearchPage extends Component {
                         this.setState((oldState) => {
                             return oldState.imgObjects.push(
                                 {img: response.primaryImage,
-                                 id: apiURLs[i].id} 
+                                    id: apiURLs[i].id,
+                                    key: i
+                                } 
                                 )
                         })
                     } catch (e) {
@@ -98,7 +98,7 @@ export default class SearchPage extends Component {
     generateArtUrlSuffix() {
         const NUMBER_OF_SEARCH_IMAGES = 12;
         let urlBase = "/explore/";
-        if (this.state.imgObjects.length === NUMBER_OF_SEARCH_IMAGES) {
+        if (this.state.imgObjects.length = NUMBER_OF_SEARCH_IMAGES) {
             //generates a random index for which to eliminate the extra met art
             //idea is we randomly select which curated art to move to the explore page
             let currentSelection = this.state.selectedImage;
@@ -111,9 +111,6 @@ export default class SearchPage extends Component {
 
             let url = "?id=" + this.state.selectedImage.toString() + "&ids=[" + idList.toString() + "]";
             url = encodeURIComponent(url);
-            console.log("url:" + url);
-            //url = decodeURIComponent(url);
-            //console.log("url:" + url);
             return urlBase + url;
         }
         

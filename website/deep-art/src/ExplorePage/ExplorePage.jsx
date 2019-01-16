@@ -4,6 +4,7 @@ import styled from "styled-components";
 import GenArt from './GenArt.jsx';
 import ExplorePalette from './ExplorePalette.jsx';
 import InfoArt from './InfoArt.jsx';
+import APIHelper from '../APIHelper';
 
 import {Box, Text, Grid, Paragraph} from 'grommet';
 
