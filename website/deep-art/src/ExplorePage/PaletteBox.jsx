@@ -4,11 +4,16 @@ import { Box, Image} from 'grommet';
 import AddButton from './AddButton.jsx';
 import RemoveButton from './RemoveButton.jsx';
 
+/**
+ * One box in the palette
+ * 'addSeed' prop: callback to add an image to the current seed
+ * 'subSeed' prop: callback to subtract an image from the current seed
+ */
 export default class PaletteBox extends Component {
     constructor(props){
         super(props);
         this.state = {
-            imgSeed: 0,
+            imgSeed: [],
         }
 
         this.addClick = this.addClick.bind(this);
@@ -19,6 +24,10 @@ export default class PaletteBox extends Component {
         this.makeRandomSeed();
     }
 
+    /**
+     * Makes a random 1x512 array of floats in the range -1,1
+     * Directly modifies state and saves it into imgSeed
+     */
     makeRandomSeed(){
         let seed = [];
         for (let i = 0; i<512; i++){
@@ -30,13 +39,17 @@ export default class PaletteBox extends Component {
         });
     }
 
+    /**
+     * Callback given to AddButton to connect to props.addSeed
+     */
     addClick(){
-        //console.log("Add Click");
         this.props.addSeed(this.state.imgSeed);
     }
 
+    /**
+     * Callback given to RemoveButton to connect to props.subSeed
+     */
     subClick(){
-        //console.log("Sub Click");
         this.props.subSeed(this.state.imgSeed);
     }
 

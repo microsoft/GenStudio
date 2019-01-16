@@ -13,9 +13,12 @@ const customTheme = {
     }
 }
 
+/**
+ * Add Icon Button with 'addClick' prop 
+ */
 export default class AddButton extends Component {
-    condtructor(props){
-
+    constructor(props){
+        super(props);
     };
 
     render(){

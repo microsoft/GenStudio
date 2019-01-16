@@ -11,7 +11,10 @@ const ColumnsDiv = styled.div`
     display: flex;
     flex-flow: row wrap;
 `
-
+/**
+ * Page for the Exploring feature
+ * Pulls data from the URL in props.match.params
+ */
 export default class ExplorePage extends Component {
     constructor(props){
 
@@ -104,7 +107,7 @@ export default class ExplorePage extends Component {
                             try {
                                 let response = JSON.parse(Http2.responseText);
                                 let seed = [response.seed].toString();
-                                seed = "[[" + seed + "]]";
+                                seed = `[[${seed}]]`;
                                 this.setState({
                                     genSeed: this.twoDArrayStringToOneDArray(seed)
                                 });
@@ -121,11 +124,13 @@ export default class ExplorePage extends Component {
                 }
             }
         }
-
-        //const seedArr = '[[780,1,2,848,6,992,705,667,232,343,522,409,870,458,810,971,187,570,879,724,525,217,183,462,670,90,637,125,50,559,816,176,886,112,185,169,683,753,878,49,628,470,318,836,565,610,452,517,978,985,788,248,540,836,272,32,767,715,253,475,89,670,741,478,913,323,461,276,29,392,355,411,60,884,454,551,811,717,273,926,533,967,834,42,949,766,153,360,238,701,360,710,193,540,370,112,672,363,738,422,215,105,890,906,697,626,9,190,18,744,152,289,87,436,389,306,33,542,673,761,957,863,985,186,611,785,271,698,789,561,968,725,11,66,254,618,611,331,264,532,351,675,24,157,32,381,37,555,661,954,342,353,958,82,18,819,474,372,264,113,723,159,855,596,87,588,777,229,354,29,6,326,637,837,548,48,481,806,927,132,794,186,588,659,116,463,574,125,635,339,202,910,517,994,36,574,392,702,698,734,257,375,795,467,189,78,632,301,349,749,158,930,53,392,148,143,804,877,987,195,411,597,674,798,73,566,183,100,646,814,326,347,255,157,480,91,88,794,948,762,389,538,899,301,593,930,49,620,598,341,345,983,435,671,753,230,132,490,312,80,444,199,380,502,837,21,225,6,576,866,945,871,18,175,999,185,135,628,624,788,73,539,30,577,287,314,844,448,469,644,178,855,915,921,159,124,832,130,680,461,654,188,297,365,45,864,947,504,386,539,757,365,912,276,533,735,427,898,100,750,864,987,576,594,643,629,606,839,471,609,782,179,800,828,306,230,998,546,353,214,110,268,506,555,570,663,886,23,651,464,840,198,617,811,368,603,184,622,779,696,205,320,850,717,119,938,896,314,537,401,635,948,946,355,134,807,827,93,616,984,983,980,10,485,727,94,186,757,326,314,279,751,249,90,437,564,576,553,360,713,165,691,985,318,460,509,553,358,805,157,4,195,460,75,614,29,466,343,218,980,652,698,184,326,671,229,533,237,198,21,738,544,559,294,881,25,25,139,255,205,277,280,749,174,659,543,181,856,260,76,787,328,148,655,707,119,430,226,839,140,468,298,956,928,50,323,992,314,773,135,968,204,834,35,742,20,966,14,484,944,780,276,707,411,870,327,829,873,298,610,687,938,85,3,583,190,187,412,620,277,674,238,862,793,928,547,341,957,491,670,234,596]]';
-        //this.getGenImage(seedArr);
     }
 
+    /**
+     * Calls an API, sending a seed, and getting back an ArrayBuffer reprsenting that image
+     * This function directly saves the ArrayBuffer to state
+     * @param {string} seedArr - string version of a 1x512 array of floats between -1,1  
+     */
     getGenImage(seedArr){
         const apiURL = 'http://artgan.eastus2.cloudapp.azure.com:8080/seed2image';
         const Http = new XMLHttpRequest();
@@ -148,7 +153,11 @@ export default class ExplorePage extends Component {
         }
     }
 
-
+    /**
+     * Converts a 2D array string into a 1D array of floats
+     * @param {string} arrayString - string version of a 1x? array of floats
+     * @returns {Float[]} - The 1D float array from arrayString
+     */
     twoDArrayStringToOneDArray(arrayString){
         let numbers = arrayString.substring(2,arrayString.length -2); //cut off the "[[]]"
         let arrayNum = numbers.split(',').map(function(item) {
@@ -157,15 +166,26 @@ export default class ExplorePage extends Component {
         return(arrayNum);
     }
 
-    findDiff(genSeed, otherSeed){
+    /**
+     * Finds a difference vector between the genSeed and the otherSeed
+     * @param {Float[]} genSeed - the current generated image seed
+     * @param {Float[]} otherSeed - the other seed to frind the difference from
+     * @param {Float} stepSize - The multiplyer on the difference vector 
+     */
+    findDiff(genSeed, otherSeed, stepSize=.1){
         let diffVec = [];
         for (let i = 0; i < 512; i++){
-            let diff = ((genSeed[i] - otherSeed[i])/10); //Magic number 10, works well
+            let diff = ((genSeed[i] - otherSeed[i])*stepSize); //Magic number 10, works well
             diffVec.push(diff);
         }
         return(diffVec);
     }
 
+    /**
+     * Adds diffVec to genSeed, limits values to be between -1,1
+     * @param {Float[]} genSeed - The current generated image seed
+     * @param {Float[]} diffVec - A difference vector to add to diffVec
+     */
     addVec(genSeed, diffVec){
         let newSeed = [];
         for (let i = 0; i < 512; i++){
@@ -180,6 +200,11 @@ export default class ExplorePage extends Component {
         return(newSeed);
     }
 
+    /**
+     * Subtracts diffVec from genSeed, limits values to be between -1,1
+     * @param {Float[]} genSeed - The current generated image seed
+     * @param {Float[]} diffVec - A difference vector to subtract from diffVec
+     */
     subVec(genSeed, diffVec){
         let newSeed = [];
         for (let i = 0; i < 512; i++){
@@ -194,28 +219,31 @@ export default class ExplorePage extends Component {
         return(newSeed);
     }
 
-
+    /**
+     * Moves genSeed towards seed linearly, and generates the new image. Directly modifies state.
+     * @param {Float[]} seed - 1x512 array
+     */
     addSeed(seed){
-        console.log("ADD");
-        //console.log(seed);
         let diffVec = this.findDiff(this.state.genSeed, seed);
         let newSeed = this.addVec(this.state.genSeed, diffVec);
         this.setState({
             genSeed: newSeed
         });
-        let strSeed = "[["+newSeed.toString()+"]]";
+        let strSeed = `[[${newSeed}]]`;
         this.getGenImage(strSeed);
     }
 
+    /**
+     * Moves genSeed away from seed linearly, and generates the new image. Directly modifies state.
+     * @param {Float[]} seed - 1x512 array
+     */
     subSeed(seed){
-        console.log("SUBTRACT");
-        //console.log(seed);
         let diffVec = this.findDiff(this.state.genSeed, seed);
         let newSeed = this.subVec(this.state.genSeed, diffVec);
         this.setState({
             genSeed: newSeed
         });
-        let strSeed = "[["+newSeed.toString()+"]]";
+        let strSeed = `[[${newSeed}]]`;
         this.getGenImage(strSeed);
     }
 
