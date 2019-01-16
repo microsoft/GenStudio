@@ -63,6 +63,7 @@ export default class SearchControl extends Component {
                 try {
                     let response = JSON.parse(Http.responseText);
                     let IDs = response.results.ObjectIds;
+                    console.log("in select control code");
                     this.props.clearOldImages();
                     this.props.sendObjectIds(IDs);
                 } catch (e) {

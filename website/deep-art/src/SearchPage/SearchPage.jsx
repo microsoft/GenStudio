@@ -43,7 +43,7 @@ export default class SearchPage extends Component {
         //Unclear if this is a better system or not
         if (ID === this.state.selectedImage){
             this.setState({selectedImage: 0});
-        }else{
+        } else {
             this.setState({selectedImage: ID});
         }
         
@@ -51,6 +51,7 @@ export default class SearchPage extends Component {
 
     getImageIDs(imageIDs) {
         this.objIDsToImages(imageIDs);
+        console.log("imgObjects: " + this.state.imgObjects);
     }
 
     clearOldImages() {
@@ -62,7 +63,7 @@ export default class SearchPage extends Component {
      * @param {Int[]} objIDs - An array of object IDs from the met API to convert to an array of image urls
      * @return {String[]} - An array of image urls from the met API.
      */
-    objIDsToImages(objIDs){
+    objIDsToImages(objIDs) {
         
         const baseURL = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
         
@@ -70,7 +71,7 @@ export default class SearchPage extends Component {
             {url: baseURL+ID.toString(),
              id: ID}
         ));
-
+        console.log("making the API call in obIDs to Images fn");
         for (let i = 0; i < apiURLs.length; i++){
             const Http = new XMLHttpRequest();
             Http.open("GET", apiURLs[i].url);
@@ -80,13 +81,15 @@ export default class SearchPage extends Component {
                     try {
                         let response = JSON.parse(Http.responseText);
                         this.setState((oldState) => {
+                            
+                            //console.log("data: " + response.primaryImage);
                             return oldState.imgObjects.push(
-                                {img: response.primaryImage,
+                                {
+                                    img: response.primaryImage,
                                     id: apiURLs[i].id,
                                     key: i
-                                } 
-                                )
-                        })
+                                });
+                        });
                     } catch (e) {
                         console.log('malformed request:' + Http.responseText);
                     }
@@ -119,6 +122,7 @@ export default class SearchPage extends Component {
     }
 
     render() {
+        console.log("test val: " + this.state.imgObjects);
         return(
             <Grid
                 areas={[

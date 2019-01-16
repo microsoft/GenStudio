@@ -26,7 +26,7 @@ export default class ExplorePage extends Component {
             apiData: {},
             genImg: 0,
             genSeed: [],
-            imgObjects: []
+            imgObjectsExplore: []
         };
 
         this.addSeed = this.addSeed.bind(this);
@@ -34,7 +34,7 @@ export default class ExplorePage extends Component {
 
     };
 
-    objIDsToImages(objIDs) {
+    objIDsToImagesTest(objIDs) {
 
         const baseURL = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
 
@@ -54,7 +54,7 @@ export default class ExplorePage extends Component {
                     try {
                         let response = JSON.parse(Http.responseText);
                         this.setState((oldState) => {
-                            return oldState.imgObjects.push(
+                            return oldState.imgObjectsExplore.push(
                                 {
                                     img: response.primaryImage,
                                     id: apiURLs[i].id,
@@ -78,7 +78,7 @@ export default class ExplorePage extends Component {
         let artArr = url.split('&')[1].slice(4);
         artArr = JSON.parse(artArr);
         const id  = selectedArt;
-        this.objIDsToImages(artArr);
+        this.objIDsToImagesTest(artArr);
         
 
         //Eventually replaced with call to GAN
@@ -280,7 +280,7 @@ export default class ExplorePage extends Component {
                         <GenArt image={this.state.genImg}/>
                     
                     <Box>
-                        <ExplorePalette images={this.state.imgObjects} addSeed={this.addSeed} subSeed={this.subSeed}/>
+                        <ExplorePalette images={this.state.imgObjectsExplore} addSeed={this.addSeed} subSeed={this.subSeed}/>
                     </Box>
                     
                 </Box>
