@@ -81,11 +81,7 @@ export default class SearchControl extends Component {
         return (
           <Box align="center" justify="start" pad="small">
             <Select
-<<<<<<< HEAD
               focusIndicator={false}
-=======
-              focusIndicator= {false}
->>>>>>> 3ee09b28b304f10334e5819083a7cffc67c3c540
               size="medium"
               placeholder="Categories"
               value={value}
