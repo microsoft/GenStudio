@@ -8,5 +8,5 @@ RUN pip install -r requirements.txt
 
 ENV PYTHONPATH "${PYTHONPATH}:/app"
 
-EXPOSE 8080
+EXPOSE 8081
 CMD [ "python", "app.py" ]
