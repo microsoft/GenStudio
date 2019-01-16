@@ -21,7 +21,8 @@ export default class ExplorePage extends Component {
             imgURL: '',
             apiData: {},
             genImg: 0,
-            genSeed: []
+            genSeed: [],
+            imgObjects: []
         };
 
         this.addSeed = this.addSeed.bind(this);
@@ -29,12 +30,56 @@ export default class ExplorePage extends Component {
 
     };
 
-    componentDidMount () {
-        const { id } = this.props.match.params;
+    objIDsToImages(objIDs) {
+
+        const baseURL = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
+
+        let apiURLs = objIDs.map(ID => (
+            {
+                url: baseURL + ID.toString(),
+                id: ID
+            }
+        ));
+
+        for (let i = 0; i < apiURLs.length; i++) {
+            const Http = new XMLHttpRequest();
+            Http.open("GET", apiURLs[i].url);
+            Http.send();
+            Http.onreadystatechange = (e) => {
+                if (Http.readyState === 4) {
+                    try {
+                        let response = JSON.parse(Http.responseText);
+                        this.setState((oldState) => {
+                            return oldState.imgObjects.push(
+                                {
+                                    img: response.primaryImage,
+                                    id: apiURLs[i].id,
+                                    key: i
+                                }
+                            )
+                        })
+                    } catch (e) {
+                        console.log('malformed request:' + Http.responseText);
+                    }
+                }
+            }
+        }
+    }
+
+    componentDidMount() {
+        let url = this.props.match.params.id.toString();
+        //console.log("url encoded: " + url);
+        url = decodeURIComponent(url);
+        let selectedArt = url.split('&')[0].slice(4);
+        let artArr = url.split('&')[1].slice(4);
+        artArr = JSON.parse(artArr);
+        const id  = selectedArt;
+        this.objIDsToImages(artArr);
+        
 
         //Eventually replaced with call to GAN
         const baseMetUrl = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
-        let metApiUrl = baseMetUrl + id.toString();
+        let metApiUrl = baseMetUrl + id;
 
         const Http = new XMLHttpRequest();
         Http.open("GET", metApiUrl);
@@ -57,9 +102,7 @@ export default class ExplorePage extends Component {
                     Http2.onreadystatechange = (e) => {
                         if (Http2.readyState === 4) {
                             try {
-                                console.log("here");
                                 let response = JSON.parse(Http2.responseText);
-                                console.log(response);
                                 let seed = [response.seed].toString();
                                 seed = "[[" + seed + "]]";
                                 this.setState({
@@ -208,7 +251,7 @@ export default class ExplorePage extends Component {
                         <GenArt image={this.state.genImg}/>
                     
                     <Box>
-                        <ExplorePalette addSeed={this.addSeed} subSeed={this.subSeed}/>
+                        <ExplorePalette images={this.state.imgObjects} addSeed={this.addSeed} subSeed={this.subSeed}/>
                     </Box>
                     
                 </Box>
