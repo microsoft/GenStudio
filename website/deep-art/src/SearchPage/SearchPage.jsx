@@ -101,7 +101,7 @@ export default class SearchPage extends Component {
     generateArtUrlSuffix() {
         const NUMBER_OF_SEARCH_IMAGES = 12;
         let urlBase = "/explore/";
-        if (this.state.imgObjects.length = NUMBER_OF_SEARCH_IMAGES) {
+        if (this.state.imgObjects.length === NUMBER_OF_SEARCH_IMAGES) {
             //generates a random index for which to eliminate the extra met art
             //idea is we randomly select which curated art to move to the explore page
             let currentSelection = this.state.selectedImage;
