@@ -133,13 +133,15 @@ export default class ExplorePage extends Component {
      * @param {string} seedArr - string version of a 1x512 array of floats between -1,1  
      */
     getGenImage(seedArr) {
-        const apiURL = 'http://artgan.eastus2.cloudapp.azure.com:8080/seed2image';
+        //const apiURL = 'http://artgan.eastus2.cloudapp.azure.com:8080/seed2image';
+        const apiURL = 'https://methack-api.azure-api.net/progan/seed2image';
         const Http = new XMLHttpRequest();
         const data = new FormData();
         data.append('seed', seedArr);
 
         Http.responseType = "arraybuffer"
         Http.open("POST", apiURL);
+        Http.setRequestHeader('key','43d3f563ea224c4c990e437ada74fae8');
         Http.send(data);
         Http.onreadystatechange = (e) => {
             if (Http.readyState === 4){
