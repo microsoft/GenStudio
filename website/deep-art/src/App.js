@@ -55,7 +55,7 @@ const mergeTheme = deepMerge(grommet, gTheme);
 
 
 const Body = styled.section`
-  height: 100%;
+  flex: 1;
   background: #F1F1D4;
   z-Index: 0;
 `;
@@ -63,11 +63,11 @@ const Body = styled.section`
 class App extends Component {
   render() {
     return (
-      <Router style={{height: "100%"}}>
+      <Router style={{height: "100%", width: "100%"}}>
         <Grommet theme={mergeTheme}>
           <Box
             direction="column"
-            style={{height: "100%"}}
+            style={{height: "100%", width: "100%"}}
           >
             <header style={{zIndex: "1"}}>
               <NavBar />
