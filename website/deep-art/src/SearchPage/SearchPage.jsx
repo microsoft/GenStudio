@@ -159,7 +159,7 @@ export default class SearchPage extends Component {
                             <Button label='Generate Image' href={this.generateArtUrlSuffix()} />
                         </Box>
                         <Box>
-                            <Button label='Explore Similar'/>
+                            <Button label='Explore Similar' href={'/graph'}/>
                         </Box>
                     </Box>
 

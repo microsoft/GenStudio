@@ -32,6 +32,7 @@ export default class ResultArt extends Component {
                         <Button
                             hoverIndicator
                             style={{ outline: 'none' }}
+                            key={image.id}
                             onClick={() => { this.props.selectImage(image.id) }}
                         >
                             <Box border=

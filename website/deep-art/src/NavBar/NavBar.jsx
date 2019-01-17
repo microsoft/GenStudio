@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import styled from "styled-components";
 
-import { Box, Text } from 'grommet';
+import { Box, Button, Text } from 'grommet';
 
 const NavBox = styled(Box)`
     padding: 2rem;
@@ -26,9 +26,12 @@ export default class NavBar extends Component{
                 fill='horizontal'
                 background="brand"
             >
-                <Text size="42px" style={{ fontFamily:"monospace"}}>
-                    Deep Art
-                </Text>
+                <Button hoverIndicator="false" href={"/"}>
+                    <Text size="42px" style={{ fontFamily:"monospace"}}>
+                        Deep Art
+                    </Text>
+                </Button>
+
             </NavBox>
 
         );
