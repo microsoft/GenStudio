@@ -141,8 +141,8 @@ export default class ExplorePage extends Component {
 
         Http.responseType = "arraybuffer"
         Http.open("POST", apiURL);
-        Http.setRequestHeader('key','43d3f563ea224c4c990e437ada74fae8');
-        Http.setRequestHeader('Access-Control-Allow-Origin','*');
+        Http.setRequestHeader('Ocp-Apim-Subscription-Key','43d3f563ea224c4c990e437ada74fae8');
+        //Http.setRequestHeader('Access-Control-Allow-Origin','*');
         Http.send(data);
         Http.onreadystatechange = (e) => {
             if (Http.readyState === 4){
