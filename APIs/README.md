@@ -23,19 +23,15 @@ NAME                       STATUS   ROLES   AGE     VERSION
 aks-nodepool1-28993262-0   Ready    agent   3m18s   v1.9.11
 ```
 
-<!-- ## Build API docker images
-Pull the deep-art code repository and `cd` into this folder.
-```cd APIs``` -->
-
 ## Deploy APIs
 Pull the deep-art code repository and `cd` into the API folder that you want to deploy. For example:
 ```
-cd APIs/seed2image-bigGan
+cd APIs/BigGAN
 ```
 
 To deploy the APIs, use the [kubectl apply](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#apply) command. This command parses the manifest (YAML) file and creates the defined Kubernetes objects. Specify the manifest files and apply it to the cluster. For example:
 ```
-kubectl apply -f biggan.yaml
+kubectl apply -f BigGAN.yaml
 ```
 
 ## Check AKS Cluster Status
