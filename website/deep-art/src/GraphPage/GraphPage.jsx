@@ -46,7 +46,7 @@ export default class GraphPage extends Component {
 
         return(
             <Grid
-            fill="vertical"
+            fill
             areas={[
                 { name: 'search', start: [0, 0], end: [0, 0] },
                 { name: 'tags', start: [0, 1], end: [0, 1] },
@@ -64,8 +64,11 @@ export default class GraphPage extends Component {
                 <Box gridArea='tags' >
                     <TagList tags={this.state.tags} tagData={this.state.tagData} tagChange={this.getTagChange}/>
                 </Box>
-                <Box gridArea='display' background="accent-1" >
-                    <ImageGraph nodes={nodes} edges={edges}/>
+                <Box gridArea='display' background="accent-1">
+                    <Box height="99%">
+                        <ImageGraph nodes={nodes} edges={edges}/>
+                    </Box>
+                    
                 </Box>
 
                 <Box gridArea='right' />
