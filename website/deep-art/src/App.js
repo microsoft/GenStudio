@@ -9,8 +9,8 @@ import './App.css';
 
 import SearchPage from './SearchPage/SearchPage.jsx';
 import ExplorePage from './ExplorePage/ExplorePage.jsx';
+import GraphPage from './GraphPage/GraphPage.jsx';
 import NavBar from './NavBar/NavBar.jsx';
-import DogPage from './DogPage.jsx';
 
 //GLOBAL THEME
 const gTheme = {
@@ -55,7 +55,7 @@ const mergeTheme = deepMerge(grommet, gTheme);
 
 
 const Body = styled.section`
-  height: 100%;
+  flex: 1;
   background: #F1F1D4;
   z-Index: 0;
 `;
@@ -63,11 +63,11 @@ const Body = styled.section`
 class App extends Component {
   render() {
     return (
-      <Router style={{height: "100%"}}>
+      <Router style={{height: "100%", width: "100%"}}>
         <Grommet theme={mergeTheme}>
           <Box
             direction="column"
-            style={{height: "100%"}}
+            style={{height: "100%", width: "100%"}}
           >
             <header style={{zIndex: "1"}}>
               <NavBar />
@@ -76,7 +76,7 @@ class App extends Component {
               <Route exact path="/" component={SearchPage}/>
               <Route exact path="/search" component={SearchPage}/>
               <Route exact path="/explore/:id" component={ExplorePage}/>
-              <Route exact path="/dogs" component={DogPage}/>
+              <Route exact path="/graph" component={GraphPage}/>
             </Body>
           </Box>
         </Grommet>

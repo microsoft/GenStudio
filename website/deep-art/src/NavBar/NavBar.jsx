@@ -7,8 +7,9 @@ import { Box, Text } from 'grommet';
 const NavBox = styled(Box)`
     padding: 2rem;
 `
-//    background-color: #e4002b;
-
+/**
+ * The Navigational Bar across the top of the page
+ */
 export default class NavBar extends Component{
     constructor(props) {
         super(props);

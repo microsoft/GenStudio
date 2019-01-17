@@ -18,9 +18,6 @@ export default class ResultArt extends Component {
         }
     };
 
-
-    //href={"/explore/"+image.id.toString()
-
     render(){
 
         return(

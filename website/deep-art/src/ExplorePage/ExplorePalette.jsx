@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import AddButton from './AddButton.jsx';
-import RemoveButton from './RemoveButton.jsx';
 import PaletteBox from './PaletteBox.jsx';
 
 import { Box, Grid, Image} from 'grommet';
 import testData from './testData.js';
 
+/**
+ * The Palette used to explore the images
+ * 'addSeed' prop: callback to add an image to the current seed
+ * 'subSeed' prop: callback to subtract an image from the current seed
+ */
 export default class ExplorePalette extends Component {
-    condtructor(props){
-
+    constructor(props){
+        super(props);
     };
 
     render(){
@@ -19,8 +22,8 @@ export default class ExplorePalette extends Component {
                 gap="medium"
                 margin="40px"
             >
-                {testData.map(tile => (
-                    <PaletteBox key={tile.key} img={tile.img} addSeed={this.props.addSeed}  subSeed={this.props.subSeed}/>
+                {this.props.images.map(tile => (
+                    <PaletteBox key={tile.key} img={tile.img} addSeed={this.props.addSeed} subSeed={this.props.subSeed}/>
                 ))}
             </Grid>
         );

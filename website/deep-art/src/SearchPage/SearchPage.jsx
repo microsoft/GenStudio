@@ -20,7 +20,7 @@ export default class SearchPage extends Component {
         this.state = {
             selectedIndex: 0,
             selectedImage: 0,
-            imgURLs: []
+            imgObjects: []
         };
 
         this.changeSelect = this.changeSelect.bind(this);
@@ -36,14 +36,14 @@ export default class SearchPage extends Component {
 
     changeSelect(index){
         this.setState({ selectedIndex: index });
-        //Call CSV API and change imgURLs accordingly
+        //Call CSV API and change imgObjects accordingly
     }
 
     changeSelectedImage(ID){
         //Unclear if this is a better system or not
         if (ID === this.state.selectedImage){
             this.setState({selectedImage: 0});
-        }else{
+        } else {
             this.setState({selectedImage: ID});
         }
         
@@ -51,11 +51,11 @@ export default class SearchPage extends Component {
 
     getImageIDs(imageIDs) {
         this.objIDsToImages(imageIDs);
+        console.log("imgObjects: " + this.state.imgObjects);
     }
 
     clearOldImages() {
-        this.state.imgURLs = [];
-        
+        this.state.imgObjects = []; 
     }
 
     /**
@@ -63,7 +63,7 @@ export default class SearchPage extends Component {
      * @param {Int[]} objIDs - An array of object IDs from the met API to convert to an array of image urls
      * @return {String[]} - An array of image urls from the met API.
      */
-    objIDsToImages(objIDs){
+    objIDsToImages(objIDs) {
         
         const baseURL = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
         
@@ -71,7 +71,7 @@ export default class SearchPage extends Component {
             {url: baseURL+ID.toString(),
              id: ID}
         ));
-
+        console.log("making the API call in obIDs to Images fn");
         for (let i = 0; i < apiURLs.length; i++){
             const Http = new XMLHttpRequest();
             Http.open("GET", apiURLs[i].url);
@@ -81,11 +81,15 @@ export default class SearchPage extends Component {
                     try {
                         let response = JSON.parse(Http.responseText);
                         this.setState((oldState) => {
-                            return oldState.imgURLs.push(
-                                {img: response.primaryImage,
-                                 id: apiURLs[i].id} 
-                                )
-                        })
+                            
+                            //console.log("data: " + response.primaryImage);
+                            return oldState.imgObjects.push(
+                                {
+                                    img: response.primaryImage,
+                                    id: apiURLs[i].id,
+                                    key: i
+                                });
+                        });
                     } catch (e) {
                         console.log('malformed request:' + Http.responseText);
                     }
@@ -94,7 +98,31 @@ export default class SearchPage extends Component {
         }
     }
 
-    render(){
+    generateArtUrlSuffix() {
+        const NUMBER_OF_SEARCH_IMAGES = 12;
+        let urlBase = "/explore/";
+        if (this.state.imgObjects.length === NUMBER_OF_SEARCH_IMAGES) {
+            //generates a random index for which to eliminate the extra met art
+            //idea is we randomly select which curated art to move to the explore page
+            let currentSelection = this.state.selectedImage;
+            let numberToEliminate = NUMBER_OF_SEARCH_IMAGES - 9 - 1;
+            let maxNumberToRemove = (NUMBER_OF_SEARCH_IMAGES - 1) - (numberToEliminate - 1);
+            let randomSpliceIndex = Math.floor(Math.random() * maxNumberToRemove);
+            let idList = this.state.imgObjects.map(ob => ob.id);
+            idList.splice(idList.indexOf(currentSelection), 1);
+            idList.splice(randomSpliceIndex, numberToEliminate);
+
+            let url = "?id=" + this.state.selectedImage.toString() + "&ids=[" + idList.toString() + "]";
+            url = encodeURIComponent(url);
+            return urlBase + url;
+        }
+        
+
+        //return url;
+    }
+
+    render() {
+        console.log("test val: " + this.state.imgObjects);
         return(
             <Grid
                 areas={[
@@ -105,7 +133,7 @@ export default class SearchPage extends Component {
                     { name: 'buttons', start: [1, 3], end: [1, 3]},
                     { name: 'right', start: [2, 0], end: [2, 3] },
                 ]}
-                columns={['flex','large','flex']}
+                columns={['flex','xlarge','flex']}
                 rows={['small','xsmall','large','xsmall']}
                 gap='small'
             >
@@ -129,7 +157,7 @@ export default class SearchPage extends Component {
                 </Box>
                 <Box gridArea='select'>
                     <ResultArt
-                        images={this.state.imgURLs}
+                        images={this.state.imgObjects}
                         selectedImage={this.state.selectedImage}
                         selectImage={this.changeSelectedImage}
                     />
@@ -137,7 +165,7 @@ export default class SearchPage extends Component {
                 <Box gridArea='buttons'>
                     <Box direction='row' style={{justifyContent: 'space-around'}}>
                         <Box>
-                            <Button label='Generate Image' href={"/explore/"+this.state.selectedImage.toString()} />
+                            <Button label='Generate Image' href={this.generateArtUrlSuffix()} />
                         </Box>
                         <Box>
                             <Button label='Explore Similar'/>

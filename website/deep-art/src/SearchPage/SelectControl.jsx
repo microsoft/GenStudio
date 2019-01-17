@@ -34,6 +34,11 @@ const customRoundedTheme = deepMerge(grommet, {
 
 const NUM_IMAGES_SEARCH_PAGE = 12;
 
+/**
+ * The search bar for art tags
+ * 'clearOldImages' prop: callback to clear out old images
+ * 'snedObjectIds' prop: callback to send the Object IDs to the parent
+ */
 export default class SearchControl extends Component {
     state = {
         options: ["Vases", "Landscapes", "Portraits", "Men", "Boats",
@@ -58,6 +63,7 @@ export default class SearchControl extends Component {
                 try {
                     let response = JSON.parse(Http.responseText);
                     let IDs = response.results.ObjectIds;
+                    console.log("in select control code");
                     this.props.clearOldImages();
                     this.props.sendObjectIds(IDs);
                 } catch (e) {
@@ -75,7 +81,7 @@ export default class SearchControl extends Component {
         return (
           <Box align="center" justify="start" pad="small">
             <Select
-              focusIndicator="false"
+              focusIndicator={false}
               size="medium"
               placeholder="Categories"
               value={value}
