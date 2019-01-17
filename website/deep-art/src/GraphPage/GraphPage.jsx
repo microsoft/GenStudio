@@ -46,7 +46,7 @@ export default class GraphPage extends Component {
 
         return(
             <Grid
-            fill
+            fill="vertical"
             areas={[
                 { name: 'search', start: [0, 0], end: [0, 0] },
                 { name: 'tags', start: [0, 1], end: [0, 1] },
@@ -54,7 +54,7 @@ export default class GraphPage extends Component {
                 { name: 'right', start: [2, 0], end: [2, 1] },
             ]}
             columns={['medium','flex','small']}
-            rows={['small','80%']}
+            rows={['small','flex']}
             gap='small'
             >
     
@@ -62,15 +62,9 @@ export default class GraphPage extends Component {
                     <SearchControl sendChange={this.getChange}/>
                 </Box>
                 <Box gridArea='tags' >
-                    <TagList tags={this.state.tags} tagChange={this.getTagChange}/>
+                    <TagList tags={this.state.tags} tagData={this.state.tagData} tagChange={this.getTagChange}/>
                 </Box>
                 <Box gridArea='display' background="accent-1" >
-                    <Text>
-                        {this.state.searchValue}
-                    </Text>
-                    <Text>
-                        {JSON.stringify(this.state.tagData)}
-                    </Text>
                     <ImageGraph nodes={nodes} edges={edges}/>
                 </Box>
 

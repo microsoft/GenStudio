@@ -21,6 +21,7 @@ export default class TagList extends Component {
                     <CheckBox
                     key={label}
                     label={label}
+                    checked={this.props.tagData[label]}
                     onChange={e => this.onChange(e, label)}/>
                 ))}
             </Box>

@@ -21,7 +21,7 @@ export default class SearchControl extends Component {
     render(){
         const {value} = this.state.value;
         return(
-            <Box>
+            <Box pad="medium">
                 <TextInput
                 type="search"
                 value={value}

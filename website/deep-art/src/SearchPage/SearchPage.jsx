@@ -124,7 +124,7 @@ export default class SearchPage extends Component {
                     { name: 'buttons', start: [1, 3], end: [1, 3]},
                     { name: 'right', start: [2, 0], end: [2, 3] },
                 ]}
-                columns={['flex','large','flex']}
+                columns={['flex','xlarge','flex']}
                 rows={['small','xsmall','large','xsmall']}
                 gap='small'
             >
