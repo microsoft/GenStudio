@@ -17,11 +17,11 @@ export default class InfoArt extends Component {
                 height="small"
                 width="small"
                 border=
-                {{ color: "black", size: "3px" }}
+                {{ color: "black", size: "4px" }}
                 round="small"
                 style={{ padding: "0px", marginTop: "10px", marginLeft: "10px",}}
             >
-                <Image src={this.props.image} fit="cover" style={{ zIndex: "-1"}} />
+                <Image src={this.props.image} fit="cover" style={{ height: "100%", zIndex: "-1"}} />
             </Box>
           );
 

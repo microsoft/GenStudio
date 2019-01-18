@@ -56,22 +56,26 @@ export default class PaletteBox extends Component {
     render(){
         return(
             <Box border=
-                {{ color: "black", size: "3px" }}
+                {{ color: "black", size: "4px" }}
                 round="small"
                 height="small"
                 width="small"
             >
-                <Image
-                    src={this.props.img}
-                    fit="cover"
-                    style={{ zIndex: "-1"}}
-                />
+                <Box height="70%">
+                    <Image
+                        src={this.props.img}
+                        fit="cover"
+                        style={{ height: '100%', zIndex: "-1"}}
+                    />
+                </Box>
+
                 <Box
                     fill="horizontal"
                     direction="row"
                     alignSelf = "center"
                     margin="xsmall"
                     style={{"justifyContent": "space-around"}}
+                    height="30%"
                 >
                     <RemoveButton subClick={this.subClick}/>
                     <AddButton addClick={this.addClick}/>
