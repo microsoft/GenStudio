@@ -134,12 +134,17 @@ export default class ExplorePage extends Component {
      */
     getGenImage(seedArr) {
         //const apiURL = 'http://artgan.eastus2.cloudapp.azure.com:8080/seed2image';
+<<<<<<< HEAD
         const apiURL = 'https://methack-api.azure-api.net/progan/seed2image';
+=======
+        const apiURL = 'https://methack-api.azure-api.net/progan/seed2image?subscription-key=43d3f563ea224c4c990e437ada74fae8';
+        //const params = 'subscription-key=43d3f563ea224c4c990e437ada74fae8';
+>>>>>>> UX
         const Http = new XMLHttpRequest();
         const data = new FormData();
         data.append('seed', seedArr);
 
-        Http.responseType = "arraybuffer"
+        Http.responseType = "arraybuffer";
         Http.open("POST", apiURL);
         Http.setRequestHeader('Ocp-Apim-Subscription-Key','43d3f563ea224c4c990e437ada74fae8');
         //Http.setRequestHeader('Access-Control-Allow-Origin','*');
