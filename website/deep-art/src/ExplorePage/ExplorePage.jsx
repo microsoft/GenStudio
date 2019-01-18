@@ -12,13 +12,15 @@ const ColumnsDiv = styled.div`
     display: flex;
     flex-flow: row wrap;
 `
+const apiHelper = new APIHelper();
+
 /**
  * Page for the Exploring feature
  * Pulls data from the URL in props.match.params
  */
 export default class ExplorePage extends Component {
-    constructor(props) {
 
+    constructor(props) {    
         super(props);
         this.state = {
             imgURL: '',
@@ -33,7 +35,7 @@ export default class ExplorePage extends Component {
 
     };
 
-    objIDsToImagesTest(objIDs) {
+    objIDsToImages(objIDs) {
 
         const baseURL = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
 
@@ -71,13 +73,12 @@ export default class ExplorePage extends Component {
 
     componentDidMount() {
         let url = this.props.match.params.id.toString();
-        //console.log("url encoded: " + url);
         url = decodeURIComponent(url);
         let selectedArt = url.split('&')[0].slice(4);
         let artArr = url.split('&')[1].slice(4);
         artArr = JSON.parse(artArr);
-        const id  = selectedArt;
-        this.objIDsToImagesTest(artArr);
+        const id = selectedArt;
+        this.objIDsToImages(artArr);
         
 
         //Eventually replaced with call to GAN

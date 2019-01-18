@@ -26,12 +26,13 @@ let options = {
         },
         arrows: {
             to: {
-                enabled: false
+                enabled: true
             },
             from: {
                 enabled: false
             }
         },
+        length: 500
     },
     width: '100%',
     height: '100%'
