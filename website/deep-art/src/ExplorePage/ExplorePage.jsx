@@ -45,12 +45,12 @@ export default class ExplorePage extends Component {
 
     objIDsToImages(objIDs) {
 
-        const baseURL = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
-        //const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails/';
+        //const baseURL = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
+        const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails2/';
 
         let apiURLs = objIDs.map(ID => (
             {
-                url: baseURL + ID.toString(),
+                url: baseURL + ID.toString()+".jpg",
                 id: ID
             }
         ));
