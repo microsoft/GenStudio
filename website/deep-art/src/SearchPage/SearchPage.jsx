@@ -43,7 +43,7 @@ export default class SearchPage extends Component {
 
     getImageIDs(imageIDs) {
         this.objIDsToImages(imageIDs);
-        console.log("imgObjects: " + this.state.imgObjects);
+        //console.log("imgObjects: " + this.state.imgObjects);
     }
 
     clearOldImages() {
@@ -56,28 +56,29 @@ export default class SearchPage extends Component {
      * @return {String[]} - An array of image urls from the met API.
      */
     objIDsToImages(objIDs) {
-        
-        const baseURL = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
+        const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails2/';
         
         let apiURLs = objIDs.map(ID => (
-            {url: baseURL+ID.toString(),
+            {url: baseURL+ID.toString()+".jpg",
              id: ID}
         ));
         console.log("making the API call in obIDs to Images fn");
         for (let i = 0; i < apiURLs.length; i++){
             const Http = new XMLHttpRequest();
+            Http.responseType = "arraybuffer";
             Http.open("GET", apiURLs[i].url);
             Http.send();
             Http.onreadystatechange = (e) => {
                 if (Http.readyState === 4){
                     try {
-                        let response = JSON.parse(Http.responseText);
+                        //let response = JSON.parse(Http.responseText);
                         this.setState((oldState) => {
                             
                             //console.log("data: " + response.primaryImage);
                             return oldState.imgObjects.push(
                                 {
-                                    img: response.primaryImage,
+                                    //img: response.primaryImage,
+                                    img: btoa(String.fromCharCode.apply(null, new Uint8Array(Http.response))),
                                     id: apiURLs[i].id,
                                     key: i
                                 });
@@ -157,10 +158,10 @@ export default class SearchPage extends Component {
                 <Box gridArea='buttons'>
                     <Box direction='row' style={{justifyContent: 'space-around'}}>
                         <Box>
-                            <Button label='Generate Image' href={this.generateArtUrlSuffix()} />
+                            <Button label='Generate Image' style={{textDecoration: "none"}} href={this.generateArtUrlSuffix()} />
                         </Box>
                         <Box>
-                            <Button label='Explore Similar' href={'/graph'}/>
+                            <Button label='Explore Similar' style={{textDecoration: "none"}} href={'/graph'}/>
                         </Box>
                     </Box>
 

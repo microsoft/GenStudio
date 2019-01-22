@@ -26,7 +26,7 @@ export default class NavBar extends Component{
                 fill='horizontal'
                 background="brand"
             >
-                <Button hoverIndicator="false" href={"/"}>
+                <Button hoverIndicator="false" style={{textDecoration: "none"}} href={"/"}>
                     <Text size="42px" style={{ fontFamily:"monospace"}}>
                         Deep Art
                     </Text>
