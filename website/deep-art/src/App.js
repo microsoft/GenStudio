@@ -10,6 +10,7 @@ import './App.css';
 import SearchPage from './SearchPage/SearchPage.jsx';
 import ExplorePage from './ExplorePage/ExplorePage.jsx';
 import GraphPage from './GraphPage/GraphPage.jsx';
+import MapPage from './MapPage/MapPage.jsx';
 import NavBar from './NavBar/NavBar.jsx';
 
 //GLOBAL THEME
@@ -77,6 +78,7 @@ class App extends Component {
               <Route exact path="/search" component={SearchPage}/>
               <Route exact path="/explore/:id" component={ExplorePage}/>
               <Route exact path="/graph" component={GraphPage}/>
+              <Route exact path="/map" component={MapPage}/>
             </Body>
           </Box>
         </Grommet>
