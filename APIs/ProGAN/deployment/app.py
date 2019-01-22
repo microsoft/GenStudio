@@ -24,7 +24,7 @@ with graph.as_default():
         G, D, Gs = pickle.load(file)
 
 
-@app.route('/seed2image', methods=['POST'])
+@app.route('/', methods=['POST'])
 def generateArt():
     global graph
     global G, D, Gs

@@ -73,9 +73,8 @@ def sample_with_category(sess, noise, category, truncation=1., batch_size=8,
 def sample_with_labels(sess, noise, label, truncation=1., batch_size=8,
            vocab_size=vocab_size):
   noise = np.asarray(noise)
+  label = np.asarray(label)
   num = noise.shape[0]
-  if len(label.shape) == 0:
-    label = np.asarray([label] * num)
   if label.shape[0] != num:
     raise ValueError('Got # noise samples ({}) != # label samples ({})'
                      .format(noise.shape[0], label.shape[0]))
@@ -130,8 +129,7 @@ with graph.as_default():
     sess.run(initializer)
 
 @app.route('/category', methods=['POST'])
-def generateArt():
-  # global graph
+def generateFromCategory():
   global sess
 
   # Categories found here: https://gist.github.com/yrevar/942d3a0ac09ec9e5eb3a
@@ -151,14 +149,13 @@ def generateArt():
   return send_file(imgBytes, attachment_filename='image.jpeg', mimetype='image/jpeg')
 
 @app.route('/labels', methods=['POST'])
-def generateArt():
-  # global graph
+def generateFromLabels():
   global sess
 
-  labels = json.loads(request.form.get('labels')) 
+  labels = np.array(json.loads(request.form.get('labels')))
   seed = np.array(json.loads(request.form.get('seed')))
 
-  assert labels.shape[0] == seed.shape[0]
+  assert labels.shape == (1, 1000)
   assert seed.shape == (1, 140)
 
   # Run the generator to produce images
