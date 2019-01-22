@@ -1,8 +1,0 @@
-flask
-redis
-flask_cors
-numpy
-tensorflow
-tensorflow_hub
-Pillow
-scipy

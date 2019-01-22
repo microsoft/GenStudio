@@ -31,11 +31,6 @@ dim_z = input_z.shape.as_list()[1]
 vocab_size = input_y.shape.as_list()[1]
 
 # Set up helper functions
-def truncated_z_sample(batch_size, truncation=1., seed=None):
-  state = None if seed is None else np.random.RandomState(seed)
-  values = truncnorm.rvs(-2, 2, size=(batch_size, dim_z), random_state=state)
-  return truncation * values
-
 def one_hot(index, vocab_size=vocab_size):
   index = np.asarray(index)
   if len(index.shape) == 0:
@@ -53,10 +48,10 @@ def one_hot_if_needed(label, vocab_size=vocab_size):
   assert len(label.shape) == 2
   return label
 
-def sample(sess, noise, label, truncation=1., batch_size=8,
+def sample_with_category(sess, noise, category, truncation=1., batch_size=8,
            vocab_size=vocab_size):
   noise = np.asarray(noise)
-  label = np.asarray(label)
+  label = np.asarray(category)
   num = noise.shape[0]
   if len(label.shape) == 0:
     label = np.asarray([label] * num)
@@ -64,6 +59,25 @@ def sample(sess, noise, label, truncation=1., batch_size=8,
     raise ValueError('Got # noise samples ({}) != # label samples ({})'
                      .format(noise.shape[0], label.shape[0]))
   label = one_hot_if_needed(label, vocab_size)
+  ims = []
+  for batch_start in range(0, num, batch_size):
+    s = slice(batch_start, min(num, batch_start + batch_size))
+    feed_dict = {input_z: noise[s], input_y: label[s], input_trunc: truncation}
+    ims.append(sess.run(output, feed_dict=feed_dict))
+  ims = np.concatenate(ims, axis=0)
+  assert ims.shape[0] == num
+  ims = np.clip(((ims + 1) / 2.0) * 256, 0, 255)
+  ims = np.uint8(ims)
+  return ims
+
+def sample_with_labels(sess, noise, label, truncation=1., batch_size=8,
+           vocab_size=vocab_size):
+  noise = np.asarray(noise)
+  label = np.asarray(label)
+  num = noise.shape[0]
+  if label.shape[0] != num:
+    raise ValueError('Got # noise samples ({}) != # label samples ({})'
+                     .format(noise.shape[0], label.shape[0]))
   ims = []
   for batch_start in range(0, num, batch_size):
     s = slice(batch_start, min(num, batch_start + batch_size))
@@ -99,7 +113,7 @@ def imgrid(imarray, cols=5, pad=1):
     grid = grid[:-pad, :-pad]
   return grid
 
-def makeImage(array):
+def imbytes(array):
   array = np.asarray(array, dtype=np.uint8)
   imgBytes = cStringIO.StringIO()
   PIL.Image.fromarray(array).save(imgBytes, 'jpeg')
@@ -114,25 +128,42 @@ with graph.as_default():
     sess = tf.Session()
     sess.run(initializer)
 
-@app.route('/biggan', methods=['POST'])
-def generateArt():
-  global graph
+@app.route('/category', methods=['POST'])
+def generateFromCategory():
   global sess
 
   # Categories found here: https://gist.github.com/yrevar/942d3a0ac09ec9e5eb3a
   category = json.loads(request.form.get('category')) 
-  seed = np.array(json.loads(request.form.get('seed'))) # (1, 140)
+  seed = np.array(json.loads(request.form.get('seed')))
 
   assert category >= 0
   assert category < 1000
   assert seed.shape == (1, 140)
 
   # Run the generator to produce images
-  images = sample(sess, seed, category)
+  images = sample_with_category(sess, seed, category)
 
   # Format to image file
   array = np.asarray(imgrid(images, 1), dtype=np.uint8)
-  imgBytes = makeImage(array)
+  imgBytes = imbytes(array)
+  return send_file(imgBytes, attachment_filename='image.jpeg', mimetype='image/jpeg')
+
+@app.route('/labels', methods=['POST'])
+def generateFromLabels():
+  global sess
+
+  labels = np.array(json.loads(request.form.get('labels')))
+  seed = np.array(json.loads(request.form.get('seed')))
+
+  assert labels.shape == (1, 1000)
+  assert seed.shape == (1, 140)
+
+  # Run the generator to produce images
+  images = sample_with_labels(sess, seed, labels)
+
+  # Format to image file
+  array = np.asarray(imgrid(images, 1), dtype=np.uint8)
+  imgBytes = imbytes(array)
   return send_file(imgBytes, attachment_filename='image.jpeg', mimetype='image/jpeg')
 
 if __name__ == "__main__":
