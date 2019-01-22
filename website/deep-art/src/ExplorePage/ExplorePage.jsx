@@ -32,12 +32,21 @@ export default class ExplorePage extends Component {
 
         this.addSeed = this.addSeed.bind(this);
         this.subSeed = this.subSeed.bind(this);
+        this.blobToFile = this.blobToFile.bind(this);
 
     };
+
+    blobToFile(theBlob, fileName){
+        //A Blob() is almost a File() - it's just missing the two properties below which we will add
+        theBlob.lastModifiedDate = new Date();
+        theBlob.name = fileName;
+        return theBlob;
+    }
 
     objIDsToImages(objIDs) {
 
         const baseURL = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
+        //const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails/';
 
         let apiURLs = objIDs.map(ID => (
             {
@@ -54,10 +63,12 @@ export default class ExplorePage extends Component {
                 if (Http.readyState === 4) {
                     try {
                         let response = JSON.parse(Http.responseText);
+                        console.log(Http.responseType);
                         this.setState((oldState) => {
                             return oldState.imgObjectsExplore.push(
                                 {
                                     img: response.primaryImage,
+                                    //img: response.primaryImage,
                                     id: apiURLs[i].id,
                                     key: i
                                 }
@@ -97,9 +108,12 @@ export default class ExplorePage extends Component {
                         apiData: response
                     })
 
-                    const imageToSeedUrl = "https://imagetoseed-met.azurewebsites.net/url"
+                    const imageToSeedUrl = "https://imagetoseed-met.azurewebsites.net/url";
+                    //const imageToSeedUrl="https://deepartstorage.blob.core.windows.net/public/inverted/biggan1/seeds/";
+                    //const fileName = response.objectID.toString()+".json";
                     const Http2 = new XMLHttpRequest();
                     Http2.open("GET", imageToSeedUrl);
+                    //Http2.open("GET", imageToSeedUrl+fileName);
                     let requestBody = new FormData();
                     requestBody.append("url", "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/70-water-lilies-claude-monet.jpg");
                     Http2.send(requestBody);
@@ -108,6 +122,7 @@ export default class ExplorePage extends Component {
                             try {
                                 let response = JSON.parse(Http2.responseText);
                                 let seed = [response.seed].toString();
+                                //let seed = [response.latents].toString();
                                 seed = `[[${seed}]]`;
                                 this.setState({
                                     genSeed: this.twoDArrayStringToOneDArray(seed)

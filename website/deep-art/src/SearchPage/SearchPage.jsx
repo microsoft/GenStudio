@@ -22,7 +22,8 @@ export default class SearchPage extends Component {
 
     //these are the initial images that are displayed when the page loads
     componentDidMount(){
-        this.objIDsToImages([34, 1439, 2134, 2348, 2392, 2393, 2552, 3110, 3297, 3315, 3318, 4401]);
+        //this.objIDsToImages([34, 1439, 2134, 2348, 2392, 2393, 2552, 3110, 3297, 3315, 3318, 4401]);
+        this.objIDsToImages([ 40083, 50844, 52798, 47373, 204070, 197408, 195696, 194588, 9205, 208337, 240039, 246565]);
     }
 
     changeSelect(index){
