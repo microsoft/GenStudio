@@ -1,175 +1,82 @@
 import React, { Component } from 'react';
-import styled from "styled-components";
-import SelectControl from './SelectControl.jsx';
-import ResultArt from './ResultArt.jsx';
-import { Box, Button, Grid, Paragraph, Text } from 'grommet';
 
+import { Box, Grid, Text} from 'grommet';
+import SearchControl from './SearchControl.jsx';
+import TagList from './TagList.jsx';
+import SearchGrid from './SearchGrid.jsx';
 
-export default class SearchPage extends Component {
+export default class GraphPage extends Component {
+
     constructor(props){
         super(props);
         this.state = {
-            selectedIndex: 0,
-            selectedImage: 0,
-            imgObjects: []
+            searchValue: "",
+            tags: ["a","b","c"],
+            tagData: {"a": false, "b": false, "c": false}
         };
-
-        this.changeSelect = this.changeSelect.bind(this);
-        this.changeSelectedImage = this.changeSelectedImage.bind(this);
-        this.getImageIDs = this.getImageIDs.bind(this);
-        this.clearOldImages = this.clearOldImages.bind(this);
+        this.getChange = this.getChange.bind(this);
+        this.getTagChange = this.getTagChange.bind(this);
     };
 
-    //these are the initial images that are displayed when the page loads
-    componentDidMount(){
-        //this.objIDsToImages([34, 1439, 2134, 2348, 2392, 2393, 2552, 3110, 3297, 3315, 3318, 4401]);
-        this.objIDsToImages([ 40083, 50844, 52798, 47373, 204070, 197408, 195696, 194588, 9205, 208337, 240039, 246565]);
+    getChange(newSearchValue){
+        this.setState({searchValue: newSearchValue});
     }
 
-    changeSelect(index){
-        this.setState({ selectedIndex: index });
-        //Call CSV API and change imgObjects accordingly
+    getTagChange(label, value){
+        this.setState((oldState) => {
+            return oldState.tagData[label] = value;
+        });
     }
 
-    changeSelectedImage(ID){
-        //Unclear if this is a better system or not
-        if (ID === this.state.selectedImage){
-            this.setState({selectedImage: 0});
-        } else {
-            this.setState({selectedImage: ID});
-        }
-        
-    }
+    render(){
 
-    getImageIDs(imageIDs) {
-        this.objIDsToImages(imageIDs);
-        //console.log("imgObjects: " + this.state.imgObjects);
-    }
+        let nodes= [
+            {id: 1, label: 'Node 1'},
+            {id: 2, label: 'Node 2'},
+            {id: 3, label: 'Node 3'},
+            {id: 4, label: 'Node 4'},
+            {id: 5, label: 'Node 5'}
+          ];
+        let edges= [
+            {from: 1, to: 2},
+            {from: 1, to: 3},
+            {from: 2, to: 4},
+            {from: 2, to: 5}
+          ];
 
-    clearOldImages() {
-        this.state.imgObjects = []; 
-    }
-
-    /**
-     * 
-     * @param {Int[]} objIDs - An array of object IDs from the met API to convert to an array of image urls
-     * @return {String[]} - An array of image urls from the met API.
-     */
-    objIDsToImages(objIDs) {
-        const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails2/';
-        
-        let apiURLs = objIDs.map(ID => (
-            {url: baseURL+ID.toString()+".jpg",
-             id: ID}
-        ));
-        console.log("making the API call in obIDs to Images fn");
-        for (let i = 0; i < apiURLs.length; i++){
-            const Http = new XMLHttpRequest();
-            Http.responseType = "arraybuffer";
-            Http.open("GET", apiURLs[i].url);
-            Http.send();
-            Http.onreadystatechange = (e) => {
-                if (Http.readyState === 4){
-                    try {
-                        //let response = JSON.parse(Http.responseText);
-                        this.setState((oldState) => {
-                            
-                            //console.log("data: " + response.primaryImage);
-                            return oldState.imgObjects.push(
-                                {
-                                    //img: response.primaryImage,
-                                    img: btoa(String.fromCharCode.apply(null, new Uint8Array(Http.response))),
-                                    id: apiURLs[i].id,
-                                    key: i
-                                });
-                        });
-                    } catch (e) {
-                        console.log('malformed request:' + Http.responseText);
-                    }
-                }
-            }
-        }
-    }
-
-    generateArtUrlSuffix() {
-        const NUMBER_OF_SEARCH_IMAGES = 12;
-        let urlBase = "/explore/";
-        if (this.state.imgObjects.length === NUMBER_OF_SEARCH_IMAGES) {
-            //generates a random index for which to eliminate the extra met art
-            //idea is we randomly select which curated art to move to the explore page
-            let currentSelection = this.state.selectedImage;
-            let numberToEliminate = NUMBER_OF_SEARCH_IMAGES - 9 - 1;
-            let maxNumberToRemove = (NUMBER_OF_SEARCH_IMAGES - 1) - (numberToEliminate - 1);
-            let randomSpliceIndex = Math.floor(Math.random() * maxNumberToRemove);
-            let idList = this.state.imgObjects.map(ob => ob.id);
-            idList.splice(idList.indexOf(currentSelection), 1);
-            idList.splice(randomSpliceIndex, numberToEliminate);
-
-            let url = "?id=" + this.state.selectedImage.toString() + "&ids=[" + idList.toString() + "]";
-            url = encodeURIComponent(url);
-            return urlBase + url;
-        }
-        
-
-        //return url;
-    }
-
-    render() {
-        console.log("test val: " + this.state.imgObjects);
         return(
             <Grid
-                areas={[
-                    { name: 'left', start: [0, 0], end: [0, 3] },
-                    { name: 'desc', start: [1, 0], end: [1, 0] },
-                    { name: 'tags', start: [1, 1], end: [1, 1] },
-                    { name: 'select', start: [1, 2], end: [1, 2] },
-                    { name: 'buttons', start: [1, 3], end: [1, 3]},
-                    { name: 'right', start: [2, 0], end: [2, 3] },
-                ]}
-                columns={['flex','xlarge','flex']}
-                rows={['small','xsmall','large','xsmall']}
-                gap='small'
+            fill
+            areas={[
+                { name: 'search', start: [0, 0], end: [0, 0] },
+                { name: 'tags', start: [0, 1], end: [0, 1] },
+                { name: 'display', start: [1, 0], end: [1, 1] },
+                { name: 'right', start: [2, 0], end: [2, 1] },
+            ]}
+            columns={['medium','flex','small']}
+            rows={['small','flex']}
+            gap='small'
             >
-                <Box gridArea='desc' >
-                    <Paragraph
-                        style={{ textAlign: 'center', marginTop: '20px' }}
-                        alignSelf={"center"}
-                        size={"large"}
-                    >
-                    Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
-                    </Paragraph>
+    
+                <Box gridArea='search' background="brand" >
+                    <SearchControl sendChange={this.getChange}/>
                 </Box>
-                <Box gridArea='tags' direction='row' align='center' justify="center">
-                    <Text>
-                        Choose a category:
-                    </Text>
-                    <SelectControl
-                        sendObjectIds={this.getImageIDs}
-                        clearOldImages={this.clearOldImages}
-                    />
+                <Box gridArea='tags' >
+                    <TagList tags={this.state.tags} tagData={this.state.tagData} tagChange={this.getTagChange}/>
                 </Box>
-                <Box gridArea='select'>
-                    <ResultArt
-                        images={this.state.imgObjects}
-                        selectedImage={this.state.selectedImage}
-                        selectImage={this.changeSelectedImage}
-                    />
-                </Box>
-                <Box gridArea='buttons'>
-                    <Box direction='row' style={{justifyContent: 'space-around'}}>
-                        <Box>
-                            <Button label='Generate Image' style={{textDecoration: "none"}} href={this.generateArtUrlSuffix()} />
-                        </Box>
-                        <Box>
-                            <Button label='Explore Similar' style={{textDecoration: "none"}} href={'/graph'}/>
-                        </Box>
+                <Box gridArea='display' background="accent-1">
+                    <Box height="99%">
+                        <SearchGrid results={} />
                     </Box>
-
                     
                 </Box>
-                <Box gridArea='left'/>
+
                 <Box gridArea='right' />
+    
             </Grid>
         );
-    }
+
+
+    };
+
 }

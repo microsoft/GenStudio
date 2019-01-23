@@ -1,0 +1,31 @@
+import React, { Component } from 'react';
+import PaletteBox from './PaletteBox.jsx';
+import ResultBox from './ResultBox.jsx';
+
+import { Grid } from 'grommet';
+import testData from './testData.js';
+
+/**
+ * Grid used to display results of a search
+ * 'results' prop: an array of the json results from the Azure search (the 'value' value)
+ */
+export default class SearchGrid extends Component {
+    constructor(props){
+        super(props);
+    };
+
+    render(){
+        return(
+            <Grid
+                columns={"10rem"}
+                rows={"meduim"}
+                gap="small"
+                margin="40px"
+            >
+                {this.props.results.map(result => (
+                    <ResultBox key={result.ObjectID} data={result} />
+                ))}
+            </Grid>
+        );
+    }
+}
