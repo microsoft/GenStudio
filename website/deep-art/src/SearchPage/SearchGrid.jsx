@@ -15,7 +15,7 @@ export default class SearchGrid extends Component {
     render(){
         return(
             <Grid
-                columns={"10rem"}
+                columns={"large"}
                 rows={"meduim"}
                 gap="small"
                 margin="40px"
