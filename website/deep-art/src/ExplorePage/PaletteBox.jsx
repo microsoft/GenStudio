@@ -14,6 +14,7 @@ export default class PaletteBox extends Component {
         super(props);
         this.state = {
             imgSeed: [],
+            imgLabels: [],
         }
 
         this.addClick = this.addClick.bind(this);
@@ -21,7 +22,8 @@ export default class PaletteBox extends Component {
     };
 
     componentDidMount(){
-        this.makeRandomSeed();
+        //this.makeRandomSeed();
+        this.getSeed();
     }
 
     /**
@@ -39,39 +41,66 @@ export default class PaletteBox extends Component {
         });
     }
 
+    getSeed(){
+        const imageToSeedUrl="https://deepartstorage.blob.core.windows.net/public/inverted/biggan1/seeds/";
+        const fileName = this.props.id.toString()+".json";
+        const Http = new XMLHttpRequest();
+        Http.open("GET", imageToSeedUrl+fileName);
+        Http.send();
+        Http.onreadystatechange = (e) => {
+            if (Http.readyState === 4) {
+                try {
+                    let response = JSON.parse(Http.responseText);
+                    this.setState({
+                        imgSeed: response.latents,
+                        imgLabels: response.labels
+                    });
+
+
+                } catch {
+                    console.log('malformed request:' + Http.responseText);
+                }
+            }
+        }
+    }
+
     /**
      * Callback given to AddButton to connect to props.addSeed
      */
     addClick(){
-        this.props.addSeed(this.state.imgSeed);
+        this.props.addSeed(this.state.imgSeed, this.state.imgLabels);
     }
 
     /**
      * Callback given to RemoveButton to connect to props.subSeed
      */
     subClick(){
-        this.props.subSeed(this.state.imgSeed);
+        this.props.subSeed(this.state.imgSeed, this.state.imgLabels);
     }
 
     render(){
         return(
             <Box border=
-                {{ color: "black", size: "3px" }}
+                {{ color: "black", size: "4px" }}
                 round="small"
                 height="small"
                 width="small"
             >
-                <Image
-                    src={this.props.img}
-                    fit="cover"
-                    style={{ zIndex: "-1"}}
-                />
+                <Box height="70%">
+                    <Image
+                        src={"data:image/jpeg;base64,"+this.props.img}
+                        fit="cover"
+                        style={{ height: '100%', zIndex: "-1"}}
+                    />
+                </Box>
+
                 <Box
                     fill="horizontal"
                     direction="row"
                     alignSelf = "center"
                     margin="xsmall"
                     style={{"justifyContent": "space-around"}}
+                    height="30%"
                 >
                     <RemoveButton subClick={this.subClick}/>
                     <AddButton addClick={this.addClick}/>
