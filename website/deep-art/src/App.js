@@ -7,9 +7,11 @@ import styled from "styled-components";
 import {BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 import './App.css';
 
-import SearchPage from './SearchPage/SearchPage.jsx';
+import SelectPage from './SelectPage/SelectPage.jsx';
 import ExplorePage from './ExplorePage/ExplorePage.jsx';
 import GraphPage from './GraphPage/GraphPage.jsx';
+import SearchPage from './SearchPage/SearchPage.jsx';
+import MapPage from './MapPage/MapPage.jsx';
 import NavBar from './NavBar/NavBar.jsx';
 
 //GLOBAL THEME
@@ -73,10 +75,12 @@ class App extends Component {
               <NavBar />
             </header>
             <Body>
-              <Route exact path="/" component={SearchPage}/>
-              <Route exact path="/search" component={SearchPage}/>
+              <Route exact path="/" component={SelectPage}/>
+              <Route exact path="/select" component={SelectPage}/>
               <Route exact path="/explore/:id" component={ExplorePage}/>
               <Route exact path="/graph" component={GraphPage}/>
+              <Route exact path="/map" component={MapPage}/>
+              <Route exact path="/search" component={SearchPage}/>
             </Body>
           </Box>
         </Grommet>

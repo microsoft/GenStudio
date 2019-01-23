@@ -13,6 +13,7 @@ const ColumnsDiv = styled.div`
     flex-flow: row wrap;
 `
 const apiHelper = new APIHelper();
+const SEED_LENGTH = 140;
 
 /**
  * Page for the Exploring feature
@@ -23,10 +24,11 @@ export default class ExplorePage extends Component {
     constructor(props) {    
         super(props);
         this.state = {
-            imgURL: '',
+            imgData: '',
             apiData: {},
             genImg: 0,
             genSeed: [],
+            genLabel: [],
             imgObjectsExplore: []
         };
 
@@ -35,29 +37,34 @@ export default class ExplorePage extends Component {
 
     };
 
+    /**
+     * sets state.imgObjectsExplore to contain a json object for each ID provided. object format: {img, id, key}
+     * @param {Int[]} objIDs - an array of art IDs
+     */
     objIDsToImages(objIDs) {
 
-        const baseURL = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
+        const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails2/';
 
         let apiURLs = objIDs.map(ID => (
             {
-                url: baseURL + ID.toString(),
+                url: baseURL + ID.toString()+".jpg",
                 id: ID
             }
         ));
 
         for (let i = 0; i < apiURLs.length; i++) {
             const Http = new XMLHttpRequest();
+            Http.responseType = "arraybuffer";
             Http.open("GET", apiURLs[i].url);
             Http.send();
             Http.onreadystatechange = (e) => {
                 if (Http.readyState === 4) {
                     try {
-                        let response = JSON.parse(Http.responseText);
+                        //console.log(Http.response);
                         this.setState((oldState) => {
                             return oldState.imgObjectsExplore.push(
                                 {
-                                    img: response.primaryImage,
+                                    img: btoa(String.fromCharCode.apply(null, new Uint8Array(Http.response))),
                                     id: apiURLs[i].id,
                                     key: i
                                 }
@@ -79,9 +86,16 @@ export default class ExplorePage extends Component {
         artArr = JSON.parse(artArr);
         const id = selectedArt;
         this.objIDsToImages(artArr);
-        
 
-        //Eventually replaced with call to GAN
+        this.firstTimeGenImage(id);
+    }
+
+    /**
+     * Sets up component state the first time for the selected image represented by id
+     * @param {int} id - object ID of the initial piece of art to generate an image for
+     */
+    firstTimeGenImage(id){
+
         const baseMetUrl = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
         let metApiUrl = baseMetUrl + id;
 
@@ -93,26 +107,27 @@ export default class ExplorePage extends Component {
                 try {
                     let response = JSON.parse(Http.responseText);
                     this.setState({
-                        imgURL: response.primaryImage,
+                        imgData: response.primaryImage,
                         apiData: response
                     })
 
-                    const imageToSeedUrl = "https://imagetoseed-met.azurewebsites.net/url"
+                    const imageToSeedUrl="https://deepartstorage.blob.core.windows.net/public/inverted/biggan1/seeds/";
+                    const fileName = response.objectID.toString()+".json";
                     const Http2 = new XMLHttpRequest();
-                    Http2.open("GET", imageToSeedUrl);
-                    let requestBody = new FormData();
-                    requestBody.append("url", "https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/70-water-lilies-claude-monet.jpg");
-                    Http2.send(requestBody);
+                    Http2.open("GET", imageToSeedUrl+fileName);
+                    Http2.send();
                     Http2.onreadystatechange = (e) => {
                         if (Http2.readyState === 4) {
                             try {
                                 let response = JSON.parse(Http2.responseText);
-                                let seed = [response.seed].toString();
+                                let seed = [response.latents].toString();
                                 seed = `[[${seed}]]`;
+                                let label = response.labels;
                                 this.setState({
-                                    genSeed: this.twoDArrayStringToOneDArray(seed)
+                                    genSeed: this.twoDArrayStringToOneDArray(seed),
+                                    genLabel: response.labels
                                 });
-                                this.getGenImage(seed);
+                                this.getGenImage(seed, label);
 
 
                             } catch {
@@ -125,29 +140,32 @@ export default class ExplorePage extends Component {
                 }
             }
         }
+
     }
 
     /**
      * Calls an API, sending a seed, and getting back an ArrayBuffer reprsenting that image
      * This function directly saves the ArrayBuffer to state
-     * @param {string} seedArr - string version of a 1x512 array of floats between -1,1  
+     * @param {string} seedArr - string version of a 1xSEED_LENGTH array of floats between -1,1  
      */
-    getGenImage(seedArr) {
-        //const apiURL = 'http://artgan.eastus2.cloudapp.azure.com:8080/seed2image';
-<<<<<<< HEAD
-        const apiURL = 'https://methack-api.azure-api.net/progan/seed2image';
-=======
-        const apiURL = 'https://methack-api.azure-api.net/progan/seed2image?subscription-key=43d3f563ea224c4c990e437ada74fae8';
-        //const params = 'subscription-key=43d3f563ea224c4c990e437ada74fae8';
->>>>>>> UX
+    getGenImage(seedArr, labelArr) {
+
+        let max = labelArr.reduce(function(a, b) {
+            return Math.max(a, b);
+        });
+        let maxIndex = labelArr.indexOf(max);
+        // let labels = this.state.genLabel.toString();
+        // labels = `[[${labels}]]`;
+
+        const apiURL = 'https://methack-api.azure-api.net/biggan/category?subscription-key=43d3f563ea224c4c990e437ada74fae8';
         const Http = new XMLHttpRequest();
         const data = new FormData();
-        data.append('seed', seedArr);
+        data.append('seed',seedArr);
+        //data.append('labels', labels);
+        data.append('category', maxIndex.toString());
 
         Http.responseType = "arraybuffer";
         Http.open("POST", apiURL);
-        Http.setRequestHeader('Ocp-Apim-Subscription-Key','43d3f563ea224c4c990e437ada74fae8');
-        //Http.setRequestHeader('Access-Control-Allow-Origin','*');
         Http.send(data);
         Http.onreadystatechange = (e) => {
             if (Http.readyState === 4){
@@ -183,7 +201,7 @@ export default class ExplorePage extends Component {
      */
     findDiff(genSeed, otherSeed, stepSize=.1){
         let diffVec = [];
-        for (let i = 0; i < 512; i++){
+        for (let i = 0; i < genSeed.length; i++){
             let diff = ((genSeed[i] - otherSeed[i])*stepSize); //Magic number 10, works well
             diffVec.push(diff);
         }
@@ -197,13 +215,8 @@ export default class ExplorePage extends Component {
      */
     addVec(genSeed, diffVec){
         let newSeed = [];
-        for (let i = 0; i < 512; i++){
-            let newVal = genSeed[i] + diffVec[i];
-            if (newVal > 1){
-                newVal = 1;
-            } else if (newVal < -1){
-                newVal = -1;
-            }
+        for (let i = 0; i < genSeed.length; i++){
+            let newVal = genSeed[i] - diffVec[i];
             newSeed.push(newVal);
         }
         return(newSeed);
@@ -216,13 +229,8 @@ export default class ExplorePage extends Component {
      */
     subVec(genSeed, diffVec){
         let newSeed = [];
-        for (let i = 0; i < 512; i++){
-            let newVal = genSeed[i] - diffVec[i];
-            if (newVal > 1){
-                newVal = 1;
-            } else if (newVal < -1){
-                newVal = -1;
-            }
+        for (let i = 0; i < genSeed.length; i++){
+            let newVal = genSeed[i] + diffVec[i];
             newSeed.push(newVal);
         }
         return(newSeed);
@@ -230,30 +238,39 @@ export default class ExplorePage extends Component {
 
     /**
      * Moves genSeed towards seed linearly, and generates the new image. Directly modifies state.
-     * @param {Float[]} seed - 1x512 array
+     * @param {Float[]} seed - 1xSEED_LENGTH array
      */
-    addSeed(seed){
-        let diffVec = this.findDiff(this.state.genSeed, seed);
-        let newSeed = this.addVec(this.state.genSeed, diffVec);
+    addSeed(seed, label){
+        let diffSeed = this.findDiff(this.state.genSeed, seed);
+        let newSeed = this.addVec(this.state.genSeed, diffSeed);
+
+        let diffLabel = this.findDiff(this.state.genLabel, label);
+        let newLabel = this.addVec(this.state.genLabel, diffLabel);
         this.setState({
-            genSeed: newSeed
+            genSeed: newSeed,
+            genLabel: newLabel
         });
         let strSeed = `[[${newSeed}]]`;
-        this.getGenImage(strSeed);
+
+        this.getGenImage(strSeed, newLabel);
     }
 
     /**
      * Moves genSeed away from seed linearly, and generates the new image. Directly modifies state.
-     * @param {Float[]} seed - 1x512 array
+     * @param {Float[]} seed - 1xSEED_LENGTH array
      */
-    subSeed(seed){
-        let diffVec = this.findDiff(this.state.genSeed, seed);
-        let newSeed = this.subVec(this.state.genSeed, diffVec);
+    subSeed(seed, label){
+        let diffSeed = this.findDiff(this.state.genSeed, seed);
+        let newSeed = this.subVec(this.state.genSeed, diffSeed);
+
+        let diffLabel = this.findDiff(this.state.genLabel, label);
+        let newLabel = this.addVec(this.state.genLabel, diffLabel);
         this.setState({
-            genSeed: newSeed
+            genSeed: newSeed,
+            genLabel: newLabel
         });
         let strSeed = `[[${newSeed}]]`;
-        this.getGenImage(strSeed);
+        this.getGenImage(strSeed, newLabel);
     }
 
     render() {
@@ -282,7 +299,7 @@ export default class ExplorePage extends Component {
                         Artist: {this.state.apiData.artistDisplayName}
                         </Paragraph>
                     </Box>
-                    <InfoArt image={this.state.imgURL}/>
+                    <InfoArt image={this.state.imgData}/>
                 </Box>
                 <Box gridArea='explore' direction='row' align='center' justify="center">
                         <GenArt image={this.state.genImg}/>

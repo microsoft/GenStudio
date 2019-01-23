@@ -23,7 +23,7 @@ export default class ExplorePalette extends Component {
                 margin="40px"
             >
                 {this.props.images.map(tile => (
-                    <PaletteBox key={tile.key} img={tile.img} addSeed={this.props.addSeed} subSeed={this.props.subSeed}/>
+                    <PaletteBox key={tile.key} img={tile.img} id={tile.id} addSeed={this.props.addSeed} subSeed={this.props.subSeed}/>
                 ))}
             </Grid>
         );
