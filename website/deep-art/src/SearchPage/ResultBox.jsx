@@ -18,25 +18,26 @@ export default class PaletteBox extends Component {
             <Box border=
                 {{ color: "black", size: "4px" }}
                 round="small"
+                height="medium"
+                width="medium"
             >
-                <Box>
-                <Button href={this.props.data.LinkResource}>
-                    <Image
-                            src={this.props.data.PrimaryImageUrl}
-                            fit="cover"
-                            style={{ height: '100%', zIndex: "-1"}}
-                    />
+                <Button href={this.props.data.LinkResource} style={{height: '70%'}}>
+                    <Box height="100%" width="100%">
+                        <Image
+                                    src={this.props.data.PrimaryImageUrl}
+                                    fit="cover"
+                                    style={{ height: '100%', zIndex: "-1"}}
+                        />
+                    </Box>
                 </Button>
 
-                </Box>
 
                 <Box
                     fill="horizontal"
                     direction="row"
                     alignSelf = "center"
                     margin="xsmall"
-                    style={{"justifyContent": "space-around", minHeight:"fit-content"}}
-                    flex = {{grow:1}}
+                    style={{"justifyContent": "space-around", minHeight:"fit-content", flex:2}}
                 >
                 <Text>{text}</Text>
                 </Box>

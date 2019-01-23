@@ -49,7 +49,7 @@ export default class GraphPage extends Component {
                 <Box gridArea='tags' >
                     <TagList tags={this.state.tags} tagData={this.state.tagData} tagChange={this.getTagChange}/>
                 </Box>
-                <Box gridArea='display' background="accent-1">
+                <Box gridArea='display' >
                     <Box height="99%">
                     {/* Takes prop 'results' */}
                         <SearchGrid results = {[
