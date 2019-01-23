@@ -9,7 +9,7 @@
     "grommet": "^2.2.1",
     "jpeg-js": "^0.3.4",
     "material-ui-icons": "^1.0.0-beta.36",
-    "plotly.js": "^1.43.2",
+    "plotly.js": "^1.44.0",
     "react": "^16.7.0",
     "react-bootstrap": "^1.0.0-beta.3",
     "react-dom": "^16.7.0",
