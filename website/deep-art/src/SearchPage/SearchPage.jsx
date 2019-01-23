@@ -29,21 +29,6 @@ export default class GraphPage extends Component {
     }
 
     render(){
-
-        let nodes= [
-            {id: 1, label: 'Node 1'},
-            {id: 2, label: 'Node 2'},
-            {id: 3, label: 'Node 3'},
-            {id: 4, label: 'Node 4'},
-            {id: 5, label: 'Node 5'}
-          ];
-        let edges= [
-            {from: 1, to: 2},
-            {from: 1, to: 3},
-            {from: 2, to: 4},
-            {from: 2, to: 5}
-          ];
-
         return(
             <Grid
             fill
@@ -67,7 +52,113 @@ export default class GraphPage extends Component {
                 <Box gridArea='display' background="accent-1">
                     <Box height="99%">
                     {/* Takes prop 'results' */}
-                        <SearchGrid />
+                        <SearchGrid results = {[
+{
+"@search.score": 1.4663118,
+"ObjectID": "358948",
+"Department": "Drawings and Prints",
+"Title": "Two Boys with aa Puppy",
+"Culture": "''",
+"Medium": "Black chalk and graphite on parchment",
+"Classification": "Drawings",
+"LinkResource": "http://www.metmuseum.org/art/collection/search/358948",
+"PrimaryImageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP801044.jpg",
+"Neighbors": [
+"358048",
+"396036",
+"371666",
+"341944",
+"371024",
+"342596",
+"336899",
+"342328",
+"334717",
+"338829"
+]
+},
+{
+"@search.score": 1.465969,
+"ObjectID": "358048",
+"Department": "Drawings and Prints",
+"Title": "Two Boys with a Puppy",
+"Culture": "''",
+"Medium": "Black chalk and graphite on parchment",
+"Classification": "Drawings",
+"LinkResource": "http://www.metmuseum.org/art/collection/search/358048",
+"PrimaryImageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP801043.jpg",
+"Neighbors": [
+"358948",
+"396036",
+"341273",
+"341944",
+"408098",
+"348360",
+"336544",
+"334695",
+"348161",
+"372760"
+]
+},
+{
+"@search.score": 1.2588559,
+"ObjectID": "362301",
+"Department": "Drawings and Prints",
+"Title": "Child Carrying a Puppy on his Shoulder",
+"Culture": "''",
+"Medium": "Etching retouched with gray wash; artist's proof",
+"Classification": "Prints",
+"LinkResource": "http://www.metmuseum.org/art/collection/search/362301",
+"PrimaryImageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP817550.jpg",
+"Neighbors": [
+"410794",
+"383904",
+"338746",
+"395495",
+"338897",
+"340891",
+"338172",
+"342150",
+"339910",
+"340272"
+]
+},
+{
+"@search.score": 1.258345,
+"ObjectID": "362302",
+"Department": "Drawings and Prints",
+"Title": "Child Carrying a Puppy on his Shoulder",
+"Culture": "''",
+"Medium": "Etching; first state, with printed tone",
+"Classification": null,
+"LinkResource": null,
+"PrimaryImageUrl": null,
+"Neighbors": []
+},
+{
+"@search.score": 0.8385548,
+"ObjectID": "671000",
+"Department": "Asian Art",
+"Title": "長澤蘆雪筆　天明美人図|Two Women and a Puppy",
+"Culture": "Japan",
+"Medium": "Hanging scroll; ink and color on silk",
+"Classification": null,
+"LinkResource": null,
+"PrimaryImageUrl": null,
+"Neighbors": []
+},
+{
+"@search.score": 0.83854455,
+"ObjectID": "712741",
+"Department": "The Cloisters",
+"Title": "Door knocker in the shape of a small dog or puppy",
+"Culture": "Spanish",
+"Medium": "Wrought iron",
+"Classification": null,
+"LinkResource": null,
+"PrimaryImageUrl": null,
+"Neighbors": []
+}
+]}/> 
                     </Box>
                     
                 </Box>
