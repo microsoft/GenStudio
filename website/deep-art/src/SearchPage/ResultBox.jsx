@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Box, Button, Image} from 'grommet';
+import { Box, Button, Image, Text} from 'grommet';
 
 /**
  * One box in the Result Grid

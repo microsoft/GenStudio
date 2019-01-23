@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import PaletteBox from './PaletteBox.jsx';
 import ResultBox from './ResultBox.jsx';
 
 import { Grid } from 'grommet';
-import testData from './testData.js';
 
 /**
  * Grid used to display results of a search

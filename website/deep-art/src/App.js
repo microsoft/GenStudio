@@ -80,7 +80,7 @@ class App extends Component {
               <Route exact path="/explore/:id" component={ExplorePage}/>
               <Route exact path="/graph" component={GraphPage}/>
               <Route exact path="/map" component={MapPage}/>
-              <Route exact path="/search" component={SelectPage}/>
+              <Route exact path="/search" component={SearchPage}/>
             </Body>
           </Box>
         </Grommet>

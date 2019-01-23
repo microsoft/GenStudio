@@ -66,7 +66,8 @@ export default class GraphPage extends Component {
                 </Box>
                 <Box gridArea='display' background="accent-1">
                     <Box height="99%">
-                        <SearchGrid results={} />
+                    {/* Takes prop 'results' */}
+                        <SearchGrid />
                     </Box>
                     
                 </Box>
