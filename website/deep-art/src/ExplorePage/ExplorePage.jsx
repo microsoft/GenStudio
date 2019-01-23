@@ -209,6 +209,26 @@ export default class ExplorePage extends Component {
         return(diffVec);
     }
 
+    // findDiff(genSeed, otherSeed, vecMul=1){
+    //     let diffVec=[]
+    //     for (let i = 0; i < genSeed.length; i++){
+    //         let diff = (genSeed[i] - otherSeed[i]);
+    //         diffVec.push(diff);
+    //     }
+    //     let norm = this.normalizeVector(diffVec, vecMul);
+    //     return norm;
+    // }
+
+    // normalizeVector(vec, multiplyer){
+    //     let normVec = [];
+    //     for (let i = 0; i < vec.length; i++){
+    //         let val = (vec[i] / Math.sqrt(vec[i]*vec[i]))*multiplyer;
+    //         normVec.push(val)
+    //     }
+    //     console.log("Norm"+normVec)
+    //     return(normVec);
+    // }
+
     /**
      * Adds diffVec to genSeed, limits values to be between -1,1
      * @param {Float[]} genSeed - The current generated image seed
