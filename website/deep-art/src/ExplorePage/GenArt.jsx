@@ -33,7 +33,7 @@ export default class GenArt extends Component {
         <Box direction="column" justify="between">
             <ImageBox />
             <Box pad="medium">
-                <Button label="Explore Similar" style={{textDecoration: "none"}}/>
+                <Button label="Explore Similar" href={'/search'}/>
             </Box>
         </Box>    
         );
