@@ -43,11 +43,11 @@ export default class ExplorePage extends Component {
      */
     objIDsToImages(objIDs) {
 
-        const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails2/';
+        const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails3/';
 
         let apiURLs = objIDs.map(ID => (
             {
-                url: baseURL + ID.toString()+".jpg",
+                url: baseURL + ID.toString(),
                 id: ID
             }
         ));
@@ -151,19 +151,19 @@ export default class ExplorePage extends Component {
     getGenImage(seedArr, labelArr) {
         console.log("HELLO: "+seedArr)
 
-        let max = labelArr.reduce(function(a, b) {
-            return Math.max(a, b);
-        });
-        let maxIndex = labelArr.indexOf(max);
-        // let labels = this.state.genLabel.toString();
-        // labels = `[[${labels}]]`;
+        // let max = labelArr.reduce(function(a, b) {
+        //     return Math.max(a, b);
+        // });
+        // let maxIndex = labelArr.indexOf(max);
+        let labels = labelArr.toString();
+        labels = `[[${labels}]]`;
 
-        const apiURL = 'https://methack-api.azure-api.net/biggan/category?subscription-key=43d3f563ea224c4c990e437ada74fae8';
+        const apiURL = 'https://methack-api.azure-api.net/biggan/labels?subscription-key=43d3f563ea224c4c990e437ada74fae8';
         const Http = new XMLHttpRequest();
         const data = new FormData();
         data.append('seed',seedArr);
-        //data.append('labels', labels);
-        data.append('category', maxIndex.toString());
+        data.append('labels', labels);
+        //data.append('category', maxIndex.toString());
 
         Http.responseType = "arraybuffer";
         Http.open("POST", apiURL);
@@ -200,7 +200,7 @@ export default class ExplorePage extends Component {
      * @param {Float[]} otherSeed - the other seed to frind the difference from
      * @param {Float} stepSize - The multiplyer on the difference vector 
      */
-    findDiff(genSeed, otherSeed, stepSize=.2){
+    findDiff(genSeed, otherSeed, stepSize=.1){
         let diffVec = [];
         for (let i = 0; i < genSeed.length; i++){
             let diff = ((genSeed[i] - otherSeed[i])*stepSize); //Magic number 10, works well

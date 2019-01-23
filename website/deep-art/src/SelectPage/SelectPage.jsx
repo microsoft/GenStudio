@@ -23,7 +23,15 @@ export default class SelectPage extends Component {
     //these are the initial images that are displayed when the page loads
     componentDidMount(){
         //this.objIDsToImages([34, 1439, 2134, 2348, 2392, 2393, 2552, 3110, 3297, 3315, 3318, 4401]);
-        this.objIDsToImages([ 40083, 50844, 52798, 47373, 204070, 197408, 195696, 194588, 9205, 208337, 240039, 246565]);
+
+        //Vases (student picked)
+        //this.objIDsToImages([ 40083, 50844, 52798, 47373, 204070, 197408, 195696, 194588, 9205, 208337, 240039, 246565]);
+
+        //Vessels
+        this.objIDsToImages([201671, 202194, 232038, 324830, 324917, 544501, 751402]);
+
+        //Armor
+        //this.objIDsToImages([22270, 22408, 22848, 23143, 25114, 35652]);
     }
 
     changeSelect(index){
@@ -56,10 +64,10 @@ export default class SelectPage extends Component {
      * @return {String[]} - An array of image urls from the met API.
      */
     objIDsToImages(objIDs) {
-        const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails2/';
+        const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails3/';
         
         let apiURLs = objIDs.map(ID => (
-            {url: baseURL+ID.toString()+".jpg",
+            {url: baseURL+ID.toString(),
              id: ID}
         ));
         console.log("making the API call in obIDs to Images fn");
@@ -92,7 +100,7 @@ export default class SelectPage extends Component {
     }
 
     generateArtUrlSuffix() {
-        const NUMBER_OF_SEARCH_IMAGES = 12;
+        const NUMBER_OF_SEARCH_IMAGES = this.state.imgObjects.length;
         let urlBase = "/explore/";
         if (this.state.imgObjects.length === NUMBER_OF_SEARCH_IMAGES) {
             //generates a random index for which to eliminate the extra met art
