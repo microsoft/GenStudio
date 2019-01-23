@@ -94,10 +94,9 @@ export default class MapExplorePage extends Component {
                     style={{ padding: '2px', marginTop: '25px', width: "100%", height: "100%" }}
                     border={{ color: "black", size: "4px"}}
                     round="small"
+                    onMouseDown={(e) => this.onMouseClick(e)}
                 >
-                    <div
-                        onMouseDown={(e) => this.onMouseMove(e)}
-                    >
+
                         <Plot 
                             id = "plot"
                             data={this.getData()}
@@ -108,14 +107,13 @@ export default class MapExplorePage extends Component {
                             style={{ width: "100%", height: "100%"}}
                             useResizeHandler={true}
                         />
-                    </div>
                 </Box>
             </div>
         );          
     }
 
-    onMouseMove(e) {
-        console.log("MOUSE MOVE!!!");
+    onMouseClick(e) {
+        console.log(e.clientX + "," + e.clientY);
         console.log(e);
     }
 
