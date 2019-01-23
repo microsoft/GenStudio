@@ -12,14 +12,21 @@ export default class GraphPage extends Component {
         this.state = {
             searchValue: "",
             tags: ["a","b","c"],
-            tagData: {"a": false, "b": false, "c": false}
+            tagData: {"a": false, "b": false, "c": false},
+            results: []
         };
         this.getChange = this.getChange.bind(this);
         this.getTagChange = this.getTagChange.bind(this);
     };
 
     getChange(newSearchValue){
-        this.setState({searchValue: newSearchValue});
+        let thisVar = this;
+        const azureSearchUrl = 'https://metartworksindex.search.windows.net/indexes/met-items/docs?api-version=2017-11-11&search=';
+        fetch(azureSearchUrl + newSearchValue, {headers: {'api-key': '11A584ECD13C39D335F57939D502673D'}}).then(function(response) {
+            return response.json();
+        }).then(function(responseJson) {
+            thisVar.setState({searchValue: newSearchValue, results: responseJson.value});
+        })
     }
 
     getTagChange(label, value){
@@ -53,7 +60,7 @@ export default class GraphPage extends Component {
 
                 <Box gridArea='display' background="accent-1" >
                     <Box height="99%">
-                        <SearchGrid results={[]}/>
+                        <SearchGrid results={this.state.results}/>
                     </Box>
                 </Box>    
 
