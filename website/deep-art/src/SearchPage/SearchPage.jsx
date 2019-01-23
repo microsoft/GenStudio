@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Box, Grid, Text} from 'grommet';
+import { Box, Button, Grid, Text} from 'grommet';
 import SearchControl from './SearchControl.jsx';
 import TagList from './TagList.jsx';
 import SearchGrid from './SearchGrid.jsx';

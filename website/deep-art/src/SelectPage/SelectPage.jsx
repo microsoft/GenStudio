@@ -161,7 +161,7 @@ export default class SelectPage extends Component {
                             <Button label='Generate Image' style={{textDecoration: "none"}} href={this.generateArtUrlSuffix()} />
                         </Box>
                         <Box>
-                            <Button label='Explore Similar' style={{textDecoration: "none"}} href={'/graph'}/>
+                            <Button label='Explore Similar' style={{textDecoration: "none"}} href={'/search'}/>
                         </Box>
                     </Box>
 
