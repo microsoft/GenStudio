@@ -146,9 +146,7 @@ export default class GraphPage extends Component {
 "PrimaryImageUrl": null,
 "Neighbors": []
 },
-{
-"@search.score": 0.83854455,
-"ObjectID": "712741",
+{"ObjectID": "712741",
 "Department": "The Cloisters",
 "Title": "Door knocker in the shape of a small dog or puppy",
 "Culture": "Spanish",
