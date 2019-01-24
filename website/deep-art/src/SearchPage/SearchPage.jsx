@@ -25,7 +25,12 @@ export default class GraphPage extends Component {
         this.updateTags = this.updateTags.bind(this);
     };
 
-    getSearch(newSearchValue){
+    componentDidMount() {
+        //The ID of the image to search on
+        let {id} = this.props.match.params;
+    }
+
+    getSearch(newSearchValue) {
         let thisVar = this; // Hacky
         fetch(azureSearchUrl + newSearchValue, {headers: {'api-key': apiKey}}).then(function(response) {
             return response.json();
