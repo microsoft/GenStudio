@@ -15,11 +15,7 @@ export default class SearchGrid extends Component {
     render(){
         return(
             <Grid
-<<<<<<< HEAD
                 columns={"small"}
-=======
-                columns={"medium"}
->>>>>>> 25e8fcb8f134061cba1e2686674ef6509c759a4a
                 rows={"flex"}
                 gap="small"
                 margin="40px"

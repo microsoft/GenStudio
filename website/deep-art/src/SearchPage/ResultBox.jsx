@@ -24,14 +24,8 @@ export default class ResultBox extends Component {
                 <CardActionArea href={this.props.data.LinkResource} style={{alignItems:"center"}}>
                     <CardMedia 
                         component="img"
-<<<<<<< HEAD
                         src={this.props.data.PrimaryImageUrl}
                         style={{alignSelf:"center", alignItems:"center", maxWidth:"fit-content", maxHeight: "500px"}}
-=======
-                        style={{alignSelf:"center", alignItems:"center"}}
-                        
-                        image={this.props.data.PrimaryImageUrl}
->>>>>>> 25e8fcb8f134061cba1e2686674ef6509c759a4a
                     />
                     <CardContent>
                         <Typography component="p">
