@@ -8,10 +8,12 @@ import SearchGrid from './SearchGrid.jsx';
 const maxSearchResults = 10;
 const azureSearchUrl = 'https://metartworksindex.search.windows.net/indexes/met-items/docs?api-version=2017-11-11&search=';
 const apiKey = '11A584ECD13C39D335F57939D502673D';
+const OR = '%2C';
+const AND = '%2B';
 
 export default class GraphPage extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             searchValue: "",
@@ -28,6 +30,7 @@ export default class GraphPage extends Component {
     componentDidMount() {
         //The ID of the image to search on
         let {id} = this.props.match.params;
+        this.getSearch(id);
     }
 
     getSearch(newSearchValue) {
@@ -65,7 +68,7 @@ export default class GraphPage extends Component {
         thisVar.setState({tags: newTags, tagData: newTagData});
     }
 
-    getTagChange(label, value){
+    getTagChange(label, value) {
         let thisVar = this; // Hacky
         let searchTags = '';
         const oldTagData = this.state.tagData;
@@ -74,7 +77,13 @@ export default class GraphPage extends Component {
         
         for (const [key, value] of Object.entries(this.state.tagData)) {
             if (value) {
-                searchTags += '%2B' + key;
+                const searchTokens = key.match(/\w+(?:'\w+)*/g); // Extract all individual words from tags
+                searchTags += AND + '(';
+                for (let i = 0; i < searchTokens.length; i++) {
+                    searchTags += searchTokens[i] + OR; // Or concat all individual words in a selected tag
+                }
+                searchTags = searchTags.substring(0, searchTags.length - 3); // Trim off extra Or operator
+                searchTags += ')';
             }
         }
 
@@ -85,7 +94,7 @@ export default class GraphPage extends Component {
         })
     }
 
-    render(){
+    render() {
         return(
             <Grid
             fill
