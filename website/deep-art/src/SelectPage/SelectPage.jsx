@@ -34,7 +34,10 @@ export default class SelectPage extends Component {
         //this.objIDsToImages([22270, 22408, 22848, 23143, 25114, 35652]);
 
         //Armor and Vessels
-        this.objIDsToImages([22270, 22408, 23143, 25114, 35652, 201671, 202194, 232038, 324830, 324917, 544501, 751402]);
+        //this.objIDsToImages([22270, 22408, 23143, 25114, 35652, 201671, 202194, 232038, 324830, 324917, 544501, 751402]);
+
+        //Purses, Armor, and Vessels
+        this.objIDsToImages([116884, 79226, 39597, 70467, 156867, 116963, 22270, 22408, 23143, 25114, 35652, 201671, 202194, 232038, 324830, 324917, 544501, 751402]);
     }
 
     changeSelect(index){
@@ -126,7 +129,6 @@ export default class SelectPage extends Component {
     }
 
     render() {
-        console.log("test val: " + this.state.imgObjects);
         return(
             <Grid
                 areas={[
@@ -138,7 +140,7 @@ export default class SelectPage extends Component {
                     { name: 'right', start: [2, 0], end: [2, 3] },
                 ]}
                 columns={['flex','xlarge','flex']}
-                rows={['small','xsmall','large','xsmall']}
+                rows={['small','xsmall','flex','xsmall']}
                 gap='small'
             >
                 <Box gridArea='desc' >
@@ -172,7 +174,7 @@ export default class SelectPage extends Component {
                             <Button label='Generate Image' style={{textDecoration: "none"}} href={this.generateArtUrlSuffix()} />
                         </Box>
                         <Box>
-                            <Button label='Explore Similar' style={{textDecoration: "none"}} href={'/search'}/>
+                            <Button label='Explore Similar' style={{textDecoration: "none"}} href={'/search/'+this.state.selectedImage.toString()}/>
                         </Box>
                     </Box>
 
