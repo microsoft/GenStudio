@@ -149,7 +149,7 @@ export default class ExplorePage extends Component {
      * @param {string} seedArr - string version of a 1xSEED_LENGTH array of floats between -1,1  
      */
     getGenImage(seedArr, labelArr) {
-        console.log("HELLO: "+seedArr)
+        //console.log("HELLO: "+seedArr)
 
         // let max = labelArr.reduce(function(a, b) {
         //     return Math.max(a, b);
@@ -172,7 +172,7 @@ export default class ExplorePage extends Component {
             if (Http.readyState === 4){
                 try{
                     let imgData = btoa(String.fromCharCode.apply(null, new Uint8Array(Http.response)));
-                    this.setState({genImg: imgData});
+                    this.setState({genImg: imgData, genArr: Http.response});
 
                 } catch (e) {
                     console.log('malformed request:'+Http.responseText);
@@ -323,7 +323,7 @@ export default class ExplorePage extends Component {
                     <InfoArt image={this.state.imgData}/>
                 </Box>
                 <Box gridArea='explore' direction='row' align='center' justify="center">
-                        <GenArt image={this.state.genImg}/>
+                        <GenArt image={this.state.genImg} data={this.state.genArr}/>
                     
                     <Box>
                         <ExplorePalette images={this.state.imgObjectsExplore} addSeed={this.addSeed} subSeed={this.subSeed}/>

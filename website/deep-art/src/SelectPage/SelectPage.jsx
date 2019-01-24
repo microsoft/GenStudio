@@ -126,7 +126,6 @@ export default class SelectPage extends Component {
     }
 
     render() {
-        console.log("test val: " + this.state.imgObjects);
         return(
             <Grid
                 areas={[
@@ -172,7 +171,7 @@ export default class SelectPage extends Component {
                             <Button label='Generate Image' style={{textDecoration: "none"}} href={this.generateArtUrlSuffix()} />
                         </Box>
                         <Box>
-                            <Button label='Explore Similar' style={{textDecoration: "none"}} href={'/search'}/>
+                            <Button label='Explore Similar' style={{textDecoration: "none"}} href={'/search/'+this.state.selectedImage.toString()}/>
                         </Box>
                     </Box>
 

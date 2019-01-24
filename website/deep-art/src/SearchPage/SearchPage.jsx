@@ -19,6 +19,11 @@ export default class GraphPage extends Component {
         this.getTagChange = this.getTagChange.bind(this);
     };
 
+    componentDidMount(){
+        //The ID of the image to search on
+        let {id} = this.props.match.params;
+    }
+
     getChange(newSearchValue){
         let thisVar = this;
         const azureSearchUrl = 'https://metartworksindex.search.windows.net/indexes/met-items/docs?api-version=2017-11-11&search=';
