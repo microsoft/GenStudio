@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Plot from 'react-plotly.js';
 import GenArt from './GenArt.jsx';
-import { Box, Button, Grommet, Select, Text, TextInput} from 'grommet';
+import { Box} from 'grommet';
 
 export default class MapExplorePage extends Component {
     constructor(props) {
@@ -40,7 +40,7 @@ export default class MapExplorePage extends Component {
                 type: 'scatter',
                 mode: 'markers+text',
                 text: [
-                    'Montreal', 'Toronto', 'Vancouver', 'Calgary', 'Woodside'
+                    '(0) [0.2, 0.8]', '(1) [0.4, 0.4]', '(2) [0.8, 0.6]', '(3) [1.1, 0.8]', '(4) [0.6, 1.0]'
                 ],
                 x: [
                     0.2, 0.4, 0.8, 1.1, 0.6
@@ -67,14 +67,12 @@ export default class MapExplorePage extends Component {
 
     getLayout() {
         let layout = {
-            margin: { 'l': 0, 'r': 0, 't': 50, 'b': 0 },
+            margin: { 'l': 0, 'r': 0, 't': 0, 'b': 0 },
             xaxis: { range: [0.1, 1.3] },
-            yaxis: { range: [0.0, 1.3] },
+            yaxis: { range: [0.1, 1.3] },
             hovermode: 'closest',
-            title: 'Explore Imaginary Met Art',
             images: this.getImages(),
-            autosize:true
-
+            autosize: true,
         };
         return layout
     }
@@ -90,40 +88,137 @@ export default class MapExplorePage extends Component {
                 </Box>
 
                 <Box
+                    id="plotlyBox"
                     align='center'
                     style={{ padding: '2px', marginTop: '25px', width: "100%", height: "100%" }}
-                    border={{ color: "black", size: "4px"}}
+                    border={{ color: "black", size: "4px" }}
                     round="small"
                     onMouseDown={(e) => this.onMouseClick(e)}
+                    onMouseMove={(e) => this.onMouseHover(e)}
                 >
 
-                        <Plot 
-                            id = "plot"
-                            data={this.getData()}
-                            layout={this.getLayout()}
-                            onClick={(figure) => console.log("test1")}
-                            onHover={(figure) => this.handleHover(figure)}
-                            onInitialized={(figure) => console.log("test3")}
-                            style={{ width: "100%", height: "100%"}}
-                            useResizeHandler={true}
-                        />
+                    <Plot 
+                        data={this.getData()}
+                        layout={this.getLayout()}
+                        onHover={(figure) => this.handleHover(figure)}
+                        onInitialized={this.initializeData()}
+                        style={{ width: "100%", height: "100%" }}
+                        useResizeHandler={true}
+                        config={{ displayModebar: false }}
+                    />
                 </Box>
             </div>
         );          
     }
 
+
+    initializeData() {
+        this.state.data = this.getData();
+    }
+
+    /* 
+     * Handles when a custom coordinate in the graph has been selected. 
+     */
     onMouseClick(e) {
-        console.log(e.clientX + "," + e.clientY);
-        console.log(e);
+        //get plotly coordinates
+        let relCoords = this.convertToRelativeCoords(e.pageX, e.pageY);
+        let plotlyCoords = this.convertToPlotlyData(relCoords[0], relCoords[1]);
+        //find nearest neighbors on graph
+        let closestNeighbors = this.getNearestNeighbors(plotlyCoords, 2);
+        let interpSeed = this.generateInterpSeed(closestNeighbors);
+
     }
 
-    handleClick(eventData) {
-        console.log("here!");
-        console.log("eventData: " + eventData);
+    getInterpSeed(neighbors, numNeighbors) {
+        //getSeed for the closest MET images (2 or 3 (rn 2))
+        let seed1 = [512];
+        let seed2 = [512];
+
+        //find new seed
+        if (numNeighbors === 2) {
+            let distance1 = neighbors[1][0];
+            let distance2 = neighbors[1][1];
+            let ratio1 = distance1 / (distance1 + distance2);
+            let ratio2 = 1.0 - ratio1;
+            return seed1 * ratio1 + seed2 * ratio2;
+        }
+
     }
 
+    getNearestNeighbors(plotlyCoords, numClosest) {
+        let xCoordsPlotly = this.state.data[0].x;
+        let yCoordsPlotly = this.state.data[0].y;
+        let distances = xCoordsPlotly.map((x, i) => {
+            return this.calculateDistance([x, yCoordsPlotly[i]], plotlyCoords);
+        });
+
+        Array.min = function (array) {
+            return Math.min.apply(Math, array);
+        };
+        let closestDistances = [0,0];
+        let minVal = Array.min(distances);
+        closestDistances[0] = minVal;
+        let indexClosest1 = distances.indexOf(minVal);
+        distances.splice(indexClosest1, 1);
+        minVal = Array.min(distances);
+        closestDistances[1] = minVal;
+        let indexClosest2 = distances.indexOf(minVal);
+        if (indexClosest1 <= indexClosest2) {
+            indexClosest2 = indexClosest2 + 1;
+        }
+        let indices = [indexClosest1, indexClosest2];
+        return [indices, closestDistances];
+    }
+
+    calculateDistance(coord1, coord2) {
+        var a = coord1[0] - coord2[0];
+        var b = coord1[1] - coord2[1];
+        return Math.sqrt(a * a + b * b);
+    }
+
+    /* 
+     * Takes in the pixel values of the div, and returns the coordinate
+     * values in the plotly coordinate space
+     */
+    convertToRelativeCoords(x, y) {
+        let relX = x - document.getElementById('plotlyBox').offsetLeft;
+        let relY = y - document.getElementById('plotlyBox').offsetTop;
+        let width = document.getElementById('plotlyBox').clientWidth + 8;
+        let height = document.getElementById('plotlyBox').clientHeight + 8;
+
+        relX = relX / width;
+        relY = relY / height;
+        return [relX, relY];
+    }
+
+     /* 
+     * Converts our normalized (0->1) coords to a plotly data point coord
+     */
+    convertToPlotlyData(x, y) {
+        const maxY = 1.3;
+        const maxX = 1.3;
+        const minY = 0.1;
+        const minX = 0.1;
+
+        let plotlyX = x * (maxX - minX) + minX;
+        let plotlyY = (1.0 - y) * (maxY - minY) + minY;// + 0.011;
+        return [plotlyX, plotlyY];
+    }
+
+    /* 
+     * When an art piece is hovered over, the information should be displayed:
+     * title, creator, date, etc (show link to explore similar?)
+     */
     handleHover(eventData) {
-        console.log("HOVER DETECTED!");
-        console.log(eventData);
+        //console.log("HOVER DETECTED!");
+        //console.log(eventData);
+    }
+
+    onMouseHover(eventData) {
+        //let relCoords = this.convertToRelativeCoords(eventData.pageX, eventData.pageY);
+        //console.log("relative coords: " + relCoords);
+        //let plotlyCoords = this.convertToPlotlyData(relCoords[0], relCoords[1]);
+        //console.log("plotly coords: " + plotlyCoords);
+
     }
 }
