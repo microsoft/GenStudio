@@ -35,6 +35,9 @@ export default class SelectPage extends Component {
 
         //Armor and Vessels
         this.objIDsToImages([22270, 22408, 23143, 25114, 35652, 201671, 202194, 232038, 324830, 324917, 544501, 751402]);
+
+        //Purses
+        //this.objIdsToImages([]);
     }
 
     changeSelect(index){
@@ -137,7 +140,7 @@ export default class SelectPage extends Component {
                     { name: 'right', start: [2, 0], end: [2, 3] },
                 ]}
                 columns={['flex','xlarge','flex']}
-                rows={['small','xsmall','large','xsmall']}
+                rows={['small','xsmall','flex','xsmall']}
                 gap='small'
             >
                 <Box gridArea='desc' >

@@ -21,12 +21,12 @@ export default class ResultBox extends Component {
     render(){
         let img=<img src={this.props.data.PrimaryImageUrl} style={{height:100}}/>
         return(
-            <Card style={{width:100, alignItems:"center"}}>
-                <CardActionArea style={{alignItems:"center"}}>
+            <Card raised={false} elevation={0} style={{ background: "#F1F1D4", height: "fit-content", alignItems:"center"}}>
+                <CardActionArea href={this.props.data.LinkResource} style={{alignItems:"center"}}>
                     <CardMedia 
                         component="img"
                         style={{alignSelf:"center", alignItems:"center"}}
-                        height="140"
+                        paddingTop="50%"
                         image={this.props.data.PrimaryImageUrl}
                     >
                     </CardMedia>

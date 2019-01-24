@@ -81,6 +81,7 @@ class App extends Component {
               <Route exact path="/graph" component={GraphPage}/>
               <Route exact path="/map" component={MapPage}/>
               <Route exact path="/search/:id" component={SearchPage}/>
+              <Route exact path="/search" component={SearchPage}/>
             </Body>
           </Box>
         </Grommet>
