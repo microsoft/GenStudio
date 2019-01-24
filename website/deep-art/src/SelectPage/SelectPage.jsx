@@ -34,7 +34,7 @@ export default class SelectPage extends Component {
         //this.objIDsToImages([22270, 22408, 22848, 23143, 25114, 35652]);
 
         //Armor and Vessels
-        this.objIDsToImages([22270, 22408, 22848, 23143, 25114, 35652, 201671, 202194, 232038, 324830, 324917, 544501, 751402]);
+        this.objIDsToImages([22270, 22408, 23143, 25114, 35652, 201671, 202194, 232038, 324830, 324917, 544501, 751402]);
     }
 
     changeSelect(index){
