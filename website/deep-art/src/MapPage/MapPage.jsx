@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Plot from 'react-plotly.js';
-
+import GenArt from './GenArt.jsx';
 import { Box, Button, Grommet, Select, Text, TextInput} from 'grommet';
 
 export default class MapExplorePage extends Component {
@@ -81,26 +81,49 @@ export default class MapExplorePage extends Component {
 
     render() {
         return (
-            <Box
-                align='center'
-                
-                style={{ marginTop: '100px' }}
-            >
-                <Plot
-                    data={this.getData()}
-                    layout={this.getLayout()}
-                    onClick={(figure) => console.log("test1")}
-                    onHover={(figure) => console.log("test2")}
-                    onInitialized={(figure) => console.log("test3")}
-                    style={{ width: "90%", height: "80%", alignContent: "center", display: "flex" }}
-                    useResizeHandler={true}
-                />
-            </Box>
+            <div >
+                <Box
+                    align= 'center'
+                    style= {{ marginTop: '25px' }}
+                >
+                    <GenArt image={"https://static.seattletimes.com/wp-content/uploads/2018/10/90a2c67c-ba17-11e8-b2d9-c270ab1caed2-1020x776.jpg"} />
+                </Box>
+
+                <Box
+                    align='center'
+                    style={{ padding: '2px', marginTop: '25px', width: "100%", height: "100%" }}
+                    border={{ color: "black", size: "4px"}}
+                    round="small"
+                    onMouseDown={(e) => this.onMouseClick(e)}
+                >
+
+                        <Plot 
+                            id = "plot"
+                            data={this.getData()}
+                            layout={this.getLayout()}
+                            onClick={(figure) => console.log("test1")}
+                            onHover={(figure) => this.handleHover(figure)}
+                            onInitialized={(figure) => console.log("test3")}
+                            style={{ width: "100%", height: "100%"}}
+                            useResizeHandler={true}
+                        />
+                </Box>
+            </div>
         );          
     }
 
-    onClick(eventData) {
+    onMouseClick(e) {
+        console.log(e.clientX + "," + e.clientY);
+        console.log(e);
+    }
+
+    handleClick(eventData) {
         console.log("here!");
         console.log("eventData: " + eventData);
+    }
+
+    handleHover(eventData) {
+        console.log("HOVER DETECTED!");
+        console.log(eventData);
     }
 }

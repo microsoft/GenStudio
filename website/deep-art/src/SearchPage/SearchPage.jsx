@@ -5,77 +5,9 @@ import SearchControl from './SearchControl.jsx';
 import TagList from './TagList.jsx';
 import SearchGrid from './SearchGrid.jsx';
 
-const testData = [
-    {
-    "@search.score": 1.4663118,
-    "ObjectID": "358948",
-    "Department": "Drawings and Prints",
-    "Title": "Two Boys with aa Puppy",
-    "Culture": "''",
-    "Medium": "Black chalk and graphite on parchment",
-    "Classification": "Drawings",
-    "LinkResource": "http://www.metmuseum.org/art/collection/search/358948",
-    "PrimaryImageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP801044.jpg",
-    "Neighbors": [
-    "358048",
-    "396036",
-    "371666",
-    "341944",
-    "371024",
-    "342596",
-    "336899",
-    "342328",
-    "334717",
-    "338829"
-    ]
-    },
-    {
-    "@search.score": 1.465969,
-    "ObjectID": "358048",
-    "Department": "Drawings and Prints",
-    "Title": "Two Boys with a Puppy",
-    "Culture": "''",
-    "Medium": "Black chalk and graphite on parchment",
-    "Classification": "Drawings",
-    "LinkResource": "http://www.metmuseum.org/art/collection/search/358048",
-    "PrimaryImageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP801043.jpg",
-    "Neighbors": [
-    "358948",
-    "396036",
-    "341273",
-    "341944",
-    "408098",
-    "348360",
-    "336544",
-    "334695",
-    "348161",
-    "372760"
-    ]
-    },
-    {
-    "@search.score": 1.2588559,
-    "ObjectID": "362301",
-    "Department": "Drawings and Prints",
-    "Title": "Child Carrying a Puppy on his Shoulder",
-    "Culture": "''",
-    "Medium": "Etching retouched with gray wash; artist's proof",
-    "Classification": "Prints",
-    "LinkResource": "http://www.metmuseum.org/art/collection/search/362301",
-    "PrimaryImageUrl": "https://images.metmuseum.org/CRDImages/dp/original/DP817550.jpg",
-    "Neighbors": [
-    "410794",
-    "383904",
-    "338746",
-    "395495",
-    "338897",
-    "340891",
-    "338172",
-    "342150",
-    "339910",
-    "340272"
-    ]
-    }
-    ];
+const maxSearchResults = 10;
+const azureSearchUrl = 'https://metartworksindex.search.windows.net/indexes/met-items/docs?api-version=2017-11-11&search=';
+const apiKey = '11A584ECD13C39D335F57939D502673D';
 
 export default class GraphPage extends Component {
 
@@ -83,21 +15,74 @@ export default class GraphPage extends Component {
         super(props);
         this.state = {
             searchValue: "",
-            tags: ["a","b","c"],
-            tagData: {"a": false, "b": false, "c": false}
+            tags: [],
+            tagData: {},
+            results: []
         };
-        this.getChange = this.getChange.bind(this);
+        this.getSearch = this.getSearch.bind(this);
         this.getTagChange = this.getTagChange.bind(this);
+        this.updateGridDisplay = this.updateGridDisplay.bind(this);
+        this.updateTags = this.updateTags.bind(this);
     };
 
-    getChange(newSearchValue){
-        this.setState({searchValue: newSearchValue});
+    componentDidMount() {
+        //The ID of the image to search on
+        let {id} = this.props.match.params;
+    }
+
+    getSearch(newSearchValue) {
+        let thisVar = this; // Hacky
+        fetch(azureSearchUrl + newSearchValue, {headers: {'api-key': apiKey}}).then(function(response) {
+            return response.json();
+        }).then(function(responseJson) {
+            thisVar.updateGridDisplay(responseJson);
+            thisVar.updateTags(responseJson);
+            thisVar.setState((oldState) => {
+                return oldState.searchValue = newSearchValue;
+            });
+        })
+    }
+
+    updateGridDisplay(searchJson) {
+        this.setState((oldState) => {
+            return oldState.results = searchJson.value.slice(0, maxSearchResults);
+        });
+    }
+
+    updateTags(searchJson) {
+        let thisVar = this; // Hacky
+        const newTags = [];
+        const newTagData = {};
+        for (let i = 0; i < searchJson.value.length && i < maxSearchResults; i++) {
+            const data = [searchJson.value[i].Culture, searchJson.value[i].Medium, searchJson.value[i].Classification];
+            for (let j = 0; j < data.length; j++) {
+                if (data[j] != null && data[j].length > 2 && !(data[j] in newTagData)) {
+                    newTags.push(data[j]);
+                    newTagData[data[j]] = false;
+                }
+            }
+        }
+        thisVar.setState({tags: newTags, tagData: newTagData});
     }
 
     getTagChange(label, value){
-        this.setState((oldState) => {
-            return oldState.tagData[label] = value;
-        });
+        let thisVar = this; // Hacky
+        let searchTags = '';
+        const oldTagData = this.state.tagData;
+        oldTagData[label] = value;
+        thisVar.setState({tagData: oldTagData});
+        
+        for (const [key, value] of Object.entries(this.state.tagData)) {
+            if (value) {
+                searchTags += '%2B' + key;
+            }
+        }
+
+        fetch(azureSearchUrl + this.state.searchValue + searchTags, {headers: {'api-key': apiKey}}).then(function(response) {
+            return response.json();
+        }).then(function(responseJson) {
+            thisVar.updateGridDisplay(responseJson);
+        })
     }
 
     render(){
@@ -115,7 +100,7 @@ export default class GraphPage extends Component {
             gap='small'
             >
                 <Box gridArea='search' background="brand" >
-                    <SearchControl sendChange={this.getChange}/>
+                    <SearchControl sendChange={this.getSearch}/>
                     <Button label={"search"} onClick={this.makeSearch} margin="medium"/>
                 </Box>
 
@@ -125,15 +110,12 @@ export default class GraphPage extends Component {
 
                 <Box gridArea='display'>
                     <Box height="99%">
-                        <SearchGrid results={testData}/>
+                        <SearchGrid results={this.state.results}/>
                     </Box>
                 </Box>    
 
                 <Box gridArea='right' />
             </Grid>
         );
-
-
     };
-
 }
