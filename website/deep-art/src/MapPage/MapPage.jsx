@@ -125,11 +125,11 @@ export default class MapExplorePage extends Component {
         let plotlyCoords = this.convertToPlotlyData(relCoords[0], relCoords[1]);
         //find nearest neighbors on graph
         let closestNeighbors = this.getNearestNeighbors(plotlyCoords, 2);
-        let interpSeed = this.generateInterpSeed(closestNeighbors);
+        let interpSeed = this.generateInterpSeed(closestNeighbors, 2);
 
     }
 
-    getInterpSeed(neighbors, numNeighbors) {
+    generateInterpSeed(neighbors, numNeighbors) {
         //getSeed for the closest MET images (2 or 3 (rn 2))
         let seed1 = [512];
         let seed2 = [512];
