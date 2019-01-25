@@ -11,7 +11,7 @@ const apiKey = '11A584ECD13C39D335F57939D502673D';
 
 export default class GraphPage extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             searchValue: "",
@@ -26,8 +26,25 @@ export default class GraphPage extends Component {
     };
 
     componentDidMount() {
-        //The ID of the image to search on
-        let {id} = this.props.match.params;
+        let thisVar = this; // Hacky
+        let {id} = this.props.match.params; // The ID of the image to search on
+
+        fetch(azureSearchUrl + id, {headers: {'api-key': apiKey}}).then(function(response) {
+            return response.json();
+        }).then(function(responseJson) {
+            let initSearchQuery = responseJson.value[0].Title;
+            const titleTokens = initSearchQuery.match(/\w+(?:'\w+)*/g); // Extract all individual words from the initial search query
+            initSearchQuery += '||';
+
+            for (let i = 0; i < titleTokens.length; i++) {
+                initSearchQuery += titleTokens[i] + '||';
+            }
+            
+            initSearchQuery = initSearchQuery.substring(0, initSearchQuery.length - 2); // Trim off extra Or operator
+            initSearchQuery = encodeURIComponent(initSearchQuery);
+            console.log(decodeURIComponent(initSearchQuery));
+            thisVar.getSearch(initSearchQuery);
+        })
     }
 
     getSearch(newSearchValue) {
@@ -65,7 +82,7 @@ export default class GraphPage extends Component {
         thisVar.setState({tags: newTags, tagData: newTagData});
     }
 
-    getTagChange(label, value){
+    getTagChange(label, value) {
         let thisVar = this; // Hacky
         let searchTags = '';
         const oldTagData = this.state.tagData;
@@ -74,9 +91,18 @@ export default class GraphPage extends Component {
         
         for (const [key, value] of Object.entries(this.state.tagData)) {
             if (value) {
-                searchTags += '%2B' + key;
+                const searchTokens = key.match(/\w+(?:'\w+)*/g); // Extract all individual words from tags
+                searchTags += '&&' + '(';
+                for (let i = 0; i < searchTokens.length; i++) {
+                    searchTags += searchTokens[i] + '||'; // Or concat all individual words in a selected tag
+                }
+                searchTags = searchTags.substring(0, searchTags.length - 2); // Trim off extra Or operator
+                searchTags += ')';
+                searchTags = encodeURIComponent(searchTags);
             }
         }
+
+        console.log(decodeURIComponent(this.state.searchValue + searchTags));
 
         fetch(azureSearchUrl + this.state.searchValue + searchTags, {headers: {'api-key': apiKey}}).then(function(response) {
             return response.json();
@@ -85,7 +111,7 @@ export default class GraphPage extends Component {
         })
     }
 
-    render(){
+    render() {
         return(
             <Grid
             fill
