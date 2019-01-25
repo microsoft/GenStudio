@@ -6,7 +6,9 @@ import { Box} from 'grommet';
 export default class MapExplorePage extends Component {
     constructor(props) {
         super(props);
-        this.state = { data: [], layout: {}, frames: [], config: {} };
+        this.state = { data: [], layout: {}, images: {201671:{}, 202194:{}}, config: {} };
+
+        this.generateInterpSeed = this.generateInterpSeed.bind(this);
     }
 
     getImages() {
@@ -32,6 +34,76 @@ export default class MapExplorePage extends Component {
             imageProps));
         console.log(images);
         return images;
+    }
+
+    componentDidMount(){
+        this.populateImageSeeds();
+    }
+
+    populateImageSeeds(){
+        let imageIDs = Object.keys(this.state.images);
+        const imageToSeedUrl="https://deepartstorage.blob.core.windows.net/public/inverted/biggan1/seeds/";
+        for (let i =0; i<imageIDs.length; i++){
+            const fileName = imageIDs[i]+".json";
+            const Http = new XMLHttpRequest();
+            Http.open("GET", imageToSeedUrl+fileName);
+            Http.send();
+            Http.onreadystatechange = (e) => {
+                if (Http.readyState === 4) {
+                    try {
+                        let response = JSON.parse(Http.responseText);
+                        let imagesString = JSON.stringify(this.state.images);
+                        let imagesCopy = JSON.parse(imagesString);
+                        imagesCopy[imageIDs[i]].latents = response.latents;
+                        imagesCopy[imageIDs[i]].labels = response.labels;
+                        this.setState({
+                            images: imagesCopy
+                        });
+                    } catch {
+                        console.log('malformed request:' + Http.responseText);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Calls an API, sending a seed, and getting back an ArrayBuffer reprsenting that image
+     * This function directly saves the image data and ArrayBuffer to state
+     * @param {string} seedArr - string version of a 1xSEED_LENGTH array of floats between -1,1  
+     * @param {Float[]} labelArr - data version of a 1000 length array of floats between 0,1
+     */
+    getGenImage(seedArr, labelArr) {
+        //console.log("HELLO: "+seedArr)
+
+        // let max = labelArr.reduce(function(a, b) {
+        //     return Math.max(a, b);
+        // });
+        // let maxIndex = labelArr.indexOf(max);
+        let labels = labelArr.toString();
+        labels = `[[${labels}]]`;
+
+        const apiURL = 'https://methack-api.azure-api.net/biggan/labels?subscription-key=43d3f563ea224c4c990e437ada74fae8';
+        const Http = new XMLHttpRequest();
+        const data = new FormData();
+        data.append('seed',seedArr);
+        data.append('labels', labels);
+        //data.append('category', maxIndex.toString());
+
+        Http.responseType = "arraybuffer";
+        Http.open("POST", apiURL);
+        Http.send(data);
+        Http.onreadystatechange = (e) => {
+            if (Http.readyState === 4){
+                try{
+                    let imgData = btoa(String.fromCharCode.apply(null, new Uint8Array(Http.response)));
+                    this.setState({genImg: imgData, genArr: Http.response});
+
+                } catch (e) {
+                    console.log('malformed request:'+Http.responseText);
+                }
+            }
+        }
     }
 
     getData() {
@@ -84,7 +156,7 @@ export default class MapExplorePage extends Component {
                     align= 'center'
                     style= {{ marginTop: '25px' }}
                 >
-                    <GenArt image={"https://static.seattletimes.com/wp-content/uploads/2018/10/90a2c67c-ba17-11e8-b2d9-c270ab1caed2-1020x776.jpg"} />
+                    <GenArt image={this.state.genImg} data={this.state.genArr} />
                 </Box>
 
                 <Box
@@ -125,24 +197,72 @@ export default class MapExplorePage extends Component {
         let plotlyCoords = this.convertToPlotlyData(relCoords[0], relCoords[1]);
         //find nearest neighbors on graph
         let closestNeighbors = this.getNearestNeighbors(plotlyCoords, 2);
-        let interpSeed = this.generateInterpSeed(closestNeighbors, 2);
+        closestNeighbors = {201671:5, 202194:3};
+        let latentAndLabel = this.generateInterpSeed(closestNeighbors);
+
+        let latent = `[[${latentAndLabel[0]}]]`
+        let label = latentAndLabel[1]
+
+        //seed is in format '[[fl,fl,fl,...#140]]
+        //labels is in format [fl, fl, fl, ...#1000]
+        this.getGenImage(latent, label);
 
     }
 
-    generateInterpSeed(neighbors, numNeighbors) {
-        //getSeed for the closest MET images (2 or 3 (rn 2))
-        let seed1 = [512];
-        let seed2 = [512];
-
-        //find new seed
-        if (numNeighbors === 2) {
-            let distance1 = neighbors[1][0];
-            let distance2 = neighbors[1][1];
-            let ratio1 = distance1 / (distance1 + distance2);
-            let ratio2 = 1.0 - ratio1;
-            return seed1 * ratio1 + seed2 * ratio2;
+    /**
+     * 
+     * @param {[Int[],?Float?[]]} neighbors - Int[] is array of obj ids, ?Float?[] are the distances to those,
+     * of the closest neighbors to a click, where the number of neighbors taken  were decided earlier in the stack
+     */
+    generateInterpSeed(neighbors) {
+        let IDsToDistance = {201671:5, 202194:3}
+        const neighborIDs = Object.keys(IDsToDistance);
+        const numNeigh = neighborIDs.length;
+        let sumDist = 0
+        for (let i = 0; i < numNeigh; i++){
+            sumDist = sumDist + IDsToDistance[neighborIDs[i]];
         }
 
+        let totalLatent = Array.apply(null, Array(140)).map(Number.prototype.valueOf,0);
+        let totalLabel = Array.apply(null, Array(1000)).map(Number.prototype.valueOf,0);;
+
+        for (let i = 0; i < numNeigh; i++){
+            let ratio = IDsToDistance[neighborIDs[i]]/sumDist;
+            let scaledLatent = this.scalarMultiplyVector(this.state.images[neighborIDs[i]].latents, ratio);
+            let scaledLabel = this.scalarMultiplyVector(this.state.images[neighborIDs[i]].labels, ratio);
+            totalLatent = this.addVector(totalLatent, scaledLatent);
+            totalLabel = this.addVector(totalLabel, scaledLabel);
+        }
+
+        return [totalLatent, totalLabel];
+    }
+
+    /**
+     * adds two vectors of the same length together!
+     * @param {Float[]} v1 - vector 1
+     * @param {Float[]} v2 - vector 2
+     */
+    addVector(v1, v2){
+
+        let sumVec = [];
+        for (let i= 0; i< v1.length; i++){
+            sumVec.push(v1[i]+v2[i])
+        }
+
+        return sumVec;
+    }
+
+    /**
+     * Multiplies a vector by a scalar
+     * @param {Float[]} vec 
+     * @param {Float} scalar 
+     */
+    scalarMultiplyVector(vec, scalar){
+        let newVec = [];
+        for (let i= 0; i< vec.length; i++){
+            newVec.push(vec[i]*scalar)
+        }
+        return newVec;
     }
 
     getNearestNeighbors(plotlyCoords, numClosest) {
