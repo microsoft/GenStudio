@@ -32,9 +32,6 @@ export default class ResultBox extends Component {
                     <Typography component="p">
                     {this.props.data.Title}
                     </Typography>
-                    <Typography component="p">
-                    {this.props.data.ObjectID}
-                    </Typography>
                 </CardContent>
                 
             </Card>
