@@ -20,22 +20,20 @@ export default class ResultBox extends Component {
 
     render(){
         return(
-            <Card raised={false} elevation={0} style={{ background: "#F1F1D4", height:"fit-content", alignItems:"center"}}>
-                <CardActionArea href={this.props.data.LinkResource} style={{alignItems:"center"}}>
+            <Card raised={false} elevation={0} style={{ background: "#F1F1D4", display: "flex", flexFlow:"column wrap", height:"fit-content", alignItems:"center"}}>
+                <CardActionArea href={this.props.data.LinkResource} style={{display: "flex", justifyItems:"center", width: "fit-content"}}>
                     <CardMedia 
                         component="img"
                         src={this.props.data.PrimaryImageUrl}
                         style={{alignSelf:"center", alignItems:"center", maxWidth:"fit-content", maxHeight: "500px"}}
                     />
-                    <CardContent>
-                        <Typography component="p">
-                        {this.props.data.Title}
-                        </Typography>
-                        <Typography component="p">
-                        {this.props.data.ObjectID}
-                        </Typography>
-                    </CardContent>
                 </CardActionArea>
+                <CardContent>
+                    <Typography component="p">
+                    {this.props.data.Title}
+                    </Typography>
+                </CardContent>
+                
             </Card>
         )
     }
