@@ -32,18 +32,24 @@ export default class GraphPage extends Component {
         fetch(azureSearchUrl + id, {headers: {'api-key': apiKey}}).then(function(response) {
             return response.json();
         }).then(function(responseJson) {
-            let initSearchQuery = responseJson.value[0].Title;
-            const titleTokens = initSearchQuery.match(/\w+(?:'\w+)*/g); // Extract all individual words from the initial search query
-            initSearchQuery += '||';
+            if (responseJson.value.length > 0) {
+                let initSearchQuery = responseJson.value[0].Title;
+                const titleTokens = initSearchQuery.match(/\w+(?:'\w+)*/g); // Extract all individual words from the initial search query
 
-            for (let i = 0; i < titleTokens.length; i++) {
-                initSearchQuery += titleTokens[i] + '||';
+                if (titleTokens != null) { // Some art have no titles
+                    initSearchQuery += '||';
+    
+                    for (let i = 0; i < titleTokens.length; i++) {
+                        initSearchQuery += titleTokens[i] + '||';
+                    }
+                    
+                    initSearchQuery = initSearchQuery.substring(0, initSearchQuery.length - 2); // Trim off extra Or operator
+                    initSearchQuery = encodeURIComponent(initSearchQuery);
+                    thisVar.getSearch(initSearchQuery);
+                    return;
+                }
             }
-            
-            initSearchQuery = initSearchQuery.substring(0, initSearchQuery.length - 2); // Trim off extra Or operator
-            initSearchQuery = encodeURIComponent(initSearchQuery);
-            console.log(decodeURIComponent(initSearchQuery));
-            thisVar.getSearch(initSearchQuery);
+            thisVar.getSearch('*');
         })
     }
 
@@ -101,8 +107,6 @@ export default class GraphPage extends Component {
                 searchTags = encodeURIComponent(searchTags);
             }
         }
-
-        console.log(decodeURIComponent(this.state.searchValue + searchTags));
 
         fetch(azureSearchUrl + this.state.searchValue + searchTags, {headers: {'api-key': apiKey}}).then(function(response) {
             return response.json();
