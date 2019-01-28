@@ -108,7 +108,8 @@ export default class SelectPage extends Component {
 
     generateArtUrlSuffix() {
         const NUMBER_OF_SEARCH_IMAGES = this.state.imgObjects.length;
-        let urlBase = "/explore/";
+        let urlBase = "/map/";
+        //return urlBase;
         if (this.state.imgObjects.length === NUMBER_OF_SEARCH_IMAGES) {
             //generates a random index for which to eliminate the extra met art
             //idea is we randomly select which curated art to move to the explore page
