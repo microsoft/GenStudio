@@ -17,23 +17,23 @@ export default class GraphPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            searchValue: "",
-            tags: [],
-            tagData: {},
-            results: []
+            searchValue: "", // Current search query to be displayed
+            tags: [], // All current tags to be displayed
+            tagData: {}, // On/Off state of all tags currently displayed
+            results: [] // All current search query results to be displayed
         };
-        this.getSearch = this.getSearch.bind(this);
-        this.getTagChange = this.getTagChange.bind(this);
+        this.extractValidObjects = this.extractValidObjects.bind(this);
         this.updateGridDisplay = this.updateGridDisplay.bind(this);
+        this.getTagChange = this.getTagChange.bind(this);
         this.updateTags = this.updateTags.bind(this);
         this.isValidUrl = this.isValidUrl.bind(this);
-        this.extractValidObjects = this.extractValidObjects.bind(this);
+        this.getSearch = this.getSearch.bind(this);
     };
 
     componentDidMount() {
-        let thisVar = this; // Hacky
+        let self = this;
         let {id} = this.props.match.params; // The ID of the image to search on
-        if (id != null && id != 0) { // Do not update for nullor 0 value ids
+        if (id != null && id != 0) { // Do not update for null or '0' ids
             fetch(azureSearchUrl + id, {headers: {'api-key': apiKey}}).then(function(response) {
                 return response.json();
             }).then(function(responseJson) {
@@ -44,35 +44,45 @@ export default class GraphPage extends Component {
                     if (titleTokens != null) { // Some art have no titles
                         initSearchQuery += '||';
         
-                        for (let i = 0; i < titleTokens.length; i++) {
+                        for (let i = 0; i < titleTokens.length; i++) { // Or operator between all words in the search query
                             initSearchQuery += titleTokens[i] + '||';
                         }
                         
                         initSearchQuery = initSearchQuery.substring(0, initSearchQuery.length - 2); // Trim off extra Or operator
                         initSearchQuery = encodeURIComponent(initSearchQuery);
-                        thisVar.getSearch(initSearchQuery);
+                        self.getSearch(initSearchQuery);
                         return;
                     }
                 }
-                thisVar.getSearch('*');
+                self.getSearch('*'); // Search for anything
             })
         }
     }
 
+    /**
+     * This function creates a brand new search query request and refreshes all tags and results in the current state
+     * @param newSearchValue the new search query
+     */
     getSearch(newSearchValue) {
-        let thisVar = this; // Hacky
+        let self = this;
         fetch(azureSearchUrl + newSearchValue, {headers: {'api-key': apiKey}}).then(function(response) {
             return response.json();
         }).then(function(responseJson) {
-            let objectList = thisVar.extractValidObjects(responseJson);
-            thisVar.updateGridDisplay(objectList);
-            thisVar.updateTags(objectList);
-            thisVar.setState((oldState) => {
+            let objectList = self.extractValidObjects(responseJson);
+            self.updateGridDisplay(objectList);
+            self.updateTags(objectList);
+            self.setState((oldState) => {
                 return oldState.searchValue = newSearchValue;
             });
         })
     }
     
+    /**
+     * This function takes in a JSON object returned from an Azure search index request and extracts the results 
+     * list of objects that have valid image and resource URLs
+     * @param responseJson a JSON object from an Azure search index query
+     * @returns a list of objects with valid URLs
+     */
     extractValidObjects(responseJson) {
         let objectList = [];
         for (let i = 0; i < responseJson.value.length && objectList.length < maxSearchResults; i++) {
@@ -82,48 +92,68 @@ export default class GraphPage extends Component {
         }
         return objectList;
     }
-
+    
+    /**
+     * This function returns true iff the passed in string is a valid URL
+     * @param string the string to be analyzed
+     * @returns true iff the string is a URL, otherwise false
+     */
     isValidUrl(string) {
         return urlRegEx.test(string);
     }
 
+    /**
+     * This function the result prop in the crrent state to the passed in object list
+     * @param objectList the new result list of objects to be displayed
+     */
     updateGridDisplay(objectList) {
         this.setState((oldState) => {
             return oldState.results = objectList;
         });
     }
 
+    /**
+     * This function creates and updates the tags and tagData props in the state to reflect the results in the objectList param
+     * @param objectList the list of objects to source the new tags from
+     */
     updateTags(objectList) {
-        let thisVar = this; // Hacky
+        let self = this;
         const newTags = [];
         const newTagData = {};
         for (let i = 0; i < objectList.length; i++) {
-            const data = [objectList[i].Culture, objectList[i].Medium, objectList[i].Classification];
+            const data = [objectList[i].Culture, objectList[i].Medium, objectList[i].Classification]; // New tags dynamically created from objects' culture, medium, and classification data
             for (let j = 0; j < data.length; j++) {
-                if (data[j] != null && data[j].length < maxTagLength && data[j].length > minTagLength && !(data[j] in newTagData)) {
+                if (data[j] != null && minTagLength < data[j].length && data[j].length < maxTagLength && !(data[j] in newTagData)) { // Filter out unwanted tags
                     newTags.push(data[j]);
                     newTagData[data[j]] = false;
                 }
             }
         }
-        thisVar.setState({tags: newTags, tagData: newTagData});
+        self.setState({tags: newTags, tagData: newTagData});
     }
 
+    /**
+     * This function is called when a user selects a tag to indlude/exclude in a new search query. This function updates the UI to reflect 
+     * that tag change and then creates a new search request including/excluding that tag, updating the state's tag, tagData, and results list 
+     * props according to the new results.
+     * @param label the tag that was selected by the user
+     * @param value true to include this tag in the new search query, false to exclude
+     */
     getTagChange(label, value) {
-        let thisVar = this; // Hacky
+        let self = this;
         let searchTags = '';
         const oldTagData = this.state.tagData;
         oldTagData[label] = value;
-        thisVar.setState({tagData: oldTagData});
+        self.setState({tagData: oldTagData});
         
         for (const [key, value] of Object.entries(this.state.tagData)) {
             if (value) {
                 const searchTokens = key.match(/\w+(?:'\w+)*/g); // Extract all individual words from tags
                 searchTags += '&&' + '(';
                 for (let i = 0; i < searchTokens.length; i++) {
-                    searchTags += searchTokens[i] + '||'; // Or concat all individual words in a selected tag
+                    searchTags += searchTokens[i] + '||'; // Concat all individual words in a selected tag with 'Or' operator 
                 }
-                searchTags = searchTags.substring(0, searchTags.length - 2); // Trim off extra Or operator
+                searchTags = searchTags.substring(0, searchTags.length - 2); // Trim off extra 'Or' operator
                 searchTags += ')';
                 searchTags = encodeURIComponent(searchTags);
             }
@@ -132,8 +162,8 @@ export default class GraphPage extends Component {
         fetch(azureSearchUrl + this.state.searchValue + searchTags, {headers: {'api-key': apiKey}}).then(function(response) {
             return response.json();
         }).then(function(responseJson) {
-            let objectList = thisVar.extractValidObjects(responseJson);
-            thisVar.updateGridDisplay(objectList);
+            let objectList = self.extractValidObjects(responseJson);
+            self.updateGridDisplay(objectList);
         })
     }
 
