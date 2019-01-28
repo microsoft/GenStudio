@@ -17,7 +17,9 @@ export default class MapExplorePage extends Component {
                 genImg: 0,
                 genSeed: [],
                 genLabel: [],
-                config: {}
+                config: {},
+                mouseCoords: [],
+                neighborCoords: []
             };
         this.generateInterpSeed = this.generateInterpSeed.bind(this);
         this.setCoords = this.setCoords.bind(this);
@@ -34,9 +36,10 @@ export default class MapExplorePage extends Component {
         // hardcoding the painting Ids until we can know all relevant Ids exist on the blob
         paintingIds = [22270, 22408, 22848, 23143, 35652];//, 202194, 324830, 324917, 544501]; //[1002, 10024, 10025, 10026, 10028];
 
+        //this prevents an infinite loop of reloading in the render() fn
+        //data needs to be loaded after ObjectIds guaranteed to be loaded, but only once
         if (Object.keys(this.state.images).length === 0) {
             this.populateImageSeeds(paintingIds);
-
         }
 
         let thumbnailRoot = "https://deepartstorage.blob.core.windows.net/public/thumbnails4/";
@@ -58,7 +61,7 @@ export default class MapExplorePage extends Component {
                 "y": locations[i][1]
             },
             imageProps));
-
+            
         return images;
     }
 
@@ -113,7 +116,6 @@ export default class MapExplorePage extends Component {
         const data = new FormData();
         data.append('seed',seedArr);
         data.append('labels', labels);
-
         Http.responseType = "arraybuffer";
         Http.open("POST", apiURL);
         Http.send(data);
@@ -232,9 +234,6 @@ export default class MapExplorePage extends Component {
     }
 
     componentDidMount() {
-         //get id object from URL (gillian)
-        //populate into this.state.images = [132,12312,3,12,3231,366 ]
-
         this.state.data = this.getData();
 
         //Parse the art ID's from the url into an int[]
@@ -279,7 +278,7 @@ export default class MapExplorePage extends Component {
         let relCoords = this.convertToRelativeCoords(xCoord, yCoord);
         let plotlyCoords = this.convertToPlotlyData(relCoords[0], relCoords[1]);
         //find nearest neighbors on graph
-        let closestNeighbors = this.getNearestNeighbors(plotlyCoords, 2);
+        let closestNeighbors = this.getNearestNeighbors(plotlyCoords, 3);
         let latentAndLabel = this.generateInterpSeed(closestNeighbors);
 
         let latent = `[[${latentAndLabel.latent}]]`
@@ -299,14 +298,14 @@ export default class MapExplorePage extends Component {
                 let plotlyCoords = this.convertToPlotlyData(relCoords[0], relCoords[1]);
         
                 //find nearest enighbors on graph
-                let closestNeighbors = this.getNearestNeighbors(plotlyCoords, 2);
+                let closestNeighbors = this.getNearestNeighbors(plotlyCoords, 3);
                 let neighborIDs = Object.keys(closestNeighbors);
         
                 let neighCoords= {}
                 
                 //Populate neighCoords
                 for(let i = 0; i< neighborIDs.length; i++){
-                    let id = closestNeighbors[i];
+                    let id = neighborIDs[i];
                     let index = closestNeighbors[id].index;
                     let xCoord = this.state.data[0].x[index];
                     let yCoord = this.state.data[0].y[index];
@@ -374,29 +373,40 @@ export default class MapExplorePage extends Component {
         return newVec;
     }
 
-    getNearestNeighbors(plotlyCoords, numClosest) {
+    /**
+     * gets the relevant data of the [numNeighbors] nearest neighboors of mouse click position
+     * 
+     * @param {any} plotlyCoords - [x, y] coordinates of mouse click position in plotly space
+     * @param {int} numNeighbors - the number of neighbors to consider for new gen seed
+     * @returns {JSON object} - {id1: {'index': INDEX1, 'distance': DISTANCE1}, id2: {...}, ...}
+     */
+    getNearestNeighbors(plotlyCoords, numNeighbors) {
+        let objectIds = Object.keys(this.state.images);
+        let response = {};
+        Array.min = function (array) {
+            return Math.min.apply(Math, array);
+        };
         let xCoordsPlotly = this.state.data[0].x;
         let yCoordsPlotly = this.state.data[0].y;
         let distances = xCoordsPlotly.map((x, i) => {
             return this.calculateDistance([x, yCoordsPlotly[i]], plotlyCoords);
         });
-
-        Array.min = function (array) {
-            return Math.min.apply(Math, array);
-        };
-        let closestDistances = [0,0];
-        let minVal = Array.min(distances);
-        closestDistances[0] = minVal;
-        let indexClosest1 = distances.indexOf(minVal);
-        distances.splice(indexClosest1, 1);
-        minVal = Array.min(distances);
-        closestDistances[1] = minVal;
-        let indexClosest2 = distances.indexOf(minVal);
-        if (indexClosest1 <= indexClosest2) {
-            indexClosest2 = indexClosest2 + 1;
+        let distancesUpdated = distances.slice(0);
+        
+        for (let i = 0; i < numNeighbors; i++) {
+            let newNeighbor = { index: 0, distance: 0 };
+            //find the index of the smallest value in distancesUpdated
+            let minVal = Array.min(distancesUpdated);
+            //use the index of unchanged distances list
+            let indexClosest = distances.indexOf(minVal);
+            newNeighbor.index = indexClosest;
+            newNeighbor.distance = minVal;
+            response[objectIds[indexClosest]] = newNeighbor;
+            //remove the smallest distance we just found
+            distancesUpdated.splice(distancesUpdated.indexOf(minVal), 1);
         }
-        let indices = [indexClosest1, indexClosest2];
-        return [indices, closestDistances];
+
+        return response;
     }
 
     calculateDistance(coord1, coord2) {
@@ -467,7 +477,7 @@ export default class MapExplorePage extends Component {
                             )
                         })
                     } catch (e) {
-                        console.log('malformed request:' + Http.responseText);
+                        console.log('malformed request:' + Http.response.toString());
                     }
                 }
             }
