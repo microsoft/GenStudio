@@ -183,10 +183,10 @@ export default class GraphPage extends Component {
             >
                 <Box gridArea='search' background="brand" >
                     <SearchControl sendChange={this.getSearch}/>
-                    <Button label={"search"} onClick={this.makeSearch} margin="medium"/>
+                    {/* <Button label={"search"} onClick={this.makeSearch} margin="medium"/> */}
                 </Box>
 
-                <Box gridArea='tags' >
+                <Box gridArea='tags' background="brand">
                     <TagList tags={this.state.tags} tagData={this.state.tagData} tagChange={this.getTagChange}/>
                 </Box>
 
