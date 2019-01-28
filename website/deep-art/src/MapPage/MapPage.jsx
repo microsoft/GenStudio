@@ -10,7 +10,7 @@ export default class MapExplorePage extends Component {
             {
                 data: [],
                 layout: {},
-                images: [],
+                images: {},
                 imgObjectsExplore: [],
                 imgData: '',
                 apiData: {},
@@ -23,11 +23,18 @@ export default class MapExplorePage extends Component {
     }
 
     getImages() {
+    
         let paintingIds = this.state.imgObjectsExplore.map(obj => obj.id).slice(0, 5);
         //NOTE: currently images on the search page aren't all on the blob, so we are  
         // hardcoding the painting Ids until we can know all relevant Ids exist on the blob
-        paintingIds = [1002, 10024, 10025, 10026, 10028];
-        let thumbnailRoot = "https://deepartstorage.blob.core.windows.net/public/thumbnails2/";
+        paintingIds = [22270, 22408, 22848, 23143, 35652];//, 202194, 324830, 324917, 544501]; //[1002, 10024, 10025, 10026, 10028];
+
+        if (Object.keys(this.state.images).length === 0) {
+            this.populateImageSeeds(paintingIds);
+
+        }
+
+        let thumbnailRoot = "https://deepartstorage.blob.core.windows.net/public/thumbnails4/";
         let paintingUrls = paintingIds.map(id => thumbnailRoot + id.toString() + ".jpg");
         let imageProps = {
             "xref": "x",
@@ -50,12 +57,8 @@ export default class MapExplorePage extends Component {
         return images;
     }
 
-    componentDidMount(){
-        this.populateImageSeeds();
-    }
-
-    populateImageSeeds(){
-        let imageIDs = Object.keys(this.state.images);
+    populateImageSeeds(paintingIds){
+        let imageIDs = paintingIds
         const imageToSeedUrl="https://deepartstorage.blob.core.windows.net/public/inverted/biggan1/seeds/";
         for (let i =0; i<imageIDs.length; i++){
             const fileName = imageIDs[i]+".json";
@@ -65,14 +68,21 @@ export default class MapExplorePage extends Component {
             Http.onreadystatechange = (e) => {
                 if (Http.readyState === 4) {
                     try {
+                        //console.log("entering the populate images response");
+                        //console.log("images state in populate fn: " + JSON.stringify(this.state.images));
+
                         let response = JSON.parse(Http.responseText);
                         let imagesString = JSON.stringify(this.state.images);
                         let imagesCopy = JSON.parse(imagesString);
+                        //console.log("after json parse");
+                        imagesCopy[imageIDs[i]] = { latents: [], labels: [] };
                         imagesCopy[imageIDs[i]].latents = response.latents;
                         imagesCopy[imageIDs[i]].labels = response.labels;
+                        //console.log("after json parse2");
                         this.setState({
                             images: imagesCopy
                         });
+                        //console.log("images state in populate fn: " + JSON.stringify(this.state.images));
                     } catch {
                         console.log('malformed request:' + Http.responseText);
                     }
@@ -203,6 +213,9 @@ export default class MapExplorePage extends Component {
     componentDidMount() {
          //get id object from URL (gillian)
         //populate into this.state.images = [132,12312,3,12,3231,366 ]
+        
+        console.log("WHAT IS THE STATE 1?: " + JSON.stringify(this.state.images));
+
         this.state.data = this.getData();
         let url = this.props.match.params.id.toString();
         url = decodeURIComponent(url);
@@ -222,7 +235,6 @@ export default class MapExplorePage extends Component {
         let plotlyCoords = this.convertToPlotlyData(relCoords[0], relCoords[1]);
         //find nearest neighbors on graph
         let closestNeighbors = this.getNearestNeighbors(plotlyCoords, 2);
-        closestNeighbors = {201671:5, 202194:3};
         let latentAndLabel = this.generateInterpSeed(closestNeighbors);
 
         let latent = `[[${latentAndLabel[0]}]]`
@@ -238,7 +250,8 @@ export default class MapExplorePage extends Component {
      * of the closest neighbors to a click, where the number of neighbors taken  were decided earlier in the stack
      */
     generateInterpSeed(neighbors) {
-        let IDsToDistance = {201671:5, 202194:3}
+        //22270, 22408, 22848, 23143, 35652
+        let IDsToDistance = { 22270: 5, 22848:3}
         const neighborIDs = Object.keys(IDsToDistance);
         const numNeigh = neighborIDs.length;
         let sumDist = 0
@@ -249,9 +262,10 @@ export default class MapExplorePage extends Component {
         let totalLatent = Array.apply(null, Array(140)).map(Number.prototype.valueOf,0);
         let totalLabel = Array.apply(null, Array(1000)).map(Number.prototype.valueOf,0);;
         for (let i = 0; i < numNeigh; i++){
-            let ratio = IDsToDistance[neighborIDs[i]]/sumDist;
-            let scaledLatent = this.scalarMultiplyVector(this.state.images[neighborIDs[i]].latents, ratio);
-            let scaledLabel = this.scalarMultiplyVector(this.state.images[neighborIDs[i]].labels, ratio);
+            let ratio = IDsToDistance[neighborIDs[i]] / sumDist;
+            console.log("WHAT IS THE STATE?: " + JSON.stringify(this.state.images));
+            let scaledLatent = this.scalarMultiplyVector(this.state.images[neighborIDs[i].toString()].latents, ratio);
+            let scaledLabel = this.scalarMultiplyVector(this.state.images[neighborIDs[i].toString()].labels, ratio);
             totalLatent = this.addVector(totalLatent, scaledLatent);
             totalLabel = this.addVector(totalLabel, scaledLabel);
         }
