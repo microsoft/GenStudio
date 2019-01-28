@@ -29,9 +29,10 @@ export default class MapExplorePage extends Component {
         // hardcoding the painting Ids until we can know all relevant Ids exist on the blob
         paintingIds = [22270, 22408, 22848, 23143, 35652];//, 202194, 324830, 324917, 544501]; //[1002, 10024, 10025, 10026, 10028];
 
+        //this prevents an infinite loop of reloading in the render() fn
+        //data needs to be loaded after ObjectIds guaranteed to be loaded, but only once
         if (Object.keys(this.state.images).length === 0) {
             this.populateImageSeeds(paintingIds);
-
         }
 
         let thumbnailRoot = "https://deepartstorage.blob.core.windows.net/public/thumbnails4/";
@@ -53,7 +54,6 @@ export default class MapExplorePage extends Component {
                 "y": locations[i][1]
             },
             imageProps));
-        //console.log(images);
         return images;
     }
 
@@ -68,21 +68,15 @@ export default class MapExplorePage extends Component {
             Http.onreadystatechange = (e) => {
                 if (Http.readyState === 4) {
                     try {
-                        //console.log("entering the populate images response");
-                        //console.log("images state in populate fn: " + JSON.stringify(this.state.images));
-
                         let response = JSON.parse(Http.responseText);
                         let imagesString = JSON.stringify(this.state.images);
                         let imagesCopy = JSON.parse(imagesString);
-                        //console.log("after json parse");
                         imagesCopy[imageIDs[i]] = { latents: [], labels: [] };
                         imagesCopy[imageIDs[i]].latents = response.latents;
                         imagesCopy[imageIDs[i]].labels = response.labels;
-                        //console.log("after json parse2");
                         this.setState({
                             images: imagesCopy
                         });
-                        //console.log("images state in populate fn: " + JSON.stringify(this.state.images));
                     } catch {
                         console.log('malformed request:' + Http.responseText);
                     }
@@ -98,12 +92,6 @@ export default class MapExplorePage extends Component {
      * @param {Float[]} labelArr - data version of a 1000 length array of floats between 0,1
      */
     getGenImage(seedArr, labelArr) {
-        //console.log("HELLO: "+seedArr)
-
-        // let max = labelArr.reduce(function(a, b) {
-        //     return Math.max(a, b);
-        // });
-        // let maxIndex = labelArr.indexOf(max);
         let labels = labelArr.toString();
         labels = `[[${labels}]]`;
 
@@ -112,8 +100,6 @@ export default class MapExplorePage extends Component {
         const data = new FormData();
         data.append('seed',seedArr);
         data.append('labels', labels);
-        //data.append('category', maxIndex.toString());
-
         Http.responseType = "arraybuffer";
         Http.open("POST", apiURL);
         Http.send(data);
@@ -211,11 +197,6 @@ export default class MapExplorePage extends Component {
     }
 
     componentDidMount() {
-         //get id object from URL (gillian)
-        //populate into this.state.images = [132,12312,3,12,3231,366 ]
-        
-        console.log("WHAT IS THE STATE 1?: " + JSON.stringify(this.state.images));
-
         this.state.data = this.getData();
         let url = this.props.match.params.id.toString();
         url = decodeURIComponent(url);
@@ -301,29 +282,39 @@ export default class MapExplorePage extends Component {
         return newVec;
     }
 
-    getNearestNeighbors(plotlyCoords, numClosest) {
+    /**
+     * gets the relevant data of the [numNeighbors] nearest neighboors of mouse click position
+     * 
+     * @param {any} plotlyCoords - [x, y] coordinates of mouse click position in plotly space
+     * @param {int} numNeighbors - the number of neighbors to consider for new gen seed
+     * @returns {JSON object} - {id1: {'index': INDEX1, 'distance': DISTANCE1}, id2: {...}, ...}
+     */
+    getNearestNeighbors(plotlyCoords, numNeighbors) {
+        let objectIds = Object.keys(this.state.images);
+        let response = {};
+        Array.min = function (array) {
+            return Math.min.apply(Math, array);
+        };
         let xCoordsPlotly = this.state.data[0].x;
         let yCoordsPlotly = this.state.data[0].y;
         let distances = xCoordsPlotly.map((x, i) => {
             return this.calculateDistance([x, yCoordsPlotly[i]], plotlyCoords);
         });
-
-        Array.min = function (array) {
-            return Math.min.apply(Math, array);
-        };
-        let closestDistances = [0,0];
-        let minVal = Array.min(distances);
-        closestDistances[0] = minVal;
-        let indexClosest1 = distances.indexOf(minVal);
-        distances.splice(indexClosest1, 1);
-        minVal = Array.min(distances);
-        closestDistances[1] = minVal;
-        let indexClosest2 = distances.indexOf(minVal);
-        if (indexClosest1 <= indexClosest2) {
-            indexClosest2 = indexClosest2 + 1;
+        let distancesUpdated = distances.slice(0);
+        
+        for (let i = 0; i < numNeighbors; i++) {
+            let newNeighbor = { "index": 0, "distance": 0 };
+            //find the index of the smallest value in distancesUpdated
+            let minVal = Array.min(distancesUpdated);
+            //use the index of unchanged distances list
+            let indexClosest = distances.indexOf(minVal);
+            newNeighbor["index"] = indexClosest;
+            newNeighbor["distance"] = minVal;
+            response[objectIds[indexClosest]] = newNeighbor;
+            //remove the smallest distance we just found
+            distancesUpdated.splice(distancesUpdated.indexOf(minVal), 1);
         }
-        let indices = [indexClosest1, indexClosest2];
-        return [indices, closestDistances];
+        return response;
     }
 
     calculateDistance(coord1, coord2) {
