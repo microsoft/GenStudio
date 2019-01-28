@@ -6,9 +6,17 @@ import { Box} from 'grommet';
 export default class MapExplorePage extends Component {
     constructor(props) {
         super(props);
-        this.state = { data: [], layout: {}, images: {201671:{}, 202194:{}}, config: {} };
+        this.state = { 
+            data: [],
+            layout: {}, 
+            images: {201671:{}, 202194:{}}, 
+            config: {},
+            mouseCoords: [],
+            neighborCoords: {} 
+        };
 
         this.generateInterpSeed = this.generateInterpSeed.bind(this);
+        this.setCoords = this.setCoords.bind(this);
     }
 
     getImages() {
@@ -120,6 +128,7 @@ export default class MapExplorePage extends Component {
                 y: [
                     0.8, 0.4, 0.6, 0.8, 1.0
                 ],
+
                 marker: {
                     size: 7,
                     color: [
@@ -138,10 +147,30 @@ export default class MapExplorePage extends Component {
     }
 
     getLayout() {
+
+        let mouseX = this.state.mouseCoords[0];
+        let mouseY = this.state.mouseCoords[1];
+        let neighCoords = this.state.neighborCoords;
+
+        let lines = Object.keys(this.state.neighborCoords).map(index => (
+            {
+                type: 'line',
+                x0: mouseX,
+                y0: mouseY,
+                x1: neighCoords[index][0],
+                y1: neighCoords[index][1],
+                line: {
+                    color:'rgb(55, 128, 191)',
+                    width:3
+                }
+            }
+        ))
+
         let layout = {
             margin: { 'l': 0, 'r': 0, 't': 0, 'b': 0 },
             xaxis: { range: [0.1, 1.3] },
             yaxis: { range: [0.1, 1.3] },
+            shapes : lines,
             hovermode: 'closest',
             images: this.getImages(),
             autosize: true,
@@ -200,8 +229,8 @@ export default class MapExplorePage extends Component {
         closestNeighbors = {201671:5, 202194:3};
         let latentAndLabel = this.generateInterpSeed(closestNeighbors);
 
-        let latent = `[[${latentAndLabel[0]}]]`
-        let label = latentAndLabel[1]
+        let latent = `[[${latentAndLabel.latent}]]`
+        let label = latentAndLabel.label
 
         //seed is in format '[[fl,fl,fl,...#140]]
         //labels is in format [fl, fl, fl, ...#1000]
@@ -209,32 +238,66 @@ export default class MapExplorePage extends Component {
 
     }
 
+    onMouseHover(e) {
+        //let relCoords = this.convertToRelativeCoords(eventData.pageX, eventData.pageY);
+        //console.log("relative coords: " + relCoords);
+        //let plotlyCoords = this.convertToPlotlyData(relCoords[0], relCoords[1]);
+        //console.log("plotly coords: " + plotlyCoords);
+
+        this.setCoords(e);
+    }
+
+    setCoords(e){
+                //Get plotly coordinates
+                let relCoords = this.convertToRelativeCoords(e.pageX, e.pageY);
+                let plotlyCoords = this.convertToPlotlyData(relCoords[0], relCoords[1]);
+        
+                //find nearest enighbors on graph
+                let closestNeighbors = this.getNearestNeighbors(plotlyCoords, 2);
+                let neighborIDs = Object.keys(closestNeighbors);
+        
+                let neighCoords= {}
+                
+                for(let i = 0; i< neighborIDs.length; i++){
+                    let id = closestNeighbors[i];
+                    let index = closestNeighbors[id].index;
+                    let xCoord = this.state.data[0].x[index];
+                    let yCoord = this.state.data[0].y[index];
+                    neighCoords[i] = [xCoord, yCoord];
+                }
+        
+                this.setState({
+                    mouseCoords: plotlyCoords,
+                    neighborCoords: neighCoords
+                })
+    }
+
     /**
-     * 
-     * @param {[Int[],?Float?[]]} neighbors - Int[] is array of obj ids, ?Float?[] are the distances to those,
+     * Given an object of neighbors and their index and distance, returns a label and latent representing a generated image
+     * @param {ID: index, distance} neighbors - Int[] is array of obj ids, ?Float?[] are the distances to those,
      * of the closest neighbors to a click, where the number of neighbors taken  were decided earlier in the stack
+     * @returns {label, latent} - the generated label and latent based on the neighbors
      */
     generateInterpSeed(neighbors) {
-        let IDsToDistance = {201671:5, 202194:3}
-        const neighborIDs = Object.keys(IDsToDistance);
+        const neighborIDs = Object.keys(neighbors);
         const numNeigh = neighborIDs.length;
         let sumDist = 0
         for (let i = 0; i < numNeigh; i++){
-            sumDist = sumDist + IDsToDistance[neighborIDs[i]];
+            sumDist = sumDist + neighbors[neighborIDs[i]].distance;
         }
 
         let totalLatent = Array.apply(null, Array(140)).map(Number.prototype.valueOf,0);
         let totalLabel = Array.apply(null, Array(1000)).map(Number.prototype.valueOf,0);;
 
         for (let i = 0; i < numNeigh; i++){
-            let ratio = IDsToDistance[neighborIDs[i]]/sumDist;
+            let ratio = neighbors[neighborIDs[i]].distance/sumDist;
             let scaledLatent = this.scalarMultiplyVector(this.state.images[neighborIDs[i]].latents, ratio);
             let scaledLabel = this.scalarMultiplyVector(this.state.images[neighborIDs[i]].labels, ratio);
             totalLatent = this.addVector(totalLatent, scaledLatent);
             totalLabel = this.addVector(totalLabel, scaledLabel);
         }
 
-        return [totalLatent, totalLabel];
+        return {latent: totalLatent, label: totalLabel};
     }
 
     /**
@@ -332,13 +395,5 @@ export default class MapExplorePage extends Component {
     handleHover(eventData) {
         //console.log("HOVER DETECTED!");
         //console.log(eventData);
-    }
-
-    onMouseHover(eventData) {
-        //let relCoords = this.convertToRelativeCoords(eventData.pageX, eventData.pageY);
-        //console.log("relative coords: " + relCoords);
-        //let plotlyCoords = this.convertToPlotlyData(relCoords[0], relCoords[1]);
-        //console.log("plotly coords: " + plotlyCoords);
-
     }
 }
