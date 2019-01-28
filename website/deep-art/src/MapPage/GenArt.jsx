@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Box, Button, Image} from 'grommet';
+import { saveAs } from 'file-saver';
 
 /**
  * The box containing the generated image
@@ -12,7 +13,16 @@ export default class GenArt extends Component {
         this.state = {
             image: 0,
         }
+        this.saveImage = this.saveImage.bind(this);
     };
+
+    saveImage(){
+        let number = Math.floor(Math.random()*(10000));
+        let file = new File([this.props.data], "image"+number.toString()+".jpeg", {type: "image/jpeg"});
+        saveAs(file);
+
+    };
+
     render(){
 
         const ImageBox = () => (
@@ -22,16 +32,20 @@ export default class GenArt extends Component {
                 border=
                 {{ color: "black", size: "4px" }}
                 round="small"
-                style={{ padding: "0px", marginTop: "0px", marginLeft: "0px",}}
+                style={{ padding: "0px", marginTop: "10px", marginLeft: "10px",}}
             >
 
-                <Image src={this.props.image} fit="cover" style={{zIndex: "-1"}} />
+                <Image src={"data:image/jpeg;base64," + this.props.image} fit="cover" style={{zIndex: "-1"}} />
             </Box>
           );
 
         return(
         <Box direction="column" justify="between">
             <ImageBox />
+            {/* <Box pad="medium">
+                <Button label="Explore Similar" href={'/search'}/>
+                <Button label="Save Image" onClick={this.saveImage}/>
+            </Box> */}
         </Box>    
         );
     }
