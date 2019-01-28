@@ -79,7 +79,7 @@ class App extends Component {
               <Route exact path="/select" component={SelectPage}/>
               <Route exact path="/explore/:id" component={ExplorePage}/>
               <Route exact path="/graph" component={GraphPage}/>
-              <Route exact path="/map" component={MapPage}/>
+              <Route exact path="/map/:id" component={MapPage}/>
               <Route exact path="/search/:id" component={SearchPage}/>
               <Route exact path="/search" component={SearchPage}/>
             </Body>

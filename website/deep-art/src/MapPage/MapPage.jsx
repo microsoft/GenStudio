@@ -6,22 +6,40 @@ import { Box} from 'grommet';
 export default class MapExplorePage extends Component {
     constructor(props) {
         super(props);
-        this.state = { 
-            data: [],
-            layout: {}, 
-            images: {201671:{}, 202194:{}}, 
-            config: {},
-            mouseCoords: [],
-            neighborCoords: {} 
-        };
-
+        this.state =
+            {
+                data: [],
+                layout: {},
+                images: {},
+                imgObjectsExplore: [],
+                imgData: '',
+                apiData: {},
+                genImg: 0,
+                genSeed: [],
+                genLabel: [],
+                config: {}
+            };
         this.generateInterpSeed = this.generateInterpSeed.bind(this);
         this.setCoords = this.setCoords.bind(this);
+        this.coordsToLatentLabel = this.coordsToLatentLabel.bind(this);
     }
 
+    /**
+     * Gets the images of the art to be shown on the map
+     */
     getImages() {
-        let thumbnailRoot = "https://deepartstorage.blob.core.windows.net/public/thumbnails2/";
-        let paintingIds = [1002, 10024, 10025, 10026, 10028];
+    
+        let paintingIds = this.state.imgObjectsExplore.map(obj => obj.id).slice(0, 5);
+        //NOTE: currently images on the search page aren't all on the blob, so we are  
+        // hardcoding the painting Ids until we can know all relevant Ids exist on the blob
+        paintingIds = [22270, 22408, 22848, 23143, 35652];//, 202194, 324830, 324917, 544501]; //[1002, 10024, 10025, 10026, 10028];
+
+        if (Object.keys(this.state.images).length === 0) {
+            this.populateImageSeeds(paintingIds);
+
+        }
+
+        let thumbnailRoot = "https://deepartstorage.blob.core.windows.net/public/thumbnails4/";
         let paintingUrls = paintingIds.map(id => thumbnailRoot + id.toString() + ".jpg");
         let imageProps = {
             "xref": "x",
@@ -40,16 +58,16 @@ export default class MapExplorePage extends Component {
                 "y": locations[i][1]
             },
             imageProps));
-        console.log(images);
+
         return images;
     }
 
-    componentDidMount(){
-        this.populateImageSeeds();
-    }
-
-    populateImageSeeds(){
-        let imageIDs = Object.keys(this.state.images);
+    /**
+     * Given a list of art ID's, direct sets 'images' state to be {id: {latents, labels}}
+     * @param {Int[]} paintingIds - Array of art ID's
+     */
+    populateImageSeeds(paintingIds){
+        let imageIDs = paintingIds
         const imageToSeedUrl="https://deepartstorage.blob.core.windows.net/public/inverted/biggan1/seeds/";
         for (let i =0; i<imageIDs.length; i++){
             const fileName = imageIDs[i]+".json";
@@ -59,14 +77,19 @@ export default class MapExplorePage extends Component {
             Http.onreadystatechange = (e) => {
                 if (Http.readyState === 4) {
                     try {
+
                         let response = JSON.parse(Http.responseText);
                         let imagesString = JSON.stringify(this.state.images);
                         let imagesCopy = JSON.parse(imagesString);
+
+                        imagesCopy[imageIDs[i]] = { latents: [], labels: [] };
                         imagesCopy[imageIDs[i]].latents = response.latents;
                         imagesCopy[imageIDs[i]].labels = response.labels;
+
                         this.setState({
                             images: imagesCopy
                         });
+
                     } catch {
                         console.log('malformed request:' + Http.responseText);
                     }
@@ -82,21 +105,14 @@ export default class MapExplorePage extends Component {
      * @param {Float[]} labelArr - data version of a 1000 length array of floats between 0,1
      */
     getGenImage(seedArr, labelArr) {
-        //console.log("HELLO: "+seedArr)
 
-        // let max = labelArr.reduce(function(a, b) {
-        //     return Math.max(a, b);
-        // });
-        // let maxIndex = labelArr.indexOf(max);
-        let labels = labelArr.toString();
-        labels = `[[${labels}]]`;
+        let labels = `[[${labelArr.toString()}]]`;
 
         const apiURL = 'https://methack-api.azure-api.net/biggan/labels?subscription-key=43d3f563ea224c4c990e437ada74fae8';
         const Http = new XMLHttpRequest();
         const data = new FormData();
         data.append('seed',seedArr);
         data.append('labels', labels);
-        //data.append('category', maxIndex.toString());
 
         Http.responseType = "arraybuffer";
         Http.open("POST", apiURL);
@@ -179,6 +195,10 @@ export default class MapExplorePage extends Component {
     }
 
     render() {
+        const COMPLETE_NUMBER_IMAGES_TO_LOAD = 9;
+        if (this.state.imgObjectsExplore.length !== COMPLETE_NUMBER_IMAGES_TO_LOAD) {
+            return <div > </div>;
+        }
         return (
             <div >
                 <Box
@@ -202,7 +222,6 @@ export default class MapExplorePage extends Component {
                         data={this.getData()}
                         layout={this.getLayout()}
                         onHover={(figure) => this.handleHover(figure)}
-                        onInitialized={this.initializeData()}
                         style={{ width: "100%", height: "100%" }}
                         useResizeHandler={true}
                         config={{ displayModebar: false }}
@@ -212,44 +231,71 @@ export default class MapExplorePage extends Component {
         );          
     }
 
+    componentDidMount() {
+         //get id object from URL (gillian)
+        //populate into this.state.images = [132,12312,3,12,3231,366 ]
 
-    initializeData() {
         this.state.data = this.getData();
+
+        //Parse the art ID's from the url into an int[]
+        let url = this.props.match.params.id.toString();
+        url = decodeURIComponent(url);
+        let selectedArt = url.split('&')[0].slice(4);
+        let artArr = url.split('&')[1].slice(4);        
+        artArr = JSON.parse(artArr);
+
+        //Get the images for the art IDs
+        this.objIDsToImages(artArr);
+
+        //Generate the first generated image
+        this.firstTimeGenImage(selectedArt);
     }
 
     /* 
      * Handles when a custom coordinate in the graph has been selected. 
      */
     onMouseClick(e) {
+
+        let latentLabel = this.coordsToLatentLabel(e.pageX, e.pageY);
+
+        //latent is in format '[[fl,fl,fl,...#140]]
+        //labels is in format [fl, fl, fl, ...#1000]
+        this.getGenImage(latentLabel.latents, latentLabel.labels);
+    }
+
+    onMouseHover(e) {
+
+        this.setCoords(e.pageX, e.pageY);
+    }
+
+    /**
+     * Given cursor coordinates, returns the latens and labels of the corresponding generated image
+     * @param {int} xCoord - the x coord of the cursor, from an event
+     * @param {int} yCoord - the y coord of the cursor, from an event
+     * @returns {latents, labels} - the latents and labels based on the coordinates
+     */
+    coordsToLatentLabel(xCoord, yCoord) {
         //get plotly coordinates
-        let relCoords = this.convertToRelativeCoords(e.pageX, e.pageY);
+        let relCoords = this.convertToRelativeCoords(xCoord, yCoord);
         let plotlyCoords = this.convertToPlotlyData(relCoords[0], relCoords[1]);
         //find nearest neighbors on graph
         let closestNeighbors = this.getNearestNeighbors(plotlyCoords, 2);
-        closestNeighbors = {201671:5, 202194:3};
         let latentAndLabel = this.generateInterpSeed(closestNeighbors);
 
         let latent = `[[${latentAndLabel.latent}]]`
         let label = latentAndLabel.label
 
-        //seed is in format '[[fl,fl,fl,...#140]]
-        //labels is in format [fl, fl, fl, ...#1000]
-        this.getGenImage(latent, label);
-
+        return {latents: latent, labels: label}
     }
 
-    onMouseHover(e) {
-        //let relCoords = this.convertToRelativeCoords(eventData.pageX, eventData.pageY);
-        //console.log("relative coords: " + relCoords);
-        //let plotlyCoords = this.convertToPlotlyData(relCoords[0], relCoords[1]);
-        //console.log("plotly coords: " + plotlyCoords);
-
-        this.setCoords(e);
-    }
-
-    setCoords(e){
+    /**
+     * Give cursor coordinates, stores the cursor coordinates and the nearest neighbor coordinates to state
+     * @param {int} xCoord - the x coord of the cursor, from an event
+     * @param {int} yCoord - the y coord of the cursor, from an event
+     */
+    setCoords(xCoord, yCoord) {
                 //Get plotly coordinates
-                let relCoords = this.convertToRelativeCoords(e.pageX, e.pageY);
+                let relCoords = this.convertToRelativeCoords(xCoord, yCoord);
                 let plotlyCoords = this.convertToPlotlyData(relCoords[0], relCoords[1]);
         
                 //find nearest enighbors on graph
@@ -258,6 +304,7 @@ export default class MapExplorePage extends Component {
         
                 let neighCoords= {}
                 
+                //Populate neighCoords
                 for(let i = 0; i< neighborIDs.length; i++){
                     let id = closestNeighbors[i];
                     let index = closestNeighbors[id].index;
@@ -288,7 +335,6 @@ export default class MapExplorePage extends Component {
 
         let totalLatent = Array.apply(null, Array(140)).map(Number.prototype.valueOf,0);
         let totalLabel = Array.apply(null, Array(1000)).map(Number.prototype.valueOf,0);;
-
         for (let i = 0; i < numNeigh; i++){
             let ratio = neighbors[neighborIDs[i]].distance/sumDist;
             let scaledLatent = this.scalarMultiplyVector(this.state.images[neighborIDs[i]].latents, ratio);
@@ -386,6 +432,141 @@ export default class MapExplorePage extends Component {
         let plotlyX = x * (maxX - minX) + minX;
         let plotlyY = (1.0 - y) * (maxY - minY) + minY;// + 0.011;
         return [plotlyX, plotlyY];
+    }
+
+    /**
+     * sets state.imgObjectsExplore to contain a json object for each ID provided. object format: {img, id, key}
+     * @param {Int[]} objIDs - an array of art IDs
+     */
+    objIDsToImages(objIDs) {
+
+        const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails3/';
+
+        let apiURLs = objIDs.map(ID => (
+            {
+                url: baseURL + ID.toString(),
+                id: ID
+            }
+        ));
+
+        for (let i = 0; i < apiURLs.length; i++) {
+            const Http = new XMLHttpRequest();
+            Http.responseType = "arraybuffer";
+            Http.open("GET", apiURLs[i].url);
+            Http.send();
+            Http.onreadystatechange = (e) => {
+                if (Http.readyState === 4) {
+                    try {
+                        this.setState((oldState) => {
+                            return oldState.imgObjectsExplore.push(
+                                {
+                                    img: btoa(String.fromCharCode.apply(null, new Uint8Array(Http.response))),
+                                    id: apiURLs[i].id,
+                                    key: i
+                                }
+                            )
+                        })
+                    } catch (e) {
+                        console.log('malformed request:' + Http.responseText);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Sets up component state the first time for the selected image represented by id
+     * @param {int} id - object ID of the initial piece of art to generate an image for
+     */
+    firstTimeGenImage(id) {
+
+        const baseMetUrl = 'https://collectionapi.metmuseum.org/public/collection/v1/objects/';
+        let metApiUrl = baseMetUrl + id;
+
+        const Http = new XMLHttpRequest();
+        Http.open("GET", metApiUrl);
+        Http.send();
+        Http.onreadystatechange = (e) => {
+            if (Http.readyState === 4) {
+                try {
+                    let response = JSON.parse(Http.responseText);
+                    this.setState({
+                        imgData: response.primaryImage,
+                        apiData: response
+                    })
+
+                    const imageToSeedUrl = "https://deepartstorage.blob.core.windows.net/public/inverted/biggan1/seeds/";
+                    const fileName = response.objectID.toString() + ".json";
+                    const Http2 = new XMLHttpRequest();
+                    Http2.open("GET", imageToSeedUrl + fileName);
+                    Http2.send();
+                    Http2.onreadystatechange = (e) => {
+                        if (Http2.readyState === 4) {
+                            try {
+                                let response = JSON.parse(Http2.responseText);
+                                let seed = [response.latents].toString();
+                                seed = `[[${seed}]]`;
+                                let label = response.labels;
+                                this.setState({
+                                    genSeed: this.twoDArrayStringToOneDArray(seed),
+                                    genLabel: response.labels
+                                });
+                                this.getGenImage(seed, label);
+                            } catch {
+                                console.log('malformed request:' + Http2.responseText);
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.log('malformed request:' + Http.responseText);
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Converts a 2D array string into a 1D array of floats
+     * @param {string} arrayString - string version of a 1x? array of floats
+     * @returns {Float[]} - The 1D float array from arrayString
+     */
+    twoDArrayStringToOneDArray(arrayString) {
+        let numbers = arrayString.substring(2, arrayString.length - 2); //cut off the "[[]]"
+        let arrayNum = numbers.split(',').map(function (item) {
+            return parseFloat(item);
+        });
+        return (arrayNum);
+    }
+
+    /**
+     * Calls an API, sending a seed, and getting back an ArrayBuffer reprsenting that image
+     * This function directly saves the ArrayBuffer to state
+     * @param {string} seedArr - string version of a 1xSEED_LENGTH array of floats between -1,1  
+     */
+    getGenImage(seedArr, labelArr) {
+        let labels = labelArr.toString();
+        labels = `[[${labels}]]`;
+
+        const apiURL = 'https://methack-api.azure-api.net/biggan/labels?subscription-key=43d3f563ea224c4c990e437ada74fae8';
+        const Http = new XMLHttpRequest();
+        const data = new FormData();
+        data.append('seed', seedArr);
+        data.append('labels', labels);
+
+        Http.responseType = "arraybuffer";
+        Http.open("POST", apiURL);
+        Http.send(data);
+        Http.onreadystatechange = (e) => {
+            if (Http.readyState === 4) {
+                try {
+                    let imgData = btoa(String.fromCharCode.apply(null, new Uint8Array(Http.response)));
+                    this.setState({ genImg: imgData, genArr: Http.response });
+
+                } catch (e) {
+                    console.log('malformed request:' + Http.responseText);
+                }
+            }
+        }
     }
 
     /* 
