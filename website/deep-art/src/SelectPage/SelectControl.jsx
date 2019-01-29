@@ -2,35 +2,6 @@ import React, { Component } from 'react';
 import styled from "styled-components";
 
 import { Box, Button, Grommet, Select, Text} from 'grommet';
-import { grommet } from "grommet/themes";
-import { deepMerge } from "grommet/utils";
-
-const customRoundedTheme = deepMerge(grommet, {
-  global: {
-    control: {
-      border: {
-        radius: "24px"
-      }
-    },
-    input: {
-      weight: 400
-    },
-    font: {
-      size: "12px"
-    }
-  },
-  text: {
-    medium: "13px"
-  },
-  textInput: {
-    extend: "padding: 0 12px;"
-  },
-  select: {
-    control: {
-      extend: "padding: 3px 6px;"
-    }
-  }
-});
 
 const NUM_IMAGES_SEARCH_PAGE = 12;
 
@@ -83,7 +54,7 @@ export default class SearchControl extends Component {
             <Select
               focusIndicator={false}
               size="medium"
-              placeholder="Categories"
+              placeholder="select"
               value={value}
               options={options}
               onChange={({ option }) => this.onSelection(option)}

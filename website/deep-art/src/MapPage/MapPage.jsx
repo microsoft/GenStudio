@@ -212,9 +212,8 @@ export default class MapExplorePage extends Component {
 
                 <Box
                     id="plotlyBox"
-                    align='center'
-                    style={{ padding: '2px', marginTop: '25px', width: "100%", height: "100%" }}
-                    border={{ color: "black", size: "4px" }}
+                    style={{ padding: '2px', marginTop: '25px', width: "80%", height: "100%", justifySelf: "center" }}
+                    // border={{ color: "black", size: "4px" }}
                     round="small"
                     onMouseDown={(e) => this.onMouseClick(e)}
                     onMouseMove={(e) => this.onMouseHover(e)}

@@ -5,8 +5,7 @@ import styled from "styled-components";
 const GridWrapper = styled(Box)`
     flex-grow: 1;
     direction: row;
-    align-items: center;
-    padding-top: 2rem;      
+    align-items: center;     
 `
 
 export default class ResultArt extends Component {
@@ -23,7 +22,7 @@ export default class ResultArt extends Component {
         return(
             <GridWrapper>
                 <Grid
-                    columns={["small", "small","small", "small"]}
+                    columns={["small", "small", "small", "small", "small", "small"]}
                     rows={"meduim"}
                     gap="medium"
                     margin="40px"
@@ -36,8 +35,8 @@ export default class ResultArt extends Component {
                             onClick={() => { this.props.selectImage(image.id) }}
                         >
                             <Box border=
-                                {this.props.selectedImage === image.id ? { color: "accent-1", size: "4px" } : { color: "black", size: "4px" }}
-                                round="small"
+                                {this.props.selectedImage === image.id ? { color: "#000000", size: "2px" } : { color: "white", size: "2px" }}
+                                //round="small"
                                 height="small"
                                 width="small"
                                 key={image.id}

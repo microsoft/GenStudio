@@ -178,15 +178,16 @@ export default class GraphPage extends Component {
                 { name: 'right', start: [2, 0], end: [2, 1] },
             ]}
             columns={['medium','flex','small']}
-            rows={['small','flex']}
+            rows={['xsmall','flex']}
             gap='small'
+            style={{paddingLeft: "3rem"}}
             >
-                <Box gridArea='search' background="brand" >
+                <Box gridArea='search' background="accent-3" style={{justifyItems: "center"}}>
                     <SearchControl sendChange={this.getSearch}/>
                     {/* <Button label={"search"} onClick={this.makeSearch} margin="medium"/> */}
                 </Box>
 
-                <Box gridArea='tags' background="brand">
+                <Box gridArea='tags' background="accent-3" style={{justifyItems: "start"}}>
                     <TagList tags={this.state.tags} tagData={this.state.tagData} tagChange={this.getTagChange}/>
                 </Box>
 
