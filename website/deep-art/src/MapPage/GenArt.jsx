@@ -32,10 +32,10 @@ export default class GenArt extends Component {
     getSimilarArtID(){
         //let file = new File([this.props.data], "image.jpeg", {type: "image/jpeg"});
 
-        let file = "data:image/jpeg;base64," + this.props.image;
+        let file = this.props.image;
 
-        //const apiURL = 'https://imagedocker.azurewebsites.net/FindSimilarImages';
-        const apiURL = 'https://metimagesearch.azurewebsites.net/neighbors?neighbors=1';
+        const apiURL = 'https://imagedocker2.azurewebsites.net/FindSimilarImages/Byte';
+        //const apiURL = 'https://metimagesearch.azurewebsites.net/neighbors?neighbors=1';
         const Http = new XMLHttpRequest();
         const data = new FormData();
         data.append('image', file);
