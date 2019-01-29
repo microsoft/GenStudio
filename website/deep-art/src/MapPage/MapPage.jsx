@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Plot from 'react-plotly.js';
 import GenArt from './GenArt.jsx';
-import { Box} from 'grommet';
+import { Box } from 'grommet';
+import Softmax from 'softmax-fn';
 
 export default class MapExplorePage extends Component {
     constructor(props) {
@@ -330,11 +331,16 @@ export default class MapExplorePage extends Component {
         for (let i = 0; i < numNeigh; i++){
             sumDist = sumDist + neighbors[neighborIDs[i]].distance;
         }
+        let distanceVector = Object.keys(neighbors).map(id => neighbors[id].distance);
+        console.log("distance vector: " + distanceVector);
+        distanceVector = Object.keys(neighbors).map(id => neighbors[id].distance * -5.0);
 
+        let ratios = Softmax(distanceVector);
+        console.log("ratios vector: " + ratios);
         let totalLatent = Array.apply(null, Array(140)).map(Number.prototype.valueOf,0);
         let totalLabel = Array.apply(null, Array(1000)).map(Number.prototype.valueOf,0);;
         for (let i = 0; i < numNeigh; i++){
-            let ratio = neighbors[neighborIDs[i]].distance/sumDist;
+            let ratio = ratios[i];//neighbors[neighborIDs[i]].distance/sumDist;
             let scaledLatent = this.scalarMultiplyVector(this.state.images[neighborIDs[i]].latents, ratio);
             let scaledLabel = this.scalarMultiplyVector(this.state.images[neighborIDs[i]].labels, ratio);
             totalLatent = this.addVector(totalLatent, scaledLatent);
@@ -404,7 +410,6 @@ export default class MapExplorePage extends Component {
             //remove the smallest distance we just found
             distancesUpdated.splice(distancesUpdated.indexOf(minVal), 1);
         }
-
         return response;
     }
 
