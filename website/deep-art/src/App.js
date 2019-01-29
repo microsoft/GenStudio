@@ -24,20 +24,27 @@ const gTheme = {
       color: '#383B3E',
     },
     colors: {
-      brand: "#DFD8BF",
-      "accent-1": "#d49e49", //mustardy
-      "accent-2": "#745c74", //purple
-      "accent-3": "#c59661",
+      brand: "#E8E2D3",
+      "accent-1": "#000000", //black
+      "accent-5": "#d49e49", //mustardy
+      "accent-2": "#383B3E", //font grey
+      "accent-3": "#FFFFFF",
+      "accent-4": "#FFF8DC", // yellow background
+      "accent-6": "#000000",
     },
     control:{
       border:{
         radius: "12px"
       }
+    },
+    input:{
+      weight: "550"
     }
   },
   button: {
     border: {
-      color: "accent-1"
+      color: "accent-1",
+      width: "1.5px",
     },
   },
   select: {
@@ -47,8 +54,9 @@ const gTheme = {
   },
   textInput: {
     extend: {
-      "border-color": "#d49e49",
-      "box-shadow": "0px 0px #d49e49",
+      "border-color": "#a4a4a4",
+      "border-width": "1.5px",
+      "box-shadow": "0px 0px #a4a4a4",
     }
   }
 };
@@ -58,9 +66,13 @@ const mergeTheme = deepMerge(grommet, gTheme);
 
 const Body = styled.section`
   flex: 1;
-  background: #F1F1D4;
+  background: #FFFFFF;
   z-Index: 0;
 `;
+
+//background: #FFF8DC;
+//background: #F1F1D4
+//brand: "#DFD8BF",
 
 class App extends Component {
   render() {
@@ -71,15 +83,16 @@ class App extends Component {
             direction="column"
             style={{height: "100%", width: "100%"}}
           >
-            <header style={{zIndex: "1"}}>
+            {/* <header style={{zIndex: "1"}}>
               <NavBar />
-            </header>
+            </header> */}
             <Body>
+              <NavBar />
               <Route exact path="/" component={SelectPage}/>
               <Route exact path="/select" component={SelectPage}/>
               <Route exact path="/explore/:id" component={ExplorePage}/>
               <Route exact path="/graph" component={GraphPage}/>
-              <Route exact path="/map" component={MapPage}/>
+              <Route exact path="/map/:id" component={MapPage}/>
               <Route exact path="/search/:id" component={SearchPage}/>
               <Route exact path="/search" component={SearchPage}/>
             </Body>

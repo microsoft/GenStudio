@@ -37,7 +37,7 @@ export default class SelectPage extends Component {
         //this.objIDsToImages([22270, 22408, 23143, 25114, 35652, 201671, 202194, 232038, 324830, 324917, 544501, 751402]);
 
         //Purses, Armor, and Vessels
-        this.objIDsToImages([ 116884, 79226, 70467, 116963, 22270, 22408, 23143, 25114, 35652, 201671, 202194, 232038, 324830, 324917, 544501, 751402]);
+        this.objIDsToImages([ 22270, 22408, 23143, 25114, 35652, 201671, 202194, 232038, 324830, 324917, 544501, 751402]);
 
     }
 
@@ -108,7 +108,8 @@ export default class SelectPage extends Component {
 
     generateArtUrlSuffix() {
         const NUMBER_OF_SEARCH_IMAGES = this.state.imgObjects.length;
-        let urlBase = "/explore/";
+        let urlBase = "/map/";
+        //return urlBase;
         if (this.state.imgObjects.length === NUMBER_OF_SEARCH_IMAGES) {
             //generates a random index for which to eliminate the extra met art
             //idea is we randomly select which curated art to move to the explore page
@@ -140,22 +141,22 @@ export default class SelectPage extends Component {
                     { name: 'buttons', start: [1, 3], end: [1, 3]},
                     { name: 'right', start: [2, 0], end: [2, 3] },
                 ]}
-                columns={['flex','xlarge','flex']}
-                rows={['small','xsmall','flex','xsmall']}
+                columns={['flex','80rem','flex']}
+                rows={['5rem','3rem','flex','xsmall']}
                 gap='small'
             >
                 <Box gridArea='desc' >
                     <Paragraph
-                        style={{ textAlign: 'center', marginTop: '20px' }}
+                        style={{ textAlign: 'center', marginTop: '40px' }}
                         alignSelf={"center"}
                         size={"large"}
                     >
-                    Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
+                    Select an image to enter the AI studio
                     </Paragraph>
                 </Box>
                 <Box gridArea='tags' direction='row' align='center' justify="center">
-                    <Text>
-                        Choose a category:
+                    <Text size={"large"}>
+                        Filter by category:
                     </Text>
                     <SelectControl
                         sendObjectIds={this.getImageIDs}
@@ -172,11 +173,11 @@ export default class SelectPage extends Component {
                 <Box gridArea='buttons'>
                     <Box direction='row' style={{justifyContent: 'space-around'}}>
                         <Box>
-                            <Button label='Generate Image' style={{textDecoration: "none"}} href={this.generateArtUrlSuffix()} />
+                            <Button label='Generate' style={{textDecoration: "none", fontWeight: "500"}} href={this.generateArtUrlSuffix()} />
                         </Box>
-                        <Box>
+                        {/* <Box>
                             <Button label='Explore Similar' style={{textDecoration: "none"}} href={'/search/'+this.state.selectedImage.toString()}/>
-                        </Box>
+                        </Box> */}
                     </Box>
 
                     

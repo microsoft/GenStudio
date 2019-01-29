@@ -20,23 +20,32 @@ export default class ResultBox extends Component {
 
     render(){
         return(
-            <Card raised={false} elevation={0} style={{ background: "#F1F1D4", display: "flex", flexFlow:"column wrap", height:"fit-content", alignItems:"center"}}>
-                <CardActionArea href={this.props.data.LinkResource} style={{display: "flex", justifyItems:"center", width: "fit-content"}}>
+            <Card raised={false} elevation={0} style={{ background: "#FFFFFF", display: "flex", flexFlow:"column wrap", height:"fit-content", alignItems:"center",}}>
+                <CardActionArea href={this.props.data.LinkResource} style={{display: "flex", justifyItems:"start"}}>
                     <CardMedia 
                         component="img"
                         src={this.props.data.PrimaryImageUrl}
-                        style={{alignSelf:"center", alignItems:"center", maxWidth:"fit-content", maxHeight: "500px"}}
+                        style={{
+                            alignSelf:"center", 
+                            alignItems:"ceneter", 
+                            maxWidth:"500px", width:"fit-content", maxHeight: "500px", objectFit:'contain'}}
                     />
                 </CardActionArea>
-                <CardContent>
-                    <Typography component="p">
-                    {this.props.data.Title}
+                <CardContent style={{flexFlow: "column wrap", alignSelf:"start"}}>
+                    <Typography component="p" style={{fontWeight: "600", fontSize: "18px"}}>
+                        {this.props.data.Title}
                     </Typography>
+
+                    <Typography component="p">
+                        {this.props.data.Department}
+                    </Typography>
+
                 </CardContent>
                 
             </Card>
         )
     }
+
 
     // render(){
     //     let text = `${this.props.data.Title}`

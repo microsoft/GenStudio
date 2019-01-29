@@ -16,7 +16,7 @@ export default class TagList extends Component {
 
     render(){
         return(
-            <Box direction="column" pad="small" margin="small">
+            <Box direction="column">
                 {this.props.tags.map(label => (
                     <CheckBox
                     key={label}
