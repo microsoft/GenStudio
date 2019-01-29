@@ -83,9 +83,6 @@ class App extends Component {
             direction="column"
             style={{height: "100%", width: "100%"}}
           >
-            {/* <header style={{zIndex: "1"}}>
-              <NavBar />
-            </header> */}
             <Body>
               <NavBar />
               <Route exact path="/" component={SelectPage}/>
