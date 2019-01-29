@@ -180,7 +180,7 @@ export default class GraphPage extends Component {
             columns={['medium','flex','small']}
             rows={['xsmall','flex']}
             gap='small'
-            style={{paddingLeft: "3rem"}}
+            style={{paddingLeft: "3rem", paddingRight: "3rem"}}
             >
                 <Box gridArea='search' background="accent-3" style={{justifyItems: "center"}}>
                     <SearchControl sendChange={this.getSearch}/>
