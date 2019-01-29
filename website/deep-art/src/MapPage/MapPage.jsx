@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Plot from 'react-plotly.js';
 import GenArt from './GenArt.jsx';
-import { Box } from 'grommet';
+import { Box, Grid, Text } from 'grommet';
 import Softmax from 'softmax-fn';
 
 export default class MapExplorePage extends Component {
@@ -197,40 +197,92 @@ export default class MapExplorePage extends Component {
         return layout
     }
 
+    // render() {
+    //     const COMPLETE_NUMBER_IMAGES_TO_LOAD = 9;
+    //     if (this.state.imgObjectsExplore.length !== COMPLETE_NUMBER_IMAGES_TO_LOAD) {
+    //         return <div > </div>;
+    //     }
+    //     return (
+    //         <div >
+    //             <Box
+    //                 align= 'center'
+    //                 style= {{ marginTop: '25px' }}
+    //             >
+    //                 <GenArt image={this.state.genImg} data={this.state.genArr} />
+    //             </Box>
+
+    //             <Box
+    //                 id="plotlyBox"
+    //                 style={{ padding: '2px', marginTop: '25px', width: "80%", height: "100%", justifySelf: "center" }}
+    //                 // border={{ color: "black", size: "4px" }}
+    //                 round="small"
+    //                 onMouseDown={(e) => this.onMouseClick(e)}
+    //                 onMouseMove={(e) => this.onMouseHover(e)}
+    //             >
+
+    //                 <Plot 
+    //                     data={this.getData()}
+    //                     layout={this.getLayout()}
+    //                     onHover={(figure) => this.handleHover(figure)}
+    //                     style={{ width: "100%", height: "100%" }}
+    //                     useResizeHandler={true}
+    //                     config={{ displayModebar: false }}
+    //                 />
+    //             </Box>
+    //         </div>
+    //     );          
+    // }
+
     render() {
         const COMPLETE_NUMBER_IMAGES_TO_LOAD = 9;
         if (this.state.imgObjectsExplore.length !== COMPLETE_NUMBER_IMAGES_TO_LOAD) {
             return <div > </div>;
         }
         return (
-            <div >
-                <Box
-                    align= 'center'
-                    style= {{ marginTop: '25px' }}
-                >
+            <Grid
+                fill="horizontal"
+                areas={[
+                    { name: 'text', start: [0, 0], end: [0, 1] },
+                    { name: 'image', start: [0, 1], end: [0, 1] },
+                    { name: 'map', start: [1, 1], end: [1, 1] },  
+                ]}
+                columns={['medium','flex']}
+                rows={["xsmall","flex"]}
+                gap='small'
+                style={{paddingLeft: "3rem", paddingRight: "3rem"}}
+            >
+
+            <Box gridArea='text' style={{justifyItems: "center"}}>
+                <Text>
+                    Oranges are just sunburnt lemons
+                </Text>
+            </Box>
+
+            <Box gridArea='image' direction='column' align="center" style={{justifyItems: "center"}}>
                     <GenArt image={this.state.genImg} data={this.state.genArr} />
-                </Box>
+                
+            </Box>
 
-                <Box
-                    id="plotlyBox"
-                    style={{ padding: '2px', marginTop: '25px', width: "80%", height: "100%", justifySelf: "center" }}
-                    // border={{ color: "black", size: "4px" }}
-                    round="small"
-                    onMouseDown={(e) => this.onMouseClick(e)}
-                    onMouseMove={(e) => this.onMouseHover(e)}
-                >
+            <Box gridArea='map' background="accent-3"
+                id="plotlyBox"
+                style={{ padding: '2px', marginTop: '25px', width: "100%", justifySelf: "center", justifyItems: "center" }}
+                // border={{ color: "black", size: "4px" }}
+                round="small"
+                onMouseDown={(e) => this.onMouseClick(e)}
+                onMouseMove={(e) => this.onMouseHover(e)}
+            >
+                <Plot 
+                    data={this.getData()}
+                    layout={this.getLayout()}
+                    onHover={(figure) => this.handleHover(figure)}
+                    style={{}}
+                    useResizeHandler={true}
+                    config={{ displayModebar: false }}
+                />
+            </Box>
 
-                    <Plot 
-                        data={this.getData()}
-                        layout={this.getLayout()}
-                        onHover={(figure) => this.handleHover(figure)}
-                        style={{ width: "100%", height: "100%" }}
-                        useResizeHandler={true}
-                        config={{ displayModebar: false }}
-                    />
-                </Box>
-            </div>
-        );          
+            </Grid>
+        );
     }
 
     componentDidMount() {
