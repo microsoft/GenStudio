@@ -187,8 +187,8 @@ export default class MapExplorePage extends Component {
 
         let layout = {
             margin: { 'l': 0, 'r': 0, 't': 0, 'b': 0 },
-            xaxis: { range: [0.1, 1.3] },
-            yaxis: { range: [0.1, 1.3] },
+            xaxis: { range: [0.1, 1.3] , fixedrange: true},
+            yaxis: { range: [0.1, 1.3] , fixedrange: true},
             shapes : lines,
             hovermode: 'closest',
             images: this.getImages(),
@@ -226,7 +226,7 @@ export default class MapExplorePage extends Component {
                         onHover={(figure) => this.handleHover(figure)}
                         style={{ width: "100%", height: "100%" }}
                         useResizeHandler={true}
-                        config={{ displayModebar: false }}
+                        config={{ displayModeBar: false }}
                     />
                 </Box>
             </div>
