@@ -11,6 +11,7 @@
     "jpeg-js": "^0.3.4",
     "material-ui-icons": "^1.0.0-beta.36",
     "plotly.js": "^1.44.0",
+    "plotly.js-dist": "^1.44.1",
     "react": "^16.7.0",
     "react-bootstrap": "^1.0.0-beta.3",
     "react-dom": "^16.7.0",
