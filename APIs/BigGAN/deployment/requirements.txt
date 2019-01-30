@@ -2,7 +2,8 @@ flask
 redis
 flask_cors
 numpy
-tensorflow
+tensorflow-gpu
 tensorflow_hub
 Pillow
 scipy
+protobuf

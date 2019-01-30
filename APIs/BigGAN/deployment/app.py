@@ -1,27 +1,33 @@
-from flask import Flask, request, send_file
-from redis import Redis, RedisError
-from flask_cors import CORS
+import json
 import os
 import socket
-import cStringIO
+from io import BytesIO
 import numpy as np
 import PIL.Image
-from scipy.stats import truncnorm
 import tensorflow as tf
 import tensorflow_hub as hub
-import json
+from scipy.stats import truncnorm
+from flask import Flask, request, send_file
+from flask_cors import CORS
+from redis import Redis, RedisError
 
 app = Flask(__name__)
 CORS(app)
 
 # Initialize the module
+filepath = os.path.dirname(os.path.abspath(__file__))
+filepath = os.path.join(filepath, 'tf_hub_dir')
+
+os.environ["TFHUB_CACHE_DIR"] = filepath
 module_path = 'https://tfhub.dev/deepmind/biggan-256/2'
 
 tf.reset_default_graph()
 module = hub.Module(module_path)
+
 inputs = {k: tf.placeholder(v.dtype, v.get_shape().as_list(), k)
           for k, v in module.get_input_info_dict().items()}
 output = module(inputs)
+print("start3")
 
 input_z = inputs['z']
 input_y = inputs['y']
@@ -31,6 +37,11 @@ dim_z = input_z.shape.as_list()[1]
 vocab_size = input_y.shape.as_list()[1]
 
 # Set up helper functions
+def truncated_z_sample(batch_size, truncation=1., seed=None):
+  state = None if seed is None else np.random.RandomState(seed)
+  values = truncnorm.rvs(-2, 2, size=(batch_size, dim_z), random_state=state)
+  return truncation * values
+
 def one_hot(index, vocab_size=vocab_size):
   index = np.asarray(index)
   if len(index.shape) == 0:
@@ -48,10 +59,10 @@ def one_hot_if_needed(label, vocab_size=vocab_size):
   assert len(label.shape) == 2
   return label
 
-def sample_with_category(sess, noise, category, truncation=1., batch_size=8,
+def sample_with_category(sess, noise, label, truncation=1., batch_size=8,
            vocab_size=vocab_size):
   noise = np.asarray(noise)
-  label = np.asarray(category)
+  label = np.asarray(label)
   num = noise.shape[0]
   if len(label.shape) == 0:
     label = np.asarray([label] * num)
@@ -115,7 +126,7 @@ def imgrid(imarray, cols=5, pad=1):
 
 def imbytes(array):
   array = np.asarray(array, dtype=np.uint8)
-  imgBytes = cStringIO.StringIO()
+  imgBytes = BytesIO()
   PIL.Image.fromarray(array).save(imgBytes, 'jpeg')
   imgBytes.seek(0)
   return imgBytes
