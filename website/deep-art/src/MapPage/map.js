@@ -80,9 +80,13 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
         autosize: true
     };
 
+    /* ---------------------------------------------------------------------------
+     * ---------------------------MAIN METHOD CALLS-------------------------------
+     * ---------------------------------------------------------------------------
+     */
+
+
     populateImageSeeds(paintingIds);
-    //201671
-    //firstGenID
     firstTimeGenImage(firstGenID);
 
     Plotly.plot(divName, data, layout,
@@ -92,6 +96,12 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
             displayModeBar: false
         }
     ).then(attach);
+
+
+    /* ---------------------------------------------------------------------------
+     * ---------------------------------------------------------------------------
+     * ---------------------------------------------------------------------------
+     */
 
     /**
    * Calls an API, sending a seed, and getting back an ArrayBuffer reprsenting that image
