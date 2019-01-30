@@ -8,11 +8,15 @@ import setupPlotly from './map.js';
 export default class MapExplorePage extends Component {
     constructor(props) {
         super(props);
-        this.state ={};
+        this.state ={
+            cursorPoint: null
+        };
     }
 
     componentDidMount() {
-        setupPlotly(this);
+        let firstID = 201671;
+        let objIDs = [22270, 22408, 22848, 23143, 35652, 201671, 202194];
+        setupPlotly(this, objIDs, firstID);
     }
 
     render() {
@@ -37,7 +41,7 @@ export default class MapExplorePage extends Component {
             </Box>
 
             <Box gridArea='image' direction='column' align="center" style={{justifyItems: "center"}}>
-                    <GenArt image={this.state.genImg} data={this.state.genArr} />
+                    <GenArt point={this.state.cursorPoint} image={this.state.genImg} data={this.state.genArr} />
                 </Box>
 
                 <Box gridArea='map' background="accent-3"

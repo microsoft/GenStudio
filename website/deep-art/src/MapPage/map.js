@@ -1,12 +1,13 @@
 import Softmax from 'softmax-fn';
 
-export default function setupPlotly(stateHolder) {
+export default function setupPlotly(stateHolder, objIDs, firstID) {
     var Plotly = require('plotly.js-dist');
     const divName = 'myPlot'
     const myPlot = document.getElementById(divName);
     const d3 = Plotly.d3;
-    const nNeighbors = 5;
-    const startCoords = [.5, .5];
+    const nNeighbors = 7;
+    const firstGenID = firstID;
+    const startCoords = [.7, .7];
     const minY = 0.1;
     const maxY = 1.3;
     const minX = 0.1;
@@ -15,12 +16,14 @@ export default function setupPlotly(stateHolder) {
     const thumbnailRoot = "https://deepartstorage.blob.core.windows.net/public/thumbnails4/";
     var lastTimeCalled = Date.now();
 
-    const paintingIds = [22270, 22408, 22848, 23143, 35652];
+    //const paintingIds = [22270, 22408, 22848, 23143, 35652];
+    const paintingIds = objIDs;
     const idToIndex = paintingIds.map((x,i) => [x,i]).reduce(function (map, obj) {
             map[obj[0]] = obj[1];
             return map;
         }, {});
-    const locations = [[0.2, 0.8], [0.4, 0.4], [0.8, 0.6], [1.1, 0.8], [0.6, 1.0]];
+    //const locations = [[0.2, 0.8], [0.4, 0.4], [0.8, 0.6], [1.1, 0.8], [0.6, 1.0]];
+    const locations = [[0.7,1.15], [1.15, 1.0], [1.2,.5], [0.9,.25], [.5, .25], [.2, .5], [.25, 1.0]]
 
     const paintingUrls = paintingIds.map(id => thumbnailRoot + id.toString() + ".jpg");
     const imageProps = {
@@ -58,16 +61,16 @@ export default function setupPlotly(stateHolder) {
             name: 'primary',
             layer: "above",
             marker: {
-                size: 35,
-                color: 'rgb(200, 200, 200)',
-                symbol: "star"
+                size: 15,
+                color: 'rgb(0, 0, 0)',
+                symbol: "square",
             },
         }
     ];
 
     const layout = {
         showlegend: false,
-        shapes: getLinesToNeighbors(startCoords, locations),
+        //shapes: getLinesToNeighbors(startCoords, locations),
         margin: { 'l': 0, 'r': 0, 't': 0, 'b': 0 },
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor: 'rgba(0,0,0,0)',
@@ -82,8 +85,9 @@ export default function setupPlotly(stateHolder) {
      * ---------------------------------------------------------------------------
      */
 
-    populateImageSeeds(paintingIds)
-    firstTimeGenImage(201671)
+
+    populateImageSeeds(paintingIds);
+    firstTimeGenImage(firstGenID);
 
     Plotly.plot(divName, data, layout,
         {
@@ -306,7 +310,12 @@ export default function setupPlotly(stateHolder) {
 
     function updatePOI(point) {
         Plotly.restyle(divName, { 'x': [[point[0]]], 'y': [[point[1]]] }, 1);
-        Plotly.relayout(divName, { 'shapes': getLinesToNeighborsOnPlot(point) });
+        let roundedX = Math.round(1000.0*point[0])/1000.0;
+        let roundedY = Math.round(1000.0*point[1])/1000.0;
+        stateHolder.setState({
+            cursorPoint: [roundedX,roundedY]
+        });
+        //Plotly.relayout(divName, { 'shapes': getLinesToNeighborsOnPlot(point) });
         const distancesAndIds = getNearestNeighborsOnPlot(point).map(nn =>
             [calculateDistance(nn.slice(0, 2), point), paintingIds[nn[2]]]);
         const ids = distancesAndIds.map(p => p[1]);
