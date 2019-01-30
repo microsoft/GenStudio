@@ -17,8 +17,11 @@ export default class ResultArt extends Component {
         }
     };
 
-    render(){
-
+    render() {
+        let imagesToDisplay = this.props.images;
+        if (this.props.categorySelected) {
+            imagesToDisplay = imagesToDisplay.slice(0, 6);
+        }
         return(
             <GridWrapper>
                 <Grid
@@ -27,7 +30,7 @@ export default class ResultArt extends Component {
                     gap="medium"
                     margin="40px"
                 >
-                    {this.props.images.map((image, i) => (
+                    {imagesToDisplay.map((image, i) => (
                         <Button
                             hoverIndicator
                             style={{ outline: 'none' }}

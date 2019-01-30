@@ -25,7 +25,7 @@ export default class SearchControl extends Component {
     onSelection(category) {
         this.state.selectedValue = category;
         let curatedImages = this.props.curatedImages;
-        let IDs = curatedImages[category].slice(0,6);
+        let IDs = curatedImages[category];//.slice(0,7);
         this.props.clearOldImages();
         this.props.sendObjectIds(IDs);
     }

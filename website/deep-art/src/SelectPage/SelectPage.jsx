@@ -10,15 +10,22 @@ export default class SelectPage extends Component {
         super(props);
         this.state = {
             curatedImages: {
-                'Vases': [249414, 249414, 249414, 249414, 249414, 249414,
-                    249414, 249414, 249414, 249414, 249414, 249414, 249414],
-                'Armors': [23143, 23143, 23143, 23143, 23143, 23143, 23143],
-                'Teapots': [44073, 44073, 44073, 44073, 44073, 44073, 44073],
-                'Ewers': [662161, 662161, 662161, 662161, 662161, 662161, 662161],
-                'Purses': [44072, 44072, 44072, 44072, 44072, 44072, 44072],
-                'Goblets': [325676, 325676, 325676, 325676, 325676, 325676, 325676],
+                'Vases': [9583, 9512, 9408, 9405, 9402, 9397, 9393, 153112, 2556, 9396,
+                        9232, 9233, 9249, 9363, 9260, 9252, 9297, 9250, 9299],
+                'Armors': [22270,22408,22848,23143,25114,34652,35652,24937],
+                'Teapots': [8348, 8354, 8355, 8375, 8385, 8391, 8396, 8401, 8412, 8423,
+                        42323, 193189, 194634, 197523, 198032],
+                'Ewers': [201671, 202194, 232038, 324830, 324917, 544501, 751402,
+                    446900, 445269, 200171, 200117, 195775, 194243, 49208,
+                    42370, 447077, 448260, 449058, 460715, 453457, 453306, 452036,
+                    4551609, 447072, 444967, 44810],
+                'Purses': [84595,116964,116963,116963,116944,116884,79226,70467],
+                'Goblets': [207897, 4081, 4086, 4101, 4102, 4124, 187987, 239826],
                 'landingpage': [42447, 42447, 42447, 42447, 42447, 42447, 42447,
-                                42447, 42447, 42447, 42447, 42447]
+                    42447, 42447, 42447, 42447, 42447],
+                'preppedPairs1': [42447, 249414, 249414, 249414, 249414, 249414, 249414],
+                'preppedPairs2': [42447, 249414, 42447, 249414, 249414, 249414, 249414]
+
             }
 ,
             selectedIndex: 0,
@@ -26,7 +33,8 @@ export default class SelectPage extends Component {
                 id: 0,
                 key: -1
             },
-            imgObjects: []
+            imgObjects: [],
+            categorySelected: false
         };
 
         this.changeSelectedImage = this.changeSelectedImage.bind(this);
@@ -65,6 +73,7 @@ export default class SelectPage extends Component {
     }
 
     clearOldImages() {
+        this.state.categorySelected = true;
         this.state.imgObjects = []; 
     }
 
@@ -107,10 +116,23 @@ export default class SelectPage extends Component {
 
     generateArtUrlSuffix() {
         let urlBase = "/map/";
-        let idList = this.state.imgObjects.map(ob => ob.id);
+        let idList = [];
+        if (this.state.categorySelected) {
+            idList = this.state.imgObjects.slice(0, 7).map(ob => ob.id);
+        } else {
+            //todo: make a random selection between the pairs
+            //currently just the same ones each time
+            if (this.state.selectedImage.id in this.state.curatedImages['preppedPairs1']) {
+                idList = this.state.curatedImages['preppedPairs1'];
+            } else {
+                idList = this.state.curatedImages['preppedPairs2'];
+            }
+            
+        }
+        
         let url = "?id=" + this.state.selectedImage.id.toString()
             + "&ids=[" + idList.toString() + "]";
-        console.log("url: " + url);
+        //console.log("url: " + url);
         url = encodeURIComponent(url);
         return urlBase + url;
     }
@@ -154,6 +176,7 @@ export default class SelectPage extends Component {
                         images={this.state.imgObjects}
                         selectedImage={this.state.selectedImage}
                         selectImage={this.changeSelectedImage}
+                        categorySelected={this.state.categorySelected}
                     />
                 </Box>
                 <Box gridArea='buttons'>
