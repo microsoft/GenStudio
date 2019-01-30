@@ -179,6 +179,7 @@ export default class SelectPage extends Component {
                             <Button label='Explore Similar' style={{textDecoration: "none"}} href={'/search/'+this.state.selectedImage.toString()}/>
                         </Box> */}
                     </Box>
+                    
 
                     
                 </Box>

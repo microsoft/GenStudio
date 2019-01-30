@@ -5,13 +5,13 @@ export default function setupPlotly(stateHolder) {
     const divName = 'myPlot'
     const myPlot = document.getElementById(divName);
     const d3 = Plotly.d3;
-    const nNeighbors = 3;
+    const nNeighbors = 5;
     const startCoords = [.5, .5];
     const minY = 0.1;
     const maxY = 1.3;
     const minX = 0.1;
     const maxX = 1.3;
-    const TIME_TILL_CALL = 1300;
+    const TIME_TILL_CALL = 350;
     const thumbnailRoot = "https://deepartstorage.blob.core.windows.net/public/thumbnails4/";
     var lastTimeCalled = Date.now();
 

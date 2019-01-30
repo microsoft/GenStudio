@@ -3,6 +3,7 @@ import { Box, Button, Image} from 'grommet';
 import { saveAs } from 'file-saver';
 
 import { Redirect } from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 /**
  * The box containing the generated image
@@ -37,7 +38,7 @@ export default class GenArt extends Component {
         //const apiURL = 'https://imagedocker2.azurewebsites.net/FindSimilarImages/Byte';
         //const apiURL = 'https://metimagesearch.azurewebsites.net/neighbors?neighbors=1';
         const apiURL = 'https://methack-api.azure-api.net/ImageSimilarity/FindSimilarImages/Byte'
-        const key = '?subscription-key=43d3f563ea224c4c990e437ada74fae8'
+        const key = '?subscription-key=43d3f563ea224c4c990e437ada74fae8&neighbors=1'
         const Http = new XMLHttpRequest();
         const data = new FormData();
         data.append('image', file);
@@ -80,6 +81,8 @@ export default class GenArt extends Component {
                 <Image src={"data:image/jpeg;base64," + this.props.image} fit="cover" style={{zIndex: "-1"}} />
             </Box>
           );
+
+        let loadOrImage = (this.props.image === 0 || this.props.image === null || this.props.image === undefined) ? <CircularProgress /> : <ImageBox />;
         
         if (this.state.redirect){
             let link = `/search/${this.state.objID}`;
@@ -87,7 +90,8 @@ export default class GenArt extends Component {
         } else {
             return(
                 <Box direction="column" align="center" justify="center">
-                    <ImageBox />
+                    {/* <ImageBox /> */}
+                    {loadOrImage}
                     <Box pad="medium">
                         <Button label="Explore Similar" onClick={this.getSimilarArtID}/>
                         <Button label="Save Image" onClick={this.saveImage}/>
