@@ -5,7 +5,8 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
     const divName = 'myPlot'
     const myPlot = document.getElementById(divName);
     const d3 = Plotly.d3;
-    const nNeighbors = 7;
+    //const nNeighbors = 7;
+    const nNeighbors = objIDs.length;
     const firstGenID = firstID;
     const startCoords = [.7, .7];
     const minY = 0.1;
@@ -13,6 +14,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
     const minX = 0.1;
     const maxX = 1.3;
     const TIME_TILL_CALL = 350;
+    const CLOSE_DIST = .05;
     const thumbnailRoot = "https://deepartstorage.blob.core.windows.net/public/thumbnails4/";
     var lastTimeCalled = Date.now();
 
@@ -22,8 +24,11 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
             map[obj[0]] = obj[1];
             return map;
         }, {});
-    //const locations = [[0.2, 0.8], [0.4, 0.4], [0.8, 0.6], [1.1, 0.8], [0.6, 1.0]];
-    const locations = [[0.7,1.15], [1.15, 1.0], [1.2,.5], [0.9,.25], [.5, .25], [.2, .5], [.25, 1.0]]
+    //Non randomed:
+    //const locations = [[0.7,1.15], [1.15, 1.0], [1.2,.5], [0.9,.25], [.5, .25], [.2, .5], [.25, 1.0]]
+
+    //Little bit of random:
+    const locations = [[0.7-.05,1.15-.01], [1.15+.01, 1.0+.02], [1.2+.03,.5+.04], [0.9+.05,.25-.03], [.5-.02, .25+0.0], [.2+.02, .5+.03], [.25+.04, 1.0+.05]];
 
     const paintingUrls = paintingIds.map(id => thumbnailRoot + id.toString() + ".jpg");
     const imageProps = {
@@ -50,7 +55,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
             type: 'scatter',
             hoverinfo: "none",
             layer: "below",
-            marker: { size: 15 },
+            marker: { size: 70, color: "#6A6A6A", symbol: "square" },
         },
         {
             x: [startCoords[0]],
@@ -236,25 +241,48 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
     }
 
     /**
+     * If a click is super close to a point, generates an image based on that point's object, then returns false
+     * @param {int[]} ids - list of object IDs, in the same order as distances 
+     * @param {float[]} distances - list of distances from click to points, in same order as ids
+     */
+    function checkIfNotSuperClose(ids, distances){
+        let isNotSuperClose = true;
+        for (let i = 0; i < distances.length; i++){
+            if (distances[i] < CLOSE_DIST){
+                isNotSuperClose = false;
+                firstTimeGenImage(ids[i]);
+            }
+        }
+        return isNotSuperClose;
+    }
+
+    /**
        * Given an object of neighbors and their index and distance, returns a label and latent representing a generated image
        * @param {Int[]} ids: is array of obj ids,
        * @param {Float[]} distances: are the distances to those,
        * of the closest neighbors to a click, where the number of neighbors taken  were decided earlier in the stack
        */
     function interpolateAndSet(ids, distances) {
-        const ratios = Softmax(scalarMultiplyVector(distances, -5));
-        let totalLatent = new Array(140).fill(0);
-        let totalLabel = new Array(1000).fill(0);
-        ratios.forEach(function (r, i) {
-            const index = idToIndex[ids[i]];
+        console.log(distances);
 
-            const labels = stateHolder.state.images[index].labels;
-            const latents = stateHolder.state.images[index].latents;
-            totalLatent = addVector(totalLatent, scalarMultiplyVector(latents, r));
-            totalLabel = addVector(totalLabel, scalarMultiplyVector(labels, r));
-        });
+        if (checkIfNotSuperClose(ids, distances)) {
+            const ratios = Softmax(scalarMultiplyVector(distances, -5));
+            //console.log(ratios);
+            let totalLatent = new Array(140).fill(0);
+            let totalLabel = new Array(1000).fill(0);
+            ratios.forEach(function (r, i) {
+                const index = idToIndex[ids[i]];
+    
+                const labels = stateHolder.state.images[index].labels;
+                const latents = stateHolder.state.images[index].latents;
+                totalLatent = addVector(totalLatent, scalarMultiplyVector(latents, r));
+                totalLabel = addVector(totalLabel, scalarMultiplyVector(labels, r));
+            });
+    
+            getGenImage(`[[${totalLatent.toString()}]]`, totalLabel);
+        }
 
-        getGenImage(`[[${totalLatent.toString()}]]`, totalLabel);
+
     }
 
     /**
@@ -360,10 +388,41 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
         return Math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2);
     }
 
+    function coordToObjID(plotlyCoord) {
+        let index = locations.indexOf(plotlyCoord);
+        console.log("INDEX: "+index);
+        let ID = paintingIds[index];
+        console.log("ID: "+ID);
+        return ID
+    }
+
+
     function attach() {
         startDragBehavior()
         myPlot.addEventListener('click', function (evt) {
+            console.log(JSON.stringify(evt.pageX));
             updatePOI(toPlotlyCoords(evt.pageX, evt.pageY))
         });
+
+        // myPlot.on('plotly_click', function(data) {
+        //     //console.log(JSON.stringify(data.points));
+        //     let coord = null;
+        //     let index = null;
+
+        //     let thing = data.points.map(point => (
+        //         {pointNumber: point.pointNumber, x: point.x, y: point.y}
+        //     ))
+        //     console.log(JSON.stringify(thing));
+        //     for (let i = data.points.length-1; i > -1; i--){
+        //         coord = [data.points[i].x, data.points[i].y];
+        //         index = data.points[i].pointNumber
+        //     }
+        //     console.log("INDEX: "+index);
+        //     console.log("Coord: "+coord);
+        //     //let id = coordToObjID(coord);
+        //     let id = paintingIds[index];
+        //     console.log("ID: "+id);
+        //     firstTimeGenImage(id);
+        // })
     };
 }
