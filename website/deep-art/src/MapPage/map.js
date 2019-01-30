@@ -77,6 +77,11 @@ export default function setupPlotly(stateHolder) {
         autosize: true
     };
 
+    /* ---------------------------------------------------------------------------
+     * ---------------------------MAIN METHOD CALLS-------------------------------
+     * ---------------------------------------------------------------------------
+     */
+
     populateImageSeeds(paintingIds)
     firstTimeGenImage(201671)
 
@@ -87,6 +92,12 @@ export default function setupPlotly(stateHolder) {
             displayModeBar: false
         }
     ).then(attach);
+
+
+    /* ---------------------------------------------------------------------------
+     * ---------------------------------------------------------------------------
+     * ---------------------------------------------------------------------------
+     */
 
     /**
    * Calls an API, sending a seed, and getting back an ArrayBuffer reprsenting that image
