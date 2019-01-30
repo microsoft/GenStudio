@@ -14,9 +14,12 @@ export default class MapExplorePage extends Component {
     }
 
     componentDidMount() {
-        let firstID = 201671;
-        let objIDs = [22270, 22408, 22848, 23143, 35652, 201671, 202194];
-        setupPlotly(this, objIDs, firstID);
+        let url = this.props.match.params.id.toString();
+        url = decodeURIComponent(url);
+        let selectedArt = url.split('&')[0].slice(4);
+        let artArr = url.split('&')[1].slice(4);
+        artArr = JSON.parse(artArr);
+        setupPlotly(this, artArr, selectedArt);
     }
 
     render() {

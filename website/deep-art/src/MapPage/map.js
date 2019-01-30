@@ -18,7 +18,6 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
     const thumbnailRoot = "https://deepartstorage.blob.core.windows.net/public/thumbnails4/";
     var lastTimeCalled = Date.now();
 
-    //const paintingIds = [22270, 22408, 22848, 23143, 35652];
     const paintingIds = objIDs;
     const idToIndex = paintingIds.map((x,i) => [x,i]).reduce(function (map, obj) {
             map[obj[0]] = obj[1];
