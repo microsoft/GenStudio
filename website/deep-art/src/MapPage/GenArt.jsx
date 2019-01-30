@@ -34,13 +34,15 @@ export default class GenArt extends Component {
 
         let file = this.props.image;
 
-        const apiURL = 'https://imagedocker2.azurewebsites.net/FindSimilarImages/Byte';
+        //const apiURL = 'https://imagedocker2.azurewebsites.net/FindSimilarImages/Byte';
         //const apiURL = 'https://metimagesearch.azurewebsites.net/neighbors?neighbors=1';
+        const apiURL = 'https://methack-api.azure-api.net/ImageSimilarity/FindSimilarImages/Byte'
+        const key = '?subscription-key=43d3f563ea224c4c990e437ada74fae8'
         const Http = new XMLHttpRequest();
         const data = new FormData();
         data.append('image', file);
 
-        Http.open("POST", apiURL);
+        Http.open("POST", apiURL+key);
         Http.send(data);
         Http.onreadystatechange = (e) => {
             if (Http.readyState === 4) {

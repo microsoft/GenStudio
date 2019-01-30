@@ -16,8 +16,6 @@ export default class InfoArt extends Component {
             <Box
                 height="small"
                 width="small"
-                border=
-                {{ color: "black", size: "4px" }}
                 round="small"
                 style={{ padding: "0px", marginTop: "10px", marginLeft: "10px",}}
             >

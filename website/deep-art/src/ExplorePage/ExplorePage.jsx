@@ -149,12 +149,6 @@ export default class ExplorePage extends Component {
      * @param {string} seedArr - string version of a 1xSEED_LENGTH array of floats between -1,1  
      */
     getGenImage(seedArr, labelArr) {
-        //console.log("HELLO: "+seedArr)
-
-        // let max = labelArr.reduce(function(a, b) {
-        //     return Math.max(a, b);
-        // });
-        // let maxIndex = labelArr.indexOf(max);
         let labels = labelArr.toString();
         labels = `[[${labels}]]`;
 
@@ -163,7 +157,6 @@ export default class ExplorePage extends Component {
         const data = new FormData();
         data.append('seed',seedArr);
         data.append('labels', labels);
-        //data.append('category', maxIndex.toString());
 
         Http.responseType = "arraybuffer";
         Http.open("POST", apiURL);
