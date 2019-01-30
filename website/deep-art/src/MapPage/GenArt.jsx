@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Box, Button, Image} from 'grommet';
+import { Box, Button, Image, Text} from 'grommet';
 import { saveAs } from 'file-saver';
 
 import { Redirect } from 'react-router-dom';
@@ -20,6 +20,7 @@ export default class GenArt extends Component {
         }
         this.saveImage = this.saveImage.bind(this);
         this.getSimilarArtID = this.getSimilarArtID.bind(this);
+        this.coordToCantorPair = this.coordToCantorPair.bind(this);
     };
 
     saveImage(){
@@ -29,6 +30,13 @@ export default class GenArt extends Component {
         saveAs(file);
 
     };
+
+    coordToCantorPair(x,y){
+        let intX = x*1000;
+        let intY = y*1000;
+        let pairing = .5*(intX+intY)*(intX+intY+1)+intY;
+        return pairing;
+    }
 
     getSimilarArtID(){
         //let file = new File([this.props.data], "image.jpeg", {type: "image/jpeg"});
@@ -83,7 +91,8 @@ export default class GenArt extends Component {
           );
 
         let loadOrImage = (this.props.image === 0 || this.props.image === null || this.props.image === undefined) ? <CircularProgress /> : <ImageBox />;
-        
+        let coords = (this.props.point === null) ? "" : <Text size={"medium"} color={"#6A6A6A"} style={{ fontWeight: "600", fontFamily: "Courier"}}>{`[ ${this.props.point[0]} , ${this.props.point[1]} ]`}</Text>;
+        let ID = (this.props.point === null) ? "" : <Text size={"medium"} color={"#6A6A6A"} style={{ fontWeight: "600", fontFamily: "Courier"}}>{`ID: ${this.coordToCantorPair(this.props.point[0], this.props.point[1])}`}</Text>;
         if (this.state.redirect){
             let link = `/search/${this.state.objID}`;
             return (<Redirect push to={link}/>)
@@ -92,9 +101,13 @@ export default class GenArt extends Component {
                 <Box direction="column" align="center" justify="center">
                     {/* <ImageBox /> */}
                     {loadOrImage}
+                    <Box style={{flexFlow: "column wrap", alignSelf:"start"}}>
+                        {coords}
+                        {ID}
+                    </Box>
                     <Box pad="medium">
                         <Button label="Explore Similar" onClick={this.getSimilarArtID}/>
-                        <Button label="Save Image" onClick={this.saveImage}/>
+                        {/* <Button label="Save Image" onClick={this.saveImage}/> */}
                     </Box>
                 </Box>
 
