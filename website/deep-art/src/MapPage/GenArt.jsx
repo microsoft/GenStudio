@@ -90,7 +90,7 @@ export default class GenArt extends Component {
             </Box>
           );
 
-        let loadOrImage = (this.props.image === 0 || this.props.image === null || this.props.image === undefined) ? <CircularProgress /> : <ImageBox />;
+        let loadOrImage = (this.props.image === 0 || this.props.image === null || this.props.image === undefined) ? <CircularProgress style={{color: "#6A6A6A"}} /> : <ImageBox />;
         let coords = (this.props.point === null) ? "" : <Text size={"medium"} color={"#6A6A6A"} style={{ fontWeight: "600", fontFamily: "Courier"}}>{`[ ${this.props.point[0]} , ${this.props.point[1]} ]`}</Text>;
         let ID = (this.props.point === null) ? "" : <Text size={"medium"} color={"#6A6A6A"} style={{ fontWeight: "600", fontFamily: "Courier"}}>{`ID: ${this.coordToCantorPair(this.props.point[0], this.props.point[1])}`}</Text>;
         if (this.state.redirect){
