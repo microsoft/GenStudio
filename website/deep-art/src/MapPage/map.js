@@ -5,7 +5,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
     const divName = 'myPlot'
     const myPlot = document.getElementById(divName);
     const d3 = Plotly.d3;
-    //const nNeighbors = 7;
+    //const nNeighbors = 5;
     const nNeighbors = objIDs.length;
     const firstGenID = firstID;
     const startCoords = [.7, .7];
@@ -27,7 +27,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
     //const locations = [[0.7,1.15], [1.15, 1.0], [1.2,.5], [0.9,.25], [.5, .25], [.2, .5], [.25, 1.0]]
 
     //Little bit of random:
-    const locations = [[0.7-.05,1.15-.01], [1.15+.01, 1.0+.02], [1.2+.03,.5+.04], [0.9+.05,.25-.03], [.5-.02, .25+0.0], [.2+.02, .5+.03], [.25+.04, 1.0+.05]];
+    const locations = [[0.7-.05,1.15-.01], [1.15+.01, 1.0+.02], [1.2+.03,.5+.04], [0.9+.01,.25-.03], [.5-.02, .25+0.0], [.2+.02, .5+.03], [.25+.04, 1.0+.05]];
 
     const paintingUrls = paintingIds.map(id => thumbnailRoot + id.toString() + ".jpg");
     const imageProps = {
@@ -262,7 +262,6 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
        * of the closest neighbors to a click, where the number of neighbors taken  were decided earlier in the stack
        */
     function interpolateAndSet(ids, distances) {
-        console.log(distances);
 
         if (checkIfNotSuperClose(ids, distances)) {
             const ratios = Softmax(scalarMultiplyVector(distances, -5));
@@ -399,7 +398,6 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
     function attach() {
         startDragBehavior()
         myPlot.addEventListener('click', function (evt) {
-            console.log(JSON.stringify(evt.pageX));
             updatePOI(toPlotlyCoords(evt.pageX, evt.pageY))
         });
 

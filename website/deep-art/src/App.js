@@ -24,7 +24,8 @@ const gTheme = {
       color: '#383B3E',
     },
     colors: {
-      brand: "#E8E2D3",
+      //brand: "#E8E2D3",
+      brand: "#383B3E",
       "accent-1": "#000000", //black
       "accent-5": "#d49e49", //mustardy
       "accent-2": "#383B3E", //font grey
@@ -49,7 +50,7 @@ const gTheme = {
   },
   select: {
     icons: {
-      color: "accent-1"
+      color: "accent-2"
     },
   },
   textInput: {
@@ -57,6 +58,11 @@ const gTheme = {
       "border-color": "#a4a4a4",
       "border-width": "1.5px",
       "box-shadow": "0px 0px #a4a4a4",
+    }
+  },
+  checkBox: {
+    toggle: {
+      color: "brand"
     }
   }
 };
