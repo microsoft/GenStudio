@@ -107,7 +107,7 @@ export default class SearchPage extends Component {
     }
 
     /**
-     * This function the result prop in the crrent state to the passed in object list
+     * This function updates the result prop in the current state to the passed in object list
      * @param objectList the new result list of objects to be displayed
      */
     updateGridDisplay(objectList) {
@@ -141,7 +141,7 @@ export default class SearchPage extends Component {
      * that tag change and then creates a new search request including/excluding that tag, updating the state's tag, tagData, and results list 
      * props according to the new results.
      * @param label the tag that was selected by the user
-     * @param value true to include this tag in the new search query, false to exclude
+     * @param value set to true to include this tag in the new search query, false to exclude
      */
     getTagChange(label, value) {
         let self = this;
@@ -188,7 +188,6 @@ export default class SearchPage extends Component {
             >
                 <Box gridArea='search' background="accent-3" style={{justifyItems: "center"}}>
                     <SearchControl sendChange={this.getSearch}/>
-                    {/* <Button label={"search"} onClick={this.makeSearch} margin="medium"/> */}
                 </Box>
 
                 <Box gridArea='tags' background="accent-3" style={{justifyItems: "start"}}>
