@@ -74,7 +74,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
 
     const layout = {
         showlegend: false,
-        //shapes: getLinesToNeighbors(startCoords, locations),
+        shapes: getLinesToNeighbors(startCoords, locations),
         margin: { 'l': 0, 'r': 0, 't': 0, 'b': 0 },
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor: 'rgba(0,0,0,0)',
@@ -403,13 +403,13 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
         return Math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2);
     }
 
-    function coordToObjID(plotlyCoord) {
-        let index = locations.indexOf(plotlyCoord);
-        console.log("INDEX: "+index);
-        let ID = paintingIds[index];
-        console.log("ID: "+ID);
-        return ID
-    }
+    // function coordToObjID(plotlyCoord) {
+    //     let index = locations.indexOf(plotlyCoord);
+    //     console.log("INDEX: "+index);
+    //     let ID = paintingIds[index];
+    //     console.log("ID: "+ID);
+    //     return ID
+    // }
 
 
     function attach() {

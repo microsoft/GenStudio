@@ -10,7 +10,6 @@
     "plotly.js-dist": "^1.44.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-graph-vis": "^1.0.2",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.3",
     "softmax-fn": "^1.0.8",
