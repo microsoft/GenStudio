@@ -10,7 +10,7 @@ export default class SelectPage extends Component {
         super(props);
         this.state = {
             curatedImages: {
-                'Vases': [9583, 9512, 9408, 9405, 9402, 9397, 9393, 153112, 2556, 9396,
+                'Vases': [9583, 9512, 9408, 9405, 9402, 9397, 9393, 2556, 9396,
                         9232, 9233, 9249, 9363, 9260, 9252, 9297, 9250, 9299],
                 'Armors': [22270,22408,22848,23143,25114,34652,35652,24937],
                 'Teapots': [8348, 8354, 8355, 8375, 8385, 8391, 8396, 8401, 8412, 8423,
@@ -18,7 +18,7 @@ export default class SelectPage extends Component {
                 'Ewers': [201671, 202194, 232038, 324830, 324917, 544501, 751402,
                     446900, 445269, 200171, 200117, 195775, 194243, 49208,
                     42370, 447077, 448260, 449058, 460715, 453457, 453306, 452036,
-                    4551609, 447072, 444967, 44810],
+                     447072, 444967, 44810],
                 'Purses': [84595,116964,116963,116944,116884,79226,70467],
                 'Goblets': [207897, 4081, 4086, 4101, 4102, 4124, 187987, 239826]
             },
@@ -129,35 +129,56 @@ export default class SelectPage extends Component {
      * @param {Int[]} objIDs - An array of object IDs from the met API to convert to an array of image urls
      * @return {String[]} - An array of image urls from the met API.
      */
-    objIDsToImages(objIDs) {
-        const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails3/';
+    // objIDsToImages(objIDs) {
+    //     const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails3/';
 
-        let apiURLs = objIDs.map(ID => (
-            {url: baseURL+ID.toString(),
-             id: ID}
+    //     let apiURLs = objIDs.map(ID => (
+    //         {url: baseURL+ID.toString(),
+    //          id: ID}
+    //     ));
+    //     for (let i = 0; i < apiURLs.length; i++){
+    //         const Http = new XMLHttpRequest();
+    //         Http.responseType = "arraybuffer";
+    //         Http.open("GET", apiURLs[i].url);
+    //         Http.send();
+    //         Http.onreadystatechange = (e) => {
+    //             if (Http.readyState === 4){
+    //                 try {
+    //                     this.setState((oldState) => {                           
+    //                         return oldState.imgObjects.push(
+    //                             {
+    //                                 img: btoa(String.fromCharCode.apply(null, new Uint8Array(Http.response))),
+    //                                 id: apiURLs[i].id,
+    //                                 key: i
+    //                             });
+    //                     });
+    //                 } catch (e) {
+    //                     console.log('malformed request:' + Http.responseText);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
+    /**
+     * loads the images of the specified object IDs from the Met and saves it
+     * into this.state.imgObjects
+     * @param {Int[]} objIDs - An array of object IDs from the met API to convert to an array of image urls
+     * @return {String[]} - An array of image urls from the met API.
+     */
+    objIDsToImages(objIDs) {
+        const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails4/';
+
+        let imgObjs = objIDs.map(ID => (
+            {img: baseURL+ID.toString()+".jpg",
+            id: ID,
+            key: ID}
         ));
-        for (let i = 0; i < apiURLs.length; i++){
-            const Http = new XMLHttpRequest();
-            Http.responseType = "arraybuffer";
-            Http.open("GET", apiURLs[i].url);
-            Http.send();
-            Http.onreadystatechange = (e) => {
-                if (Http.readyState === 4){
-                    try {
-                        this.setState((oldState) => {                           
-                            return oldState.imgObjects.push(
-                                {
-                                    img: btoa(String.fromCharCode.apply(null, new Uint8Array(Http.response))),
-                                    id: apiURLs[i].id,
-                                    key: i
-                                });
-                        });
-                    } catch (e) {
-                        console.log('malformed request:' + Http.responseText);
-                    }
-                }
-            }
-        }
+
+        this.setState({
+            imgObjects: imgObjs
+        });
+        
     }
 
     generateArtUrlSuffix() {
@@ -168,9 +189,9 @@ export default class SelectPage extends Component {
         } else {
 
             if (this.state.choiceLists[0].includes(this.state.selectedImage.id)){
-                idList = this.state.choiceLists[1];
+                idList = [this.state.selectedImage.id].concat(this.state.choiceLists[1]);
             } else {
-                idList = this.state.choiceLists[0];
+                idList = [this.state.selectedImage.id].concat(this.state.choiceLists[0]);
             }
             
         }

@@ -45,7 +45,7 @@ export default class ResultArt extends Component {
                                 style={{focus: {outline:0}}}
                         >
                                 <Image
-                                    src={"data:image/jpeg;base64," + image.img}
+                                    src={image.img}
                                     fit="cover"
                                     style={{ height: '100%', zIndex: "-1"}}
                                 />
