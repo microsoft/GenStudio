@@ -5,7 +5,6 @@
   "dependencies": {
     "@material-ui/core": "^3.8.2",
     "@material-ui/icons": "^3.0.2",
-    "bootstrap": "^4.2.1",
     "file-saver": "^2.0.0",
     "grommet": "^2.2.1",
     "jpeg-js": "^0.3.4",
@@ -25,7 +24,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "node --max-old-space-size=4096 node_modules/react-scripts/scripts/build.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "postbuild": "node iisConfig/copyIISConfig.js"
