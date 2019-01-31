@@ -8,11 +8,18 @@ import setupPlotly from './map.js';
 export default class MapExplorePage extends Component {
     constructor(props) {
         super(props);
-        this.state ={};
+        this.state ={
+            cursorPoint: null
+        };
     }
 
     componentDidMount() {
-        setupPlotly(this);
+        let url = this.props.match.params.id.toString();
+        url = decodeURIComponent(url);
+        let selectedArt = url.split('&')[0].slice(4);
+        let artArr = url.split('&')[1].slice(4);
+        artArr = JSON.parse(artArr);
+        setupPlotly(this, artArr, selectedArt);
     }
 
     render() {
@@ -20,7 +27,7 @@ export default class MapExplorePage extends Component {
             <Grid
                 fill="horizontal"
                 areas={[
-                    { name: 'text', start: [0, 0], end: [0, 1] },
+                    { name: 'text', start: [0, 0], end: [1,0] },
                     { name: 'image', start: [0, 1], end: [0, 1] },
                     { name: 'map', start: [1, 1], end: [1, 1] },  
                 ]}
@@ -30,14 +37,20 @@ export default class MapExplorePage extends Component {
                 style={{paddingLeft: "3rem", paddingRight: "3rem"}}
             >
 
-            <Box gridArea='text' style={{justifyItems: "center"}}>
-                <Text>
-                    Oranges are just sunburnt lemons
-                </Text>
-            </Box>
+                <Box fill gridArea='text'>
+                    <Box fill style={{flexFlow: "column", alignSelf:"start", justifyContent:"space-around"}}>
+                        <Text style={{fontWeight:"550"}}>
+                            Explore the map to discover new objects in the space between existing Met artworks.
+                        </Text>
+                        
+                        <Text>
+                            A trained GAN (Generative Adversarial Network) contains a model of a shared feature space underlying a collection of images. Based on given artworks from the Met collection, the GAN generates new objects that could have been made, but maybe never were.
+                        </Text>
+                    </Box>
+                </Box>
 
-            <Box gridArea='image' direction='column' align="center" style={{justifyItems: "center"}}>
-                    <GenArt image={this.state.genImg} data={this.state.genArr} />
+                <Box gridArea='image' direction='column' align="center" style={{justifyItems: "center"}}>
+                        <GenArt point={this.state.cursorPoint} image={this.state.genImg} data={this.state.genArr} />
                 </Box>
 
                 <Box gridArea='map' background="accent-3"

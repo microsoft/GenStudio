@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Box, Image} from 'grommet';
+import { Box, Image, Stack} from 'grommet';
 
 import AddButton from './AddButton.jsx';
 import RemoveButton from './RemoveButton.jsx';
@@ -80,13 +80,15 @@ export default class PaletteBox extends Component {
 
     render(){
         return(
-            <Box border=
-                {{ color: "black", size: "4px" }}
+            <Box 
+            //border=
+            //    {{ color: "black", size: "4px" }}
                 round="small"
                 height="small"
                 width="small"
             >
-                <Box height="70%">
+            <Stack anchor="bottom" fill>
+                <Box>
                     <Image
                         src={"data:image/jpeg;base64,"+this.props.img}
                         fit="cover"
@@ -100,11 +102,15 @@ export default class PaletteBox extends Component {
                     alignSelf = "center"
                     margin="xsmall"
                     style={{"justifyContent": "space-around"}}
-                    height="30%"
+                    //height="30%"
+                    width="small"
                 >
                     <RemoveButton subClick={this.subClick}/>
+                    <Box width="50px"/>
                     <AddButton addClick={this.addClick}/>
                 </Box>
+            </Stack>
+
             </Box>   
         );
     }

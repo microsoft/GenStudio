@@ -17,8 +17,11 @@ export default class ResultArt extends Component {
         }
     };
 
-    render(){
-
+    render() {
+        let imagesToDisplay = this.props.images;
+        if (this.props.categorySelected) {
+            imagesToDisplay = imagesToDisplay.slice(0, 6);
+        }
         return(
             <GridWrapper>
                 <Grid
@@ -27,19 +30,18 @@ export default class ResultArt extends Component {
                     gap="medium"
                     margin="40px"
                 >
-                    {this.props.images.map(image => (
+                    {imagesToDisplay.map((image, i) => (
                         <Button
                             hoverIndicator
                             style={{ outline: 'none' }}
-                            key={image.id}
-                            onClick={() => { this.props.selectImage(image.id) }}
+                            key={i}
+                            onClick={() => { this.props.selectImage(image.key, image.id) }}
                         >
                             <Box border=
-                                {this.props.selectedImage === image.id ? { color: "#000000", size: "2px" } : { color: "white", size: "2px" }}
-                                //round="small"
+                                {this.props.selectedImage.key === image.key ? { color: "#000000", size: "2px" } : { color: "white", size: "2px" }}
                                 height="small"
                                 width="small"
-                                key={image.id}
+                                key={i}
                                 style={{focus: {outline:0}}}
                         >
                                 <Image

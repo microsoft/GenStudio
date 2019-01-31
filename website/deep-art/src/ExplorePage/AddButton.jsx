@@ -8,7 +8,7 @@ const customTheme = {
     button: {
         extend:{
             "border-radius": "12px",
-            background: "#d49e49"
+            //background: "#FFFFFF"
         }
     }
 }
@@ -24,7 +24,7 @@ export default class AddButton extends Component {
     render(){
         return (
             <Grommet theme={customTheme}>
-                <Button icon={<Add />} onClick={() => {this.props.addClick()}} hoverIndicator="#b6802b" />
+                <Button icon={<Add />} onClick={() => {this.props.addClick()}} hoverIndicator="#EAEAEA" />
             </Grommet>
         );
     }

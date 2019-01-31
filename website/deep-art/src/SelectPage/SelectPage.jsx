@@ -9,12 +9,34 @@ export default class SelectPage extends Component {
     constructor(props){
         super(props);
         this.state = {
+            curatedImages: {
+                'Vases': [9583, 9512, 9408, 9405, 9402, 9397, 9393, 153112, 2556, 9396,
+                        9232, 9233, 9249, 9363, 9260, 9252, 9297, 9250, 9299],
+                'Armors': [22270,22408,22848,23143,25114,34652,35652,24937],
+                'Teapots': [8348, 8354, 8355, 8375, 8385, 8391, 8396, 8401, 8412, 8423,
+                        42323, 193189, 194634, 197523, 198032],
+                'Ewers': [201671, 202194, 232038, 324830, 324917, 544501, 751402,
+                    446900, 445269, 200171, 200117, 195775, 194243, 49208,
+                    42370, 447077, 448260, 449058, 460715, 453457, 453306, 452036,
+                    4551609, 447072, 444967, 44810],
+                'Purses': [84595,116964,116963,116963,116944,116884,79226,70467],
+                'Goblets': [207897, 4081, 4086, 4101, 4102, 4124, 187987, 239826],
+                'landingpage': [42447, 42447, 42447, 42447, 42447, 42447, 42447,
+                    42447, 42447, 42447, 42447, 42447],
+                'preppedPairs1': [42447, 249414, 249414, 249414, 249414, 249414, 249414],
+                'preppedPairs2': [42447, 249414, 42447, 249414, 249414, 249414, 249414]
+
+            }
+,
             selectedIndex: 0,
-            selectedImage: 0,
-            imgObjects: []
+            selectedImage: {
+                id: 0,
+                key: -1
+            },
+            imgObjects: [],
+            categorySelected: false
         };
 
-        this.changeSelect = this.changeSelect.bind(this);
         this.changeSelectedImage = this.changeSelectedImage.bind(this);
         this.getImageIDs = this.getImageIDs.bind(this);
         this.clearOldImages = this.clearOldImages.bind(this);
@@ -22,51 +44,42 @@ export default class SelectPage extends Component {
 
     //these are the initial images that are displayed when the page loads
     componentDidMount(){
-        //this.objIDsToImages([34, 1439, 2134, 2348, 2392, 2393, 2552, 3110, 3297, 3315, 3318, 4401]);
-
-        //Vases (student picked)
-        //this.objIDsToImages([ 40083, 50844, 52798, 47373, 204070, 197408, 195696, 194588, 9205, 208337, 240039, 246565]);
-
-        //Vessels
-        //this.objIDsToImages([201671, 202194, 232038, 324830, 324917, 544501, 751402]);
-
-        //Armor
-        //this.objIDsToImages([22270, 22408, 22848, 23143, 25114, 35652]);
-
-        //Armor and Vessels
-        //this.objIDsToImages([22270, 22408, 23143, 25114, 35652, 201671, 202194, 232038, 324830, 324917, 544501, 751402]);
-
-        //Purses, Armor, and Vessels
-        this.objIDsToImages([ 22270, 22408, 23143, 25114, 35652, 201671, 202194, 232038, 324830, 324917, 544501, 751402]);
-
+        this.objIDsToImages(this.state.curatedImages['landingpage']);
     }
 
-    changeSelect(index){
-        this.setState({ selectedIndex: index });
-        //Call CSV API and change imgObjects accordingly
-    }
-
-    changeSelectedImage(ID){
+    changeSelectedImage(key, ID) {
         //Unclear if this is a better system or not
         if (ID === this.state.selectedImage){
-            this.setState({selectedImage: 0});
+            this.setState({
+                selectedImage:
+                {
+                    id: 0,
+                    key: -1
+                }
+            });
         } else {
-            this.setState({selectedImage: ID});
+            this.setState({
+                selectedImage:
+                {
+                    id: ID,
+                    key: key
+                }
+            });
         }
-        
     }
 
     getImageIDs(imageIDs) {
         this.objIDsToImages(imageIDs);
-        //console.log("imgObjects: " + this.state.imgObjects);
     }
 
     clearOldImages() {
+        this.state.categorySelected = true;
         this.state.imgObjects = []; 
     }
 
     /**
-     * 
+     * loads the images of the specified object IDs from the Met and saves it
+     * into this.state.imgObjects
      * @param {Int[]} objIDs - An array of object IDs from the met API to convert to an array of image urls
      * @return {String[]} - An array of image urls from the met API.
      */
@@ -77,7 +90,6 @@ export default class SelectPage extends Component {
             {url: baseURL+ID.toString(),
              id: ID}
         ));
-        console.log("making the API call in obIDs to Images fn");
         for (let i = 0; i < apiURLs.length; i++){
             const Http = new XMLHttpRequest();
             Http.responseType = "arraybuffer";
@@ -86,13 +98,9 @@ export default class SelectPage extends Component {
             Http.onreadystatechange = (e) => {
                 if (Http.readyState === 4){
                     try {
-                        //let response = JSON.parse(Http.responseText);
-                        this.setState((oldState) => {
-                            
-                            //console.log("data: " + response.primaryImage);
+                        this.setState((oldState) => {                           
                             return oldState.imgObjects.push(
                                 {
-                                    //img: response.primaryImage,
                                     img: btoa(String.fromCharCode.apply(null, new Uint8Array(Http.response))),
                                     id: apiURLs[i].id,
                                     key: i
@@ -107,27 +115,26 @@ export default class SelectPage extends Component {
     }
 
     generateArtUrlSuffix() {
-        const NUMBER_OF_SEARCH_IMAGES = this.state.imgObjects.length;
         let urlBase = "/map/";
-        //return urlBase;
-        if (this.state.imgObjects.length === NUMBER_OF_SEARCH_IMAGES) {
-            //generates a random index for which to eliminate the extra met art
-            //idea is we randomly select which curated art to move to the explore page
-            let currentSelection = this.state.selectedImage;
-            let numberToEliminate = NUMBER_OF_SEARCH_IMAGES - 9 - 1;
-            let maxNumberToRemove = (NUMBER_OF_SEARCH_IMAGES - 1) - (numberToEliminate - 1);
-            let randomSpliceIndex = Math.floor(Math.random() * maxNumberToRemove);
-            let idList = this.state.imgObjects.map(ob => ob.id);
-            idList.splice(idList.indexOf(currentSelection), 1);
-            idList.splice(randomSpliceIndex, numberToEliminate);
-
-            let url = "?id=" + this.state.selectedImage.toString() + "&ids=[" + idList.toString() + "]";
-            url = encodeURIComponent(url);
-            return urlBase + url;
+        let idList = [];
+        if (this.state.categorySelected) {
+            idList = this.state.imgObjects.slice(0, 7).map(ob => ob.id);
+        } else {
+            //todo: make a random selection between the pairs
+            //currently just the same ones each time
+            if (this.state.selectedImage.id in this.state.curatedImages['preppedPairs1']) {
+                idList = this.state.curatedImages['preppedPairs1'];
+            } else {
+                idList = this.state.curatedImages['preppedPairs2'];
+            }
+            
         }
         
-
-        //return url;
+        let url = "?id=" + this.state.selectedImage.id.toString()
+            + "&ids=[" + idList.toString() + "]";
+        //console.log("url: " + url);
+        url = encodeURIComponent(url);
+        return urlBase + url;
     }
 
     render() {
@@ -161,6 +168,7 @@ export default class SelectPage extends Component {
                     <SelectControl
                         sendObjectIds={this.getImageIDs}
                         clearOldImages={this.clearOldImages}
+                        curatedImages={this.state.curatedImages}
                     />
                 </Box>
                 <Box gridArea='select'>
@@ -168,6 +176,7 @@ export default class SelectPage extends Component {
                         images={this.state.imgObjects}
                         selectedImage={this.state.selectedImage}
                         selectImage={this.changeSelectedImage}
+                        categorySelected={this.state.categorySelected}
                     />
                 </Box>
                 <Box gridArea='buttons'>
@@ -178,9 +187,7 @@ export default class SelectPage extends Component {
                         {/* <Box>
                             <Button label='Explore Similar' style={{textDecoration: "none"}} href={'/search/'+this.state.selectedImage.toString()}/>
                         </Box> */}
-                    </Box>
-
-                    
+                    </Box> 
                 </Box>
                 <Box gridArea='left'/>
                 <Box gridArea='right' />

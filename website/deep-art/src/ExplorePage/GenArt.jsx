@@ -29,8 +29,7 @@ export default class GenArt extends Component {
             <Box
                 height="medium"
                 width="medium"
-                border=
-                {{ color: "black", size: "4px" }}
+                //border={{ color: "black", size: "4px" }}
                 round="small"
                 style={{ padding: "0px", marginTop: "10px", marginLeft: "10px",}}
             >

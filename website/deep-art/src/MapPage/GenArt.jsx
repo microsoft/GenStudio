@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Box, Button, Image} from 'grommet';
+import { Box, Button, Image, Text} from 'grommet';
 import { saveAs } from 'file-saver';
 
 import { Redirect } from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 /**
  * The box containing the generated image
@@ -19,6 +20,7 @@ export default class GenArt extends Component {
         }
         this.saveImage = this.saveImage.bind(this);
         this.getSimilarArtID = this.getSimilarArtID.bind(this);
+        this.coordToCantorPair = this.coordToCantorPair.bind(this);
     };
 
     saveImage(){
@@ -29,18 +31,27 @@ export default class GenArt extends Component {
 
     };
 
+    coordToCantorPair(x,y){
+        let intX = x*1000;
+        let intY = y*1000;
+        let pairing = .5*(intX+intY)*(intX+intY+1)+intY;
+        return pairing;
+    }
+
     getSimilarArtID(){
         //let file = new File([this.props.data], "image.jpeg", {type: "image/jpeg"});
 
         let file = this.props.image;
 
-        const apiURL = 'https://imagedocker2.azurewebsites.net/FindSimilarImages/Byte';
+        //const apiURL = 'https://imagedocker2.azurewebsites.net/FindSimilarImages/Byte';
         //const apiURL = 'https://metimagesearch.azurewebsites.net/neighbors?neighbors=1';
+        const apiURL = 'https://methack-api.azure-api.net/ImageSimilarity/FindSimilarImages/Byte'
+        const key = '?subscription-key=43d3f563ea224c4c990e437ada74fae8&neighbors=1'
         const Http = new XMLHttpRequest();
         const data = new FormData();
         data.append('image', file);
 
-        Http.open("POST", apiURL);
+        Http.open("POST", apiURL+key);
         Http.send(data);
         Http.onreadystatechange = (e) => {
             if (Http.readyState === 4) {
@@ -78,17 +89,25 @@ export default class GenArt extends Component {
                 <Image src={"data:image/jpeg;base64," + this.props.image} fit="cover" style={{zIndex: "-1"}} />
             </Box>
           );
-        
+
+        let loadOrImage = (this.props.image === 0 || this.props.image === null || this.props.image === undefined) ? <CircularProgress style={{color: "#6A6A6A"}} /> : <ImageBox />;
+        let coords = (this.props.point === null) ? "" : <Text size={"medium"} color={"#6A6A6A"} style={{ fontWeight: "600", fontFamily: "Courier"}}>{`[ ${this.props.point[0]} , ${this.props.point[1]} ]`}</Text>;
+        let ID = (this.props.point === null) ? "" : <Text size={"medium"} color={"#6A6A6A"} style={{ fontWeight: "600", fontFamily: "Courier"}}>{`ID: ${this.coordToCantorPair(this.props.point[0], this.props.point[1])}`}</Text>;
         if (this.state.redirect){
             let link = `/search/${this.state.objID}`;
             return (<Redirect push to={link}/>)
         } else {
             return(
                 <Box direction="column" align="center" justify="center">
-                    <ImageBox />
+                    {/* <ImageBox /> */}
+                    {loadOrImage}
+                    <Box style={{flexFlow: "column wrap", alignSelf:"start"}}>
+                        {coords}
+                        {ID}
+                    </Box>
                     <Box pad="medium">
                         <Button label="Explore Similar" onClick={this.getSimilarArtID}/>
-                        <Button label="Save Image" onClick={this.saveImage}/>
+                        {/* <Button label="Save Image" onClick={this.saveImage}/> */}
                     </Box>
                 </Box>
 

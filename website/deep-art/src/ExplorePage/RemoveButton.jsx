@@ -8,7 +8,7 @@ const customTheme = {
     button: {
         extend:{
             "border-radius": "12px",
-            background: "#d49e49"
+            //background: "#FFFFFF"
         }
     }
 }
@@ -26,7 +26,7 @@ export default class RemoveButton extends Component {
     render() {
         return (
             <Grommet theme={customTheme}>
-                <Button align="center" icon={<Subtract />} onClick={() => {this.props.subClick()}} hoverIndicator="#b6802b" />
+                <Button align="center" icon={<Subtract />} onClick={() => {this.props.subClick()}} hoverIndicator="#EAEAEA" />
             </Grommet>
         );
     }
