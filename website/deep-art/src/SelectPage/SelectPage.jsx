@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import styled from "styled-components";
 import SelectControl from './SelectControl.jsx';
 import ResultArt from './ResultArt.jsx';
 import { Box, Button, Grid, Paragraph, Text } from 'grommet';
 
+const NUM_FROM_EACH_CAT = 2;
 
 export default class SelectPage extends Component {
     constructor(props){
@@ -19,15 +19,10 @@ export default class SelectPage extends Component {
                     446900, 445269, 200171, 200117, 195775, 194243, 49208,
                     42370, 447077, 448260, 449058, 460715, 453457, 453306, 452036,
                     4551609, 447072, 444967, 44810],
-                'Purses': [84595,116964,116963,116963,116944,116884,79226,70467],
-                'Goblets': [207897, 4081, 4086, 4101, 4102, 4124, 187987, 239826],
-                'landingpage': [42447, 42447, 42447, 42447, 42447, 42447, 42447,
-                    42447, 42447, 42447, 42447, 42447],
-                'preppedPairs1': [42447, 249414, 249414, 249414, 249414, 249414, 249414],
-                'preppedPairs2': [42447, 249414, 42447, 249414, 249414, 249414, 249414]
-
-            }
-,
+                'Purses': [84595,116964,116963,116944,116884,79226,70467],
+                'Goblets': [207897, 4081, 4086, 4101, 4102, 4124, 187987, 239826]
+            },
+            choiceLists: {0:[], 1:[]}, //I really do not like this
             selectedIndex: 0,
             selectedImage: {
                 id: 0,
@@ -42,9 +37,60 @@ export default class SelectPage extends Component {
         this.clearOldImages = this.clearOldImages.bind(this);
     };
 
+    /**
+     * choses N random unique elements from list and returns them in a list
+     * @param {any[]} list - list of elements of any type 
+     * @param {*} n - the number of unqiue elements to choose. N <= list.length
+     */
+    pickNUniqueFromList(list, n){
+        if (n > list.length){
+            return "N IS TOO LARGE";
+        }
+
+        let output = [];
+        while (output.length < n){
+            let randIndex = Math.floor(Math.random()*list.length)
+            let choice = list[randIndex];
+            if (!output.includes(choice)){
+                output.push(choice);
+            }
+        }
+        return output;
+    }
+
+
+ 
+    getLandingPage(){
+        let categories = Object.keys(this.state.curatedImages);
+        let landingPageList = [];
+ 
+        let choiceLists = {}
+        for (let j = 0; j < NUM_FROM_EACH_CAT; j++){
+                choiceLists[j] = [];
+        }
+
+        for (let i = 0; i < categories.length; i++){
+            let list = this.state.curatedImages[categories[i]];
+            let choices = this.pickNUniqueFromList(list, NUM_FROM_EACH_CAT);
+            landingPageList = landingPageList.concat(choices);
+
+            for (let j = 0; j < NUM_FROM_EACH_CAT; j++){
+                choiceLists[j].push(choices[j]);
+            }
+        }
+
+        this.setState({
+            choiceLists: choiceLists
+        })
+
+        return landingPageList;
+    }
+
     //these are the initial images that are displayed when the page loads
     componentDidMount(){
-        this.objIDsToImages(this.state.curatedImages['landingpage']);
+        let landingPageList = this.getLandingPage();
+        //this.objIDsToImages(this.state.curatedImages['landingpage']);
+        this.objIDsToImages(landingPageList);
     }
 
     changeSelectedImage(key, ID) {
@@ -85,7 +131,7 @@ export default class SelectPage extends Component {
      */
     objIDsToImages(objIDs) {
         const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails3/';
-        
+
         let apiURLs = objIDs.map(ID => (
             {url: baseURL+ID.toString(),
              id: ID}
@@ -120,12 +166,11 @@ export default class SelectPage extends Component {
         if (this.state.categorySelected) {
             idList = this.state.imgObjects.slice(0, 7).map(ob => ob.id);
         } else {
-            //todo: make a random selection between the pairs
-            //currently just the same ones each time
-            if (this.state.selectedImage.id in this.state.curatedImages['preppedPairs1']) {
-                idList = this.state.curatedImages['preppedPairs1'];
+
+            if (this.state.choiceLists[0].includes(this.state.selectedImage.id)){
+                idList = this.state.choiceLists[1];
             } else {
-                idList = this.state.curatedImages['preppedPairs2'];
+                idList = this.state.choiceLists[0];
             }
             
         }

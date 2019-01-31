@@ -262,7 +262,6 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
        * of the closest neighbors to a click, where the number of neighbors taken  were decided earlier in the stack
        */
     function interpolateAndSet(ids, distances) {
-        console.log(distances);
 
         if (checkIfNotSuperClose(ids, distances)) {
             const ratios = Softmax(scalarMultiplyVector(distances, -5));

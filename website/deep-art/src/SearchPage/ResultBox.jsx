@@ -6,6 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 /**
  * One box in the Result Grid
@@ -19,17 +20,30 @@ export default class ResultBox extends Component {
     };
 
     render(){
+        let media = (this.props.data.PrimaryImageURL === undefined || this.props.data.PrimaryImageURL === null) ? 
+        <CardMedia 
+        component="img"
+        src={this.props.data.PrimaryImageUrl}
+        style={{
+            alignSelf:"center", 
+            alignItems:"ceneter", 
+            maxWidth:"500px", width:"fit-content", maxHeight: "500px", objectFit:'contain'}}
+        />
+        :
+        <CircularProgress style={{color: "#6A6A6A"}} />;
+        
         return(
             <Card raised={false} elevation={0} style={{ background: "#FFFFFF", display: "flex", flexFlow:"column wrap", height:"fit-content", alignItems:"center",}}>
-                <CardActionArea href={this.props.data.LinkResource} style={{display: "flex", justifyItems:"start"}}>
-                    <CardMedia 
+                <CardActionArea href={this.props.data.LinkResource} target="_blank" style={{display: "flex", justifyItems:"start"}}>
+                    {/* <CardMedia 
                         component="img"
                         src={this.props.data.PrimaryImageUrl}
                         style={{
                             alignSelf:"center", 
                             alignItems:"ceneter", 
                             maxWidth:"500px", width:"fit-content", maxHeight: "500px", objectFit:'contain'}}
-                    />
+                    /> */}
+                    {media}
                 </CardActionArea>
                 <CardContent style={{flexFlow: "column wrap", alignSelf:"start"}}>
                     <Typography component="p" style={{fontWeight: "600", fontSize: "18px"}}>

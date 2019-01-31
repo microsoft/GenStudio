@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Box, Button, Grommet, Select, Text} from 'grommet';
 
 const NUM_IMAGES_SEARCH_PAGE = 12;
+const NUM_FOR_SELECT = 7;
 
 /**
  * The search bar for art tags
@@ -22,10 +23,31 @@ export default class SearchControl extends Component {
         return url;
     }
 
+    /**
+     * choses N random unique elements from list and returns them in a list
+     * @param {any[]} list - list of elements of any type 
+     * @param {*} n - the number of unqiue elements to choose. N <= list.length
+     */
+    pickNUniqueFromList(list, n){
+        if (n > list.length){
+            return "N IS TOO LARGE";
+        }
+
+        let output = [];
+        while (output.length < n){
+            let randIndex = Math.floor(Math.random()*list.length)
+            let choice = list[randIndex];
+            if (!output.includes(choice)){
+                output.push(choice);
+            }
+        }
+        return output;
+    }
+
     onSelection(category) {
         this.state.selectedValue = category;
         let curatedImages = this.props.curatedImages;
-        let IDs = curatedImages[category];//.slice(0,7);
+        let IDs = this.pickNUniqueFromList(curatedImages[category], NUM_FOR_SELECT);
         this.props.clearOldImages();
         this.props.sendObjectIds(IDs);
     }
