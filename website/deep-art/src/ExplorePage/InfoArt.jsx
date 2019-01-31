@@ -6,9 +6,6 @@ import { Box, Image} from 'grommet';
  * 'image' prop: the image to be displayed, in url formal
  */
 export default class InfoArt extends Component {
-    constructor(props){
-        super(props);
-    };
 
     render(){
 

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import styled from "styled-components";
 
-import { Box, Button, Grommet, Select, Text} from 'grommet';
+import { Box, Select} from 'grommet';
 
-const NUM_IMAGES_SEARCH_PAGE = 12;
+//const NUM_IMAGES_SEARCH_PAGE = 12;
 const NUM_FOR_SELECT = 7;
 
 /**
  * The search bar for art tags
+ * 'curatedImages' prop: object of objIDs
  * 'clearOldImages' prop: callback to clear out old images
  * 'snedObjectIds' prop: callback to send the Object IDs to the parent
  */
@@ -16,12 +16,6 @@ export default class SearchControl extends Component {
         options: ["Armors", "Ewers", "Goblets", "Purses", "Teapots", "Vases"],
         selectedValue: ""
     };
-
-    generateURL(category) {
-        let url = "https://met-art-api.azurewebsites.net/GetIDsByCategory";
-        url = url + "?category=" + category + "&numids=" + NUM_IMAGES_SEARCH_PAGE +"&resulttype=first";
-        return url;
-    }
 
     /**
      * choses N random unique elements from list and returns them in a list
@@ -44,8 +38,14 @@ export default class SearchControl extends Component {
         return output;
     }
 
+    /**
+     * Picks images from the category and sends them to the SelectPage for display
+     * @param {String} category 
+     */
     onSelection(category) {
-        this.state.selectedValue = category;
+        this.setState({
+            selectedValue: category
+        })
         let curatedImages = this.props.curatedImages;
         let IDs = this.pickNUniqueFromList(curatedImages[category], NUM_FOR_SELECT);
         this.props.clearOldImages();
@@ -60,7 +60,7 @@ export default class SearchControl extends Component {
               focusIndicator={false}
               size="medium"
               placeholder="Select a Category"
-              value={this.state.selectedValue}
+              value={selectedValue}
               options={options}
               onChange={({ option }) => this.onSelection(option)}
             />

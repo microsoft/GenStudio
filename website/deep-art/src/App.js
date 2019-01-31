@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Grommet, Box, TextInput } from 'grommet';
+import { Grommet, Box } from 'grommet';
 import { grommet } from "grommet/themes";
 import {deepMerge} from "grommet/utils";
 import styled from "styled-components";
 
-import {BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import './App.css';
 
 import SelectPage from './SelectPage/SelectPage.jsx';
@@ -75,10 +75,6 @@ const Body = styled.section`
   background: #FFFFFF;
   z-Index: 0;
 `;
-
-//background: #FFF8DC;
-//background: #F1F1D4
-//brand: "#DFD8BF",
 
 class App extends Component {
   render() {

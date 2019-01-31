@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 
-import { Box, Button, Grommet, Select, Text, TextInput} from 'grommet';
-import { grommet } from "grommet/themes";
-import { deepMerge } from "grommet/utils";
+import { Box, TextInput} from 'grommet';
 
 export default class SearchControl extends Component {
 

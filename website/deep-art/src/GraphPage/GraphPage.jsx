@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Box, Button, Grid, Text} from 'grommet';
+import { Box, Button, Grid} from 'grommet';
 import SearchControl from './SearchControl.jsx';
 import TagList from './TagList.jsx';
 import ImageGraph from './ImageGraph.jsx';

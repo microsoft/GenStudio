@@ -21,10 +21,6 @@ const WrapBox = styled(Box)`
  * The Navigational Bar across the top of the page
  */
 export default class NavBar extends Component{
-    constructor(props) {
-        super(props);
-
-    }
 
     render() {
         return(
@@ -37,7 +33,7 @@ export default class NavBar extends Component{
                     fill='horizontal'
                     background="#FFFFFF"
                 >
-                    <img src={logo} style={{height: "32px", width: "32px"}}/>
+                    <img src={logo} alt={"Gen Studio Logo"} style={{height: "32px", width: "32px"}}/>
                     <Button hoverIndicator="false" style={{textDecoration: "none"}} href={"/"}>
                         <Text size="42px" style={{fontWeight: 600}}>
                             Gen Studio

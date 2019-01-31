@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PaletteBox from './PaletteBox.jsx';
 
-import { Box, Grid, Image} from 'grommet';
-import testData from './testData.js';
+import { Grid } from 'grommet';
 
 /**
  * The Palette used to explore the images
@@ -10,9 +9,6 @@ import testData from './testData.js';
  * 'subSeed' prop: callback to subtract an image from the current seed
  */
 export default class ExplorePalette extends Component {
-    constructor(props){
-        super(props);
-    };
 
     render(){
         return(

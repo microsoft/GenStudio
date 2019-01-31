@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Box, CheckBox } from 'grommet';
 
+/**
+ * List of tags that can be used to filter results
+ */
 export default class TagList extends Component {
 
     constructor(props){
