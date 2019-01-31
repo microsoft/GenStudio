@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import Plot from 'react-plotly.js';
 import GenArt from './GenArt.jsx';
 import { Box, Grid, Text } from 'grommet';
-import Softmax from 'softmax-fn';
 import setupPlotly from './map.js';
 
+/**
+ * A map explore page to explore the latent space of BigGAN
+ */
 export default class MapExplorePage extends Component {
     constructor(props) {
         super(props);
@@ -14,11 +15,14 @@ export default class MapExplorePage extends Component {
     }
 
     componentDidMount() {
+        //Decode the url data
         let url = this.props.match.params.id.toString();
         url = decodeURIComponent(url);
         let selectedArt = url.split('&')[0].slice(4);
         let artArr = url.split('&')[1].slice(4);
         artArr = JSON.parse(artArr);
+
+        //Setup the Plotly graph
         setupPlotly(this, artArr, selectedArt);
     }
 

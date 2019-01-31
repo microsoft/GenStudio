@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { Grommet, Box, TextInput } from 'grommet';
+import { Grommet, Box } from 'grommet';
 import { grommet } from "grommet/themes";
 import {deepMerge} from "grommet/utils";
 import styled from "styled-components";
 
-import {BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import './App.css';
 
 import SelectPage from './SelectPage/SelectPage.jsx';
 import ExplorePage from './ExplorePage/ExplorePage.jsx';
-import GraphPage from './GraphPage/GraphPage.jsx';
 import SearchPage from './SearchPage/SearchPage.jsx';
 import MapPage from './MapPage/MapPage.jsx';
 import NavBar from './NavBar/NavBar.jsx';
@@ -76,10 +75,6 @@ const Body = styled.section`
   z-Index: 0;
 `;
 
-//background: #FFF8DC;
-//background: #F1F1D4
-//brand: "#DFD8BF",
-
 class App extends Component {
   render() {
     return (
@@ -94,7 +89,6 @@ class App extends Component {
               <Route exact path="/" component={SelectPage}/>
               <Route exact path="/select" component={SelectPage}/>
               <Route exact path="/explore/:id" component={ExplorePage}/>
-              <Route exact path="/graph" component={GraphPage}/>
               <Route exact path="/map/:id" component={MapPage}/>
               <Route exact path="/search/:id" component={SearchPage}/>
               <Route exact path="/search" component={SearchPage}/>

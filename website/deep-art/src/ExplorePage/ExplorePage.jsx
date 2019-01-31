@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
-import styled from "styled-components";
 
 import GenArt from './GenArt.jsx';
 import ExplorePalette from './ExplorePalette.jsx';
 import InfoArt from './InfoArt.jsx';
-import APIHelper from '../APIHelper.jsx';
 
-import {Box, Text, Grid, Paragraph} from 'grommet';
+import {Box, Grid, Paragraph} from 'grommet';
 
-const ColumnsDiv = styled.div`
-    display: flex;
-    flex-flow: row wrap;
-`
-const apiHelper = new APIHelper();
-const SEED_LENGTH = 140;
 
 /**
  * Page for the Exploring feature

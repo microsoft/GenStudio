@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Box, Button, Grid, Text} from 'grommet';
+import { Box, Grid} from 'grommet';
 import SearchControl from './SearchControl.jsx';
 import TagList from './TagList.jsx';
 import SearchGrid from './SearchGrid.jsx';
@@ -12,7 +12,10 @@ const urlRegEx =  /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!
 const azureSearchUrl = 'https://metartworksindex.search.windows.net/indexes/met-items/docs?api-version=2017-11-11&search=';
 const apiKey = '11A584ECD13C39D335F57939D502673D';
 
-export default class GraphPage extends Component {
+/**
+ * Page for searching the MET collection
+ */
+export default class SearchPage extends Component {
 
     constructor(props) {
         super(props);
@@ -31,9 +34,10 @@ export default class GraphPage extends Component {
     };
 
     componentDidMount() {
+        //Does an initial search if given an ObjID
         let self = this;
         let {id} = this.props.match.params; // The ID of the image to search on
-        if (id != null && id != 0) { // Do not update for null or '0' ids
+        if (id != null && id !== 0) { // Do not update for null or '0' ids
             fetch(azureSearchUrl + id, {headers: {'api-key': apiKey}}).then(function(response) {
                 return response.json();
             }).then(function(responseJson) {
@@ -103,7 +107,7 @@ export default class GraphPage extends Component {
     }
 
     /**
-     * This function the result prop in the crrent state to the passed in object list
+     * This function updates the result prop in the current state to the passed in object list
      * @param objectList the new result list of objects to be displayed
      */
     updateGridDisplay(objectList) {
@@ -137,7 +141,7 @@ export default class GraphPage extends Component {
      * that tag change and then creates a new search request including/excluding that tag, updating the state's tag, tagData, and results list 
      * props according to the new results.
      * @param label the tag that was selected by the user
-     * @param value true to include this tag in the new search query, false to exclude
+     * @param value set to true to include this tag in the new search query, false to exclude
      */
     getTagChange(label, value) {
         let self = this;
@@ -184,7 +188,6 @@ export default class GraphPage extends Component {
             >
                 <Box gridArea='search' background="accent-3" style={{justifyItems: "center"}}>
                     <SearchControl sendChange={this.getSearch}/>
-                    {/* <Button label={"search"} onClick={this.makeSearch} margin="medium"/> */}
                 </Box>
 
                 <Box gridArea='tags' background="accent-3" style={{justifyItems: "start"}}>

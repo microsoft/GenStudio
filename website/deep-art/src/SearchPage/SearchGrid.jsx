@@ -8,9 +8,6 @@ import { Grid } from 'grommet';
  * 'results' prop: an array of the json results from the Azure search (the 'value' value)
  */
 export default class SearchGrid extends Component {
-    constructor(props){
-        super(props);
-    };
 
     render(){
         return(

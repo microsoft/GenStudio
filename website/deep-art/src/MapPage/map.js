@@ -54,7 +54,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
             type: 'scatter',
             hoverinfo: "none",
             layer: "below",
-            marker: { size: 70, color: "#6A6A6A", symbol: "square" },
+            marker: { size: 10, color: "#6A6A6A", symbol: "square" },
         },
         {
             x: [startCoords[0]],
@@ -74,7 +74,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
 
     const layout = {
         showlegend: false,
-        //shapes: getLinesToNeighbors(startCoords, locations),
+        shapes: getLinesToNeighbors(startCoords, locations),
         margin: { 'l': 0, 'r': 0, 't': 0, 'b': 0 },
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor: 'rgba(0,0,0,0)',
@@ -301,6 +301,9 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
         return vec.map(v => v * scalar)
     }
 
+    /**
+     * makes a line object from point to nn
+     */
     function getLine(point, nn) {
         return {
             type: 'line',
@@ -310,8 +313,8 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
             y1: nn[1],
             layer: "below",
             line: {
-                color: 'rgb(255, 255, 255)',
-                width: 3
+                color: 'rgba(240, 240, 240, .1)',
+                width: 2
             }
         }
     };
@@ -324,6 +327,11 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
         return getNearestNeighborsOnPlot(point).map(nn => getLine(point, nn))
     };
 
+    /**
+     * Changes from mouse coords to plotly coords
+     * @param {int} x - x coord in pixels of the mouse 
+     * @param {int} y - y coord in pixels of the mouse 
+     */
     function toPlotlyCoords(x, y) {
         const width = myPlot.clientWidth + 8;
         const height = myPlot.clientHeight + 8;
@@ -334,6 +342,10 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
         return [plotlyX, plotlyY];
     }
 
+    /**
+     * updates the location of the main marker and updates the generated image periodically
+     * @param {int[]} point - the point of the marker 
+     */
     function updatePOI(point) {
         Plotly.restyle(divName, { 'x': [[point[0]]], 'y': [[point[1]]] }, 1);
         let roundedX = Math.round(1000.0*point[0])/1000.0;
@@ -341,7 +353,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
         stateHolder.setState({
             cursorPoint: [roundedX,roundedY]
         });
-        //Plotly.relayout(divName, { 'shapes': getLinesToNeighborsOnPlot(point) });
+        Plotly.relayout(divName, { 'shapes': getLinesToNeighborsOnPlot(point) });
         const distancesAndIds = getNearestNeighborsOnPlot(point).map(nn =>
             [calculateDistance(nn.slice(0, 2), point), paintingIds[nn[2]]]);
         const ids = distancesAndIds.map(p => p[1]);
@@ -367,6 +379,11 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
         d3.selectAll(".scatterlayer .trace:last-of-type .points path").call(drag);
     }
 
+    /**
+     * gets the "nNeighbors" nearest neighbors of the current marker location
+     * @param {int[]} plotlyCoords - coords of the marker
+     * @param {int[][]} locations - list of image locations
+     */
     function getNearestNeighbors(plotlyCoords, locations) {
         const xs = locations.map(p => p[0]);
         const ys = locations.map(p => p[1]);
@@ -386,13 +403,13 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
         return Math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2);
     }
 
-    function coordToObjID(plotlyCoord) {
-        let index = locations.indexOf(plotlyCoord);
-        console.log("INDEX: "+index);
-        let ID = paintingIds[index];
-        console.log("ID: "+ID);
-        return ID
-    }
+    // function coordToObjID(plotlyCoord) {
+    //     let index = locations.indexOf(plotlyCoord);
+    //     console.log("INDEX: "+index);
+    //     let ID = paintingIds[index];
+    //     console.log("ID: "+ID);
+    //     return ID
+    // }
 
 
     function attach() {

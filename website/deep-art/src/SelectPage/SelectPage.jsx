@@ -3,8 +3,11 @@ import SelectControl from './SelectControl.jsx';
 import ResultArt from './ResultArt.jsx';
 import { Box, Button, Grid, Paragraph, Text } from 'grommet';
 
-const NUM_FROM_EACH_CAT = 2;
+const NUM_FROM_EACH_CAT = 2; //Number to choose from each category
 
+/**
+ * Page for selecting an image to start generating on
+ */
 export default class SelectPage extends Component {
     constructor(props){
         super(props);
@@ -18,11 +21,11 @@ export default class SelectPage extends Component {
                 'Ewers': [201671, 202194, 232038, 324830, 324917, 544501, 751402,
                     446900, 445269, 200171, 200117, 195775, 194243, 49208,
                     42370, 447077, 448260, 449058, 460715, 453457, 453306, 452036,
-                     447072, 444967, 44810],
+                     447072, 444967, 444810],
                 'Purses': [84595,116964,116963,116944,116884,79226,70467],
                 'Goblets': [207897, 4081, 4086, 4101, 4102, 4124, 187987, 239826]
             },
-            choiceLists: {0:[], 1:[]}, //I really do not like this
+            choiceLists: {0:[], 1:[]}, //I really do not like this, hard coded so theres something to reference
             selectedIndex: 0,
             selectedImage: {
                 id: 0,
@@ -60,6 +63,11 @@ export default class SelectPage extends Component {
 
 
  
+    /**
+     * Gets the list of object ids to be used on the landing page
+     * While doing so, also populates choiceLists with subset lists, each list contianing one ObjID from each category
+     * @returns {int[]} - list of object IDs to be displayed
+     */
     getLandingPage(){
         let categories = Object.keys(this.state.curatedImages);
         let landingPageList = [];
@@ -89,13 +97,17 @@ export default class SelectPage extends Component {
     //these are the initial images that are displayed when the page loads
     componentDidMount(){
         let landingPageList = this.getLandingPage();
-        //this.objIDsToImages(this.state.curatedImages['landingpage']);
         this.objIDsToImages(landingPageList);
     }
 
+    /**
+     * Changes the selection of an ID in state
+     * @param {int} key 
+     * @param {int} ID - objID of the art being selected
+     */
     changeSelectedImage(key, ID) {
         //Unclear if this is a better system or not
-        if (ID === this.state.selectedImage){
+        if (ID === this.state.selectedImage.id){
             this.setState({
                 selectedImage:
                 {
@@ -114,57 +126,29 @@ export default class SelectPage extends Component {
         }
     }
 
+    /**
+     * callback wrapper for the objIDsToImages function
+     * @param {int[]} imageIDs - list of object IDs to get the images for
+     */
     getImageIDs(imageIDs) {
         this.objIDsToImages(imageIDs);
     }
 
+    /**
+     * Clears the state of objects and the selected category
+     */
     clearOldImages() {
-        this.state.categorySelected = true;
-        this.state.imgObjects = []; 
+        this.setState({
+            categorySelected: true,
+            imgObjects: []
+        })
     }
 
+ 
     /**
      * loads the images of the specified object IDs from the Met and saves it
      * into this.state.imgObjects
      * @param {Int[]} objIDs - An array of object IDs from the met API to convert to an array of image urls
-     * @return {String[]} - An array of image urls from the met API.
-     */
-    // objIDsToImages(objIDs) {
-    //     const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails3/';
-
-    //     let apiURLs = objIDs.map(ID => (
-    //         {url: baseURL+ID.toString(),
-    //          id: ID}
-    //     ));
-    //     for (let i = 0; i < apiURLs.length; i++){
-    //         const Http = new XMLHttpRequest();
-    //         Http.responseType = "arraybuffer";
-    //         Http.open("GET", apiURLs[i].url);
-    //         Http.send();
-    //         Http.onreadystatechange = (e) => {
-    //             if (Http.readyState === 4){
-    //                 try {
-    //                     this.setState((oldState) => {                           
-    //                         return oldState.imgObjects.push(
-    //                             {
-    //                                 img: btoa(String.fromCharCode.apply(null, new Uint8Array(Http.response))),
-    //                                 id: apiURLs[i].id,
-    //                                 key: i
-    //                             });
-    //                     });
-    //                 } catch (e) {
-    //                     console.log('malformed request:' + Http.responseText);
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-
-    /**
-     * loads the images of the specified object IDs from the Met and saves it
-     * into this.state.imgObjects
-     * @param {Int[]} objIDs - An array of object IDs from the met API to convert to an array of image urls
-     * @return {String[]} - An array of image urls from the met API.
      */
     objIDsToImages(objIDs) {
         const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails4/';
@@ -181,24 +165,31 @@ export default class SelectPage extends Component {
         
     }
 
+    /**
+     * Generates a URL suffix to transmit objID's between pages of the website
+     * @returns {String} - the URL suffix encoding ObjIDs
+     */
     generateArtUrlSuffix() {
         let urlBase = "/map/";
         let idList = [];
+
+        //If a category is selected, then just use the current set of images
         if (this.state.categorySelected) {
             idList = this.state.imgObjects.slice(0, 7).map(ob => ob.id);
+
+        //Else, you are in the default landing page and should take the selected image and a choiceList that does not contain the selected image
         } else {
 
-            if (this.state.choiceLists[0].includes(this.state.selectedImage.id)){
-                idList = [this.state.selectedImage.id].concat(this.state.choiceLists[1]);
-            } else {
+            if (!this.state.choiceLists[0].includes(this.state.selectedImage.id)){
                 idList = [this.state.selectedImage.id].concat(this.state.choiceLists[0]);
+            } else {
+                idList = [this.state.selectedImage.id].concat(this.state.choiceLists[1]);
             }
             
         }
         
         let url = "?id=" + this.state.selectedImage.id.toString()
             + "&ids=[" + idList.toString() + "]";
-        //console.log("url: " + url);
         url = encodeURIComponent(url);
         return urlBase + url;
     }

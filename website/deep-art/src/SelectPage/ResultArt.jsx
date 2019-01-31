@@ -8,6 +8,13 @@ const GridWrapper = styled(Box)`
     align-items: center;     
 `
 
+/**
+ * The grid of thumbnails of art
+ *  images : List of ObjIDs to be displayed
+ *  selectedImage : the currently selected image
+ *  selectImage : callback to change the selected image
+ *  categorySelected : the selected category
+ */
 export default class ResultArt extends Component {
     constructor(props){
         super(props);

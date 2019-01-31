@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { grommet } from "grommet/themes";
 
-import { Box, Button, Grommet} from 'grommet';
+import { Button, Grommet} from 'grommet';
 import { Subtract } from "grommet-icons";
 
 const customTheme = {
     button: {
         extend:{
             "border-radius": "12px",
-            //background: "#FFFFFF"
         }
     }
 }
@@ -17,11 +15,6 @@ const customTheme = {
  * Remove Icon Button with 'subClick' prop 
  */
 export default class RemoveButton extends Component {
-    constructor(props){
-        super(props);
-    };
-
-
 
     render() {
         return (
