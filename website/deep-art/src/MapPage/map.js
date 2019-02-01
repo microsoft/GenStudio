@@ -313,7 +313,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
             y1: nn[1],
             layer: "below",
             line: {
-                color: 'rgba(240, 240, 240, .1)',
+                color: 'rgba(200, 200, 200, .7)',
                 width: 2
             }
         }

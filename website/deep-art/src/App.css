@@ -27,8 +27,8 @@
 }
 
 .plot {
-    background-image: url('https://deepartstorage.blob.core.windows.net/public/assets/optimized_geometric_1.jpeg');
-    background-color: rgb(0,0,0);
+    background-image: url('../src/images/background.jpeg');
+    background-color: rgba(0,0,0,.2);
     background-size: cover;
     padding: 0;
     margin: 0;
