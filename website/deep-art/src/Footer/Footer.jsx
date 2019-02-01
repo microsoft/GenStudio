@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import styled from "styled-components";
 
 import { Box, Button, Text } from 'grommet';
-import logo from '../images/genStudioLogo.png';
 
 const FootBox = styled(Box)`
     padding-top: 2rem;
