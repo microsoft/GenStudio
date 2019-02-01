@@ -305,6 +305,10 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
      * makes a line object from point to nn
      */
     function getLine(point, nn) {
+        let dist = 5.0*calculateDistance(point, nn);
+        let frac = Math.min(1.0/(dist+.0001)**2,1);
+        console.log(frac);
+
         return {
             type: 'line',
             x0: point[0],
@@ -313,7 +317,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
             y1: nn[1],
             layer: "below",
             line: {
-                color: 'rgba(240, 240, 240, .1)',
+                color: `rgba(240, 240, 240, ${frac})`,
                 width: 2
             }
         }
