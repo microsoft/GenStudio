@@ -7,7 +7,7 @@ import logo from '../images/genStudioLogo.png';
 
 const FootBox = styled(Box)`
     padding-top: 2rem;
-    padding-bottom: .5rem;
+    padding-bottom: 2rem;
 `
 
 const WrapBox = styled(Box)`
