@@ -12,6 +12,7 @@ import ExplorePage from './ExplorePage/ExplorePage.jsx';
 import SearchPage from './SearchPage/SearchPage.jsx';
 import MapPage from './MapPage/MapPage.jsx';
 import NavBar from './NavBar/NavBar.jsx';
+import Footer from './Footer/Footer.jsx';
 
 //GLOBAL THEME
 const gTheme = {
@@ -92,7 +93,9 @@ class App extends Component {
               <Route exact path="/map/:id" component={MapPage}/>
               <Route exact path="/search/:id" component={SearchPage}/>
               <Route exact path="/search" component={SearchPage}/>
+              
             </Body>
+            <Footer/>
           </Box>
         </Grommet>
       </Router>
