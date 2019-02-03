@@ -13,7 +13,7 @@ const NUM_FOR_SELECT = 7;
  */
 export default class SearchControl extends Component {
     state = {
-        options: ["Armors", "Ewers", "Goblets", "Purses", "Teapots", "Vases"],
+        options: ["Armor", "Ewers", "Goblets", "Purses", "Teapots", "Vases"],
         selectedValue: ""
     };
 
