@@ -129,7 +129,6 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
                 try {
                     let imgData = btoa(String.fromCharCode.apply(null, new Uint8Array(Http.response)));
                     stateHolder.setState({ genImg: imgData, genArr: Http.response });
-
                 } catch (e) {
                     console.log('malformed request:' + Http.responseText);
                 }
@@ -264,7 +263,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
     function interpolateAndSet(ids, distances) {
 
         if (checkIfNotSuperClose(ids, distances)) {
-            const ratios = Softmax(scalarMultiplyVector(distances, -5));
+            const ratios = Softmax(scalarMultiplyVector(distances, -6));
             //console.log(ratios);
             let totalLatent = new Array(140).fill(0);
             let totalLabel = new Array(1000).fill(0);
@@ -276,7 +275,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
                 totalLatent = addVector(totalLatent, scalarMultiplyVector(latents, r));
                 totalLabel = addVector(totalLabel, scalarMultiplyVector(labels, r));
             });
-    
+            stateHolder.setState({ message: `Top Ratios: ${ratios.map(r => r.toPrecision(1)).slice(0,3)}` });
             getGenImage(`[[${totalLatent.toString()}]]`, totalLabel);
         }
 

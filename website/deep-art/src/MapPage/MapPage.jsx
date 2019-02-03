@@ -44,17 +44,18 @@ export default class MapExplorePage extends Component {
                 <Box fill gridArea='text'>
                     <Box fill style={{flexFlow: "column", alignSelf:"start", justifyContent:"space-around"}}>
                         <Text style={{fontWeight:"550"}}>
-                            Explore the map to discover new objects in the space between existing Met artworks.
+                            Explore the mind of a Generative Adversarial Network that has been trained to create artworks from the Met's collection!
+                        </Text>
+                        <Text style={{fontWeight:"550"}}>
+                            Click or drag the cursor to generate art. Click "Explore Similiar" to find your object's closest matches in the MET.
                         </Text>
                         
-                        <Text>
-                            A trained GAN (Generative Adversarial Network) contains a model of a shared feature space underlying a collection of images. Based on given artworks from the Met collection, the GAN generates new objects that could have been made, but maybe never were.
-                        </Text>
+
                     </Box>
                 </Box>
 
                 <Box gridArea='image' direction='column' align="center" style={{justifyItems: "center"}}>
-                        <GenArt point={this.state.cursorPoint} image={this.state.genImg} data={this.state.genArr} />
+                        <GenArt message={this.state.message} image={this.state.genImg} data={this.state.genArr} />
                 </Box>
 
                 <Box gridArea='map' background="accent-3"
