@@ -10,7 +10,7 @@ const NavBox = styled(Box)`
     padding-bottom: .5rem;
     border-style: solid;
     border-width: 0px 0px 1.5px 0px;
-    border-color: #00000;
+    border-color: #000000;
 `
 
 const WrapBox = styled(Box)`
@@ -39,7 +39,7 @@ export default class NavBar extends Component{
                             Gen Studio
                         </Text>
                     </Button>
-                    
+
                 </NavBox>
             </WrapBox>
 
