@@ -4,13 +4,12 @@ import styled from 'styled-components';
 
 import search from './../images/search.svg';
 
-const Nav = styled.span`
+const Nav = styled.nav`
   align-items: center;
   display: flex;
   height: 3.125rem;
   justify-content: space-between;
-  padding-left: 6.25rem;
-  padding-right: 6.25rem;
+  margin-bottom: 1.25rem;
 `;
 
 const Link = styled.a`
