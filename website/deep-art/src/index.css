@@ -1,22 +1,93 @@
+:root {
+  box-sizing: border-box;
+  font-size: 100%;
+  line-height: 1.4;
+
+  -webkit-text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*:after {
+  box-sizing: inherit;
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'SegoeUI', 'Roboto', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100%;
   min-width: 100%;
 }
 
-html, body, #root, #root>div {
+html,
+body,
+#root,
+#root > div {
   height: 100%;
   min-width: 100%;
   width: fit-content;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+@font-face {
+  font-family: 'SegoeUI';
+  font-style: swap;
+  src: local('Segoe UI'),
+    url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2')
+      format('woff2'),
+    url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff') format('woff'),
+    url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.ttf') format('ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'SegoeUI';
+  font-style: swap;
+  src: local('Segoe UI'),
+    url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/Light/latest.woff2')
+      format('woff2'),
+    url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/Light/latest.woff') format('woff'),
+    url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/Light/latest.ttf') format('ttf');
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: 'SegoeUI';
+  font-style: swap;
+  src: local('Segoe UI'),
+    url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/Semilight/latest.woff2')
+      format('woff2'),
+    url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/Semilight/latest.woff')
+      format('woff'),
+    url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/Semilight/latest.ttf')
+      format('ttf');
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: 'SegoeUI';
+  font-style: swap;
+  src: local('Segoe UI'),
+    url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/Semibold/latest.woff2')
+      format('woff2'),
+    url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/Semibold/latest.woff')
+      format('woff'),
+    url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/Semibold/latest.ttf') format('ttf');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'SegoeUI';
+  font-style: swap;
+  src: local('Segoe UI'),
+    url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/Bold/latest.woff2') format('woff2'),
+    url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/Bold/latest.woff') format('woff'),
+    url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/Bold/latest.ttf') format('ttf');
+  font-weight: 600;
 }
