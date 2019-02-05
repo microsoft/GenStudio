@@ -7,6 +7,8 @@ import globe from '../images/globe.svg';
 const Footer = styled.footer`
   background-color: #f2f2f2;
   font-size: 12px;
+  margin-left: -6.25rem;
+  margin-right: -6.25rem;
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-right: 2.875rem;
@@ -30,7 +32,6 @@ const LinkBig = styled.a`
 `;
 
 const FooterLinks = styled.div`
-
   @media (min-width: 48em) {
     display: flex;
     justify-content: space-between;
