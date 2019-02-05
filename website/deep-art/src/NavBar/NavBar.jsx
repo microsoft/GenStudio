@@ -1,48 +1,61 @@
 import React, { Component } from 'react';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { Box, Button, Text } from 'grommet';
-import logo from '../images/genStudioLogo.png';
+import search from './../images/search.svg';
 
-const NavBox = styled(Box)`
-    padding-top: 2rem;
-    padding-bottom: .5rem;
-    border-style: solid;
-    border-width: 0px 0px 1.5px 0px;
-    border-color: #000000;
-`
+const Nav = styled.span`
+  align-items: center;
+  display: flex;
+  height: 3.125rem;
+  justify-content: space-between;
+  padding-left: 6.25rem;
+  padding-right: 6.25rem;
+`;
 
-const WrapBox = styled(Box)`
-    padding-left: 3rem;
-    padding-right: 3rem;
-`
+const Link = styled.a`
+  color: #000000;
+  font-size: 1.25rem;
+`;
+
+const Search = styled.a`
+  align-items: center;
+  border: 1px solid #d2d2d2;
+  border-radius: 1.5rem;
+  color: #505050;
+  display: flex;
+  height: 2.125rem;
+  justify-content: space-between;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  text-decoration: none;
+  width: 15rem;
+`;
+
+const SearchIcon = styled.img`
+  margin-left: 0.5rem;
+  height: 1.25rem;
+  width: 1.25rem;
+`;
+
+const SearchDesc = styled.span`
+  font-size: 0.75rem;
+  white-space: nowrap;
+`;
+
 /**
  * The Navigational Bar across the top of the page
  */
-export default class NavBar extends Component{
-
-    render() {
-        return(
-            <WrapBox>
-                <NavBox
-                    direction='row'
-                    align='center'
-                    justify='start'
-                    elevation='none'
-                    fill='horizontal'
-                    background="#FFFFFF"
-                >
-                    <img src={logo} alt={"Gen Studio Logo"} style={{height: "32px", width: "32px"}}/>
-                    <Button hoverIndicator="false" style={{textDecoration: "none"}} href={"/"}>
-                        <Text size="42px" style={{fontWeight: 600}}>
-                            Gen Studio
-                        </Text>
-                    </Button>
-
-                </NavBox>
-            </WrapBox>
-
-        );
-    }
+export default class NavBar extends Component {
+  render() {
+    return (
+      <Nav>
+        <Link hoverIndicator="false" style={{ textDecoration: 'none' }} href={'/'}>Gen Studio</Link>
+        <Search href="/">
+          <SearchDesc>Explore the MET Collection</SearchDesc>
+          <SearchIcon src={search} alt={'Explore the MET Collection'} />
+        </Search>
+      </Nav>
+    );
+  }
 }
