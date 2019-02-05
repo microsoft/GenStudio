@@ -36,6 +36,17 @@ export default class NavBar extends Component{
                                 Click here to learn more.
                             </Text>
                         </Button>
+                        <Button hoverIndicator={true} href={"https://go.microsoft.com/fwlink/?LinkId=521839"} style={{marginLeft:"5px"}}>
+                            <Text size = "16px">
+                                Privacy and Cookies
+                            </Text>
+                        </Button>
+                        {" | "}
+                        <Button hoverIndicator={true} href={"https://go.microsoft.com/fwlink/?LinkID=206977"} style={{marginLeft:"5px"}}>
+                            <Text size = "16px">
+                                Terms of use
+                            </Text>
+                        </Button>
                     </Text>
 
 
