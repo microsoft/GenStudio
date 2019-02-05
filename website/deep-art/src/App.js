@@ -18,7 +18,7 @@ import Footer from './Footer/Footer.jsx';
 const gTheme = {
   global: {
     font: {
-      family: 'Roboto',
+      family: 'Segoe UI',
       size: '14px',
       height: '20px',
       color: '#383B3E',
@@ -93,7 +93,7 @@ class App extends Component {
               <Route exact path="/map/:id" component={MapPage}/>
               <Route exact path="/search/:id" component={SearchPage}/>
               <Route exact path="/search" component={SearchPage}/>
-              
+
             </Body>
             <Footer/>
           </Box>
