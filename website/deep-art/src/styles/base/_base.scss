@@ -29,3 +29,12 @@ body {
   padding-left: $horizontal-space;
   padding-right: $horizontal-space;
 }
+
+.logo {
+  color: $color-base-darkest;
+  font-size: 46px;
+  font-weight: $font-weight-light;
+  line-height: initial;
+  margin-bottom: $space-m;
+  margin-top: 0;
+}
