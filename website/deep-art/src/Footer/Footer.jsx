@@ -12,7 +12,7 @@ function NavBar({ t }) {
       <footer className="footer">
         <p className="footer__description">
           {t('foo.desc')}
-          <a className="footer__link foo__link--strong" hoverIndicator={true} href={'https://www.microsoft.com/inculture/arts/met-microsoft-mit-ai-open-access-hack'} target="_blank" rel="noopener noreferrer">
+          <a className="footer__link foo__link--strong" href={'https://www.microsoft.com/inculture/arts/met-microsoft-mit-ai-open-access-hack'} target="_blank" rel="noopener noreferrer">
             {t('global.learn_more')}
           </a>
         </p>
