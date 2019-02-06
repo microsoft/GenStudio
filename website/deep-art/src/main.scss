@@ -1,0 +1,38 @@
+// 1. Configuration and helpers
+@import
+  '/styles/abstracts/variables',
+  '/styles/abstracts/functions',
+  '/styles/abstracts/mixins/arrows',
+  '/styles/abstracts/mixins/aspect-ratio',
+  '/styles/abstracts/mixins/baseline',
+  '/styles/abstracts/mixins/custom-properties',
+  '/styles/abstracts/mixins/ellipsis',
+  '/styles/abstracts/mixins/ellipsis-multiline',
+  '/styles/abstracts/mixins/fonts',
+  '/styles/abstracts/mixins/crop-text',
+  '/styles/abstracts/mixins/underline',
+  '/styles/abstracts/mixins/spacing';
+
+// 2. Vendors
+@import
+  '/styles/vendor/normalize';
+
+// 3. Base stuff
+@import
+  '/styles/base/base',
+  '/styles/base/fonts',
+  '/styles/base/typography',
+  '/styles/base/utilities';
+
+// 4. Layout-related sections
+@import
+  '/styles/layout/header',
+  '/styles/layout/footer';
+
+// 5. Components
+@import
+  '/styles/components/nav';
+
+// 6. Page-specific styles
+@import
+  '/styles/pages/home';

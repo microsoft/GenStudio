@@ -12,13 +12,14 @@ import ExplorePage from './ExplorePage/ExplorePage.jsx';
 import SearchPage from './SearchPage/SearchPage.jsx';
 import MapPage from './MapPage/MapPage.jsx';
 import NavBar from './NavBar/NavBar.jsx';
+import Logo from './Logo/Logo.jsx'
 import Footer from './Footer/Footer.jsx';
 
 //GLOBAL THEME
 const gTheme = {
   global: {
     font: {
-      family: 'Roboto',
+      family: 'Segoe UI',
       size: '14px',
       height: '20px',
       color: '#383B3E',
@@ -73,7 +74,7 @@ const mergeTheme = deepMerge(grommet, gTheme);
 const Body = styled.section`
   flex: 1;
   background: #FFFFFF;
-  z-Index: 0;
+  z-index: 0;
 `;
 
 class App extends Component {
@@ -87,13 +88,13 @@ class App extends Component {
           >
             <Body>
               <NavBar />
+              <Logo />
               <Route exact path="/" component={SelectPage}/>
               <Route exact path="/select" component={SelectPage}/>
               <Route exact path="/explore/:id" component={ExplorePage}/>
               <Route exact path="/map/:id" component={MapPage}/>
               <Route exact path="/search/:id" component={SearchPage}/>
               <Route exact path="/search" component={SearchPage}/>
-              
             </Body>
             <Footer/>
           </Box>

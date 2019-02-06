@@ -1,0 +1,63 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the footer of the site/application.
+// -----------------------------------------------------------------------------
+.foo {
+  background-color: $color-shade-light;
+  font-size: 12px;
+  margin-left: calc(#{$horizontal-space} * -1);
+  margin-right: calc(#{$horizontal-space} * -1);
+  padding-top: $space-m;
+  padding-bottom: $space-m;
+  padding-right: $horizontal-foo-padding;
+  padding-left: $horizontal-foo-padding;
+
+  &__desc {
+    margin-bottom: $space-m;
+    margin-top: initial;
+  }
+
+  &__links {
+    @media (min-width: $mq-s) {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  &__link {
+    display: block;
+    color: $color-shade-lighter;
+    margin-right: $space-m;
+    text-decoration: none;
+    white-space: nowrap;
+
+    @media (min-width: 33.75em) {
+      display: initial;
+    }
+
+    &--strong {
+      color: $color-base-darkest;
+      font-weight: $font-weight-semibold;
+      margin-left: $space-xs;
+      text-decoration: underline;
+      white-space: nowrap;
+    }
+  }
+
+  &__lang {
+    align-items: center;
+    color: $color-shade-lighter;
+    display: flex;
+    margin-bottom: $space-s;
+    white-space: nowrap;
+
+    @media (min-width: $mq-s) {
+      margin-bottom: initial;
+    }
+  }
+
+  &__img {
+    margin-right: $space-s;
+    height: $icon-m;
+    width: $icon-m;
+  }
+}

@@ -1,48 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import styled from "styled-components";
+import { withNamespaces } from 'react-i18next';
 
-import { Box, Button, Text } from 'grommet';
-import logo from '../images/genStudioLogo.png';
+import search from './../images/search.svg';
 
-const NavBox = styled(Box)`
-    padding-top: 2rem;
-    padding-bottom: .5rem;
-    border-style: solid;
-    border-width: 0px 0px 1.5px 0px;
-    border-color: #00000;
-`
-
-const WrapBox = styled(Box)`
-    padding-left: 3rem;
-    padding-right: 3rem;
-`
 /**
  * The Navigational Bar across the top of the page
  */
-export default class NavBar extends Component{
-
-    render() {
-        return(
-            <WrapBox>
-                <NavBox
-                    direction='row'
-                    align='center'
-                    justify='start'
-                    elevation='none'
-                    fill='horizontal'
-                    background="#FFFFFF"
-                >
-                    <img src={logo} alt={"Gen Studio Logo"} style={{height: "32px", width: "32px"}}/>
-                    <Button hoverIndicator="false" style={{textDecoration: "none"}} href={"/"}>
-                        <Text size="42px" style={{fontWeight: 600}}>
-                            Gen Studio
-                        </Text>
-                    </Button>
-                    
-                </NavBox>
-            </WrapBox>
-
-        );
-    }
+function NavBar({ t }) {
+  return (
+    <nav className="nav">
+      <a className="nav__link" href="/">
+        {t('global.title')}
+      </a>
+      <a className="nav__btn" href="/search/1">
+        <span className="nav__text">{t('nav.explore')}</span>
+        <img className="nav__img" src={search} alt={t('nav.explore')} />
+      </a>
+    </nav>
+  );
 }
+
+export default withNamespaces()(NavBar);
