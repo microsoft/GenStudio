@@ -1,0 +1,19 @@
+{
+  "en": {
+    "translation": {
+      "global.title": "Gen Studio",
+      "global.learn_more": "Click here to learn more",
+      "global.lang_eng": "Language: English",
+      "global.lang_eng_description_us": "English (United States)",
+      "global.copyright": "© Microsoft 2019",
+
+      "nav.explore": "Explore the MET Collection",
+
+      "foo.desc": "Gen Studio is a prototype concept which was created over a two-day hackathon with collaborators across The Met, Microsoft, and MIT.",
+      "foo.privacy_cookies": "Privacy & Cookies",
+      "foo.terms_use": "Terms of use",
+      "foo.trademarks": "Trademarks",
+      "foo.report_abuse": "Report abuse"
+    }
+  }
+}
