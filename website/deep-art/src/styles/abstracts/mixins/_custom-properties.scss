@@ -1,0 +1,30 @@
+// Custom properties to Sass fallback
+// @author Ignacio Villanueva
+// @params {String}: $customProp, $renderedValue
+// Source: https://gist.github.com/IgnaciodeNuevo/4a945cec3c68bb6a0ad829bd14c96918
+
+@mixin props($customProp, $renderedValue) {
+    #{$customProp}: map-get($VariablesMap, $renderedValue);
+    #{$customProp}: var(unquote('--#{$renderedValue}'));
+}
+
+// Usage:
+// .class {
+//    @include props('CSS Property ', 'Sass Map Key');
+// }
+
+@mixin plainProps($property, $variable, $fallback) {
+    #{$property}: $fallback;
+    #{$property}: var($variable);
+}
+
+// Usage:
+// .dashboard {
+//     @include variable(background, --theme-primary-color, blue);
+// }
+
+// Compiles to:
+// .dashboard {
+//     background: blue;
+//     background: var(--theme-primary-color);
+// }

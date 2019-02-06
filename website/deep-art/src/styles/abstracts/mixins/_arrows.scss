@@ -1,0 +1,49 @@
+@mixin box-arrow($arrowDirection, $arrowColor, $arrowSize: 10px) {
+    position: relative;
+    z-index: 10;
+
+    &::after {
+        content: '';
+        width: 0;
+        height: 0;
+        display: block;
+        position: absolute;
+        z-index: 10;
+        border: 0;
+
+        @if $arrowDirection == bottom or $arrowDirection == top {
+            border-left: $arrowSize solid transparent;
+            border-right: $arrowSize solid transparent;
+            margin-left: -$arrowSize;
+            left: 50%;
+
+            @if $arrowDirection == bottom {
+                border-top: $arrowSize solid $arrowColor;
+                bottom: -$arrowSize;
+            }
+
+            @if $arrowDirection == top {
+                border-bottom: $arrowSize solid $arrowColor;
+                top: -$arrowSize;
+            }
+        }
+
+        @if $arrowDirection == left or $arrowDirection == right {
+            border-top: $arrowSize solid transparent;
+            border-bottom: $arrowSize solid transparent;
+            margin-top: -$arrowSize;
+            top: 50%;
+
+            @if $arrowDirection == left {
+                border-right: $arrowSize solid $arrowColor;
+                left: -$arrowSize;
+            }
+
+            @if $arrowDirection == right {
+                border-left: $arrowSize solid $arrowColor;
+                left: auto;
+                right: -$arrowSize;
+            }
+        }
+    }
+}

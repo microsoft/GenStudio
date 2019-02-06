@@ -1,0 +1,38 @@
+$base-font-size: 16px;
+$base-line-height: $line-height;
+
+// this value may vary for each font
+// unitless value relative to 1em
+$cap-height: 0.68;
+
+@mixin baseline($font-size, $scale: 2) {
+    // rhythm unit
+    $rhythm: $base-line-height * $font-size / $scale;
+
+    // number of rhythm units that can fit the font-size
+    $lines: ceil(($font-size + 0.001px) / $rhythm);
+
+    // calculate the new line-height
+    $line-height: $rhythm * $lines / $font-size;
+
+    // use the results
+    font-size: $font-size;
+    line-height: $line-height;
+
+    $baseline-distance: ($line-height - $cap-height) / 2;
+
+    // METHOD 1
+
+    // this method can relatively move down elements you may not want to
+    // position: relative;
+    // top: $baseline-distance + em;
+
+    // METHOD 2
+
+    // if you use this mixin only on elements that have one direction margins
+    // http://csswizardry.com/2012/06/single-direction-margin-declarations/
+    // you can use this method with no worries.
+    // this method assumes the direction is down and the margin is $base-line-height
+    padding-top: $baseline-distance + em;
+    margin-bottom: $base-line-height - $baseline-distance + em;
+}

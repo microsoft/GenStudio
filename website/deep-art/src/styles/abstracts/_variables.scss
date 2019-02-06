@@ -1,0 +1,146 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass variables.
+// -----------------------------------------------------------------------------
+
+//
+// #Colors
+//
+
+// #Base-Color
+$color-white: #ffffff;
+$color-base: #000000;
+
+$color-base-darkest: $color-base;
+$color-base-darker: lighten($color-base, 20);
+$color-base-dark: lighten($color-base, 40);
+$color-base-light: lighten($color-base, 60);
+$color-base-lighter: lighten($color-base, 80);
+
+// #Greys
+$color-shade-light: #f2f2f2;
+$color-shade-lighter: #505050;
+$color-shade-lightest: #e0cccc;
+
+// #Primary-Color
+
+//
+// #Box-Shadow
+//
+$box-shaodw-1: 0 1px 2px rgba($color-base-darker, 0.5);
+$box-shaodw-2: 0 1px 2px rgba($color-base-dark, 0.5);
+$box-shaodw-3: 0 1px 2px rgba($color-base-light, 0.5);
+$box-shaodw-4: 0 1px 2px rgba($color-base-lighter, 0.5);
+
+//
+// #Animations
+//
+$animation-speed-slow: 0.35s;
+$animation-speed-regular: 0.25s;
+$animation-type: ease-in;
+
+//
+// #Fonts
+//
+$font-family-base:
+  'Segoe UI',
+  'SegoeUI',
+  -apple-system,
+  BlinkMacSystemFont,
+  'Roboto',
+  Helvetica,
+  Arial,
+  sans-serif,
+  'Apple Color Emoji',
+  'Segoe UI Emoji',
+  'Segoe UI Symbol';
+
+//
+// $Line-Height
+//
+$line-height: 1.4;
+
+//
+// $Font-Weight
+//
+$font-weight-thin: 100;
+$font-weight-extralight: 200;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+$font-weight-black: 900;
+
+//
+// #Scale
+//
+$scale: 1.25;
+
+//
+// #Font-Size
+//
+$font-base: 1rem; // 16px
+
+//
+// #Spacing
+//
+$container-width: 50em; // 800px
+$container-padding: 1.25em; // 20px
+$space-default: $font-base; // Is dependant on $font-base and should be 1em;
+
+//
+// #Space Sizes
+//
+$space-xxs: $font-base / 8; // 2px
+$space-xs: $font-base / 4; // 4px
+$space-s: $font-base / 2; // 8px
+$space-m: $font-base; // 16px
+$space-l: $font-base * 2; // 32px
+$space-xl: $font-base * 4; // 64px
+$space-xxl: $font-base * 8; // 128px
+
+//
+// #Border-Radius Sizes
+//
+$border-radius-xxs: $space-xxs; // 2px
+$border-radius-xs: $space-xs; // 4px
+$border-radius-s: $space-s; // 8px
+$border-radius-m: $space-m; // 16px
+$border-radius-l: $space-l; // 32px
+$border-radius-xl: $space-xl; // 64px
+$border-radius-xxl: $space-xxl; // 128px
+
+// #Icon Sizes
+$icon-xxs: $space-xxs; // 2px
+$icon-xs: $space-xs; // 4px
+$icon-s: $space-s; // 8px
+$icon-m: $space-m; // 16px
+$icon-l: $space-l; // 32px
+$icon-xl: $space-xl; // 64px
+$icon-xxl: $space-xxl; // 128px
+
+//
+// #Media-Queries
+//
+$mq-xxs: 20em; // 320px
+$mq-xs: 30em; // 480px
+$mq-s: 48em; // 768px
+$mq-m: 61.25em; // 980px
+$mq-l: 80em; // 1280px
+$mq-xl: 90em; // 1440px
+$mq-xxl: 160em; // 2650px
+
+//
+// $Z-Index
+//
+$z-index-s: 1;
+$z-index-m: 2;
+$z-index-l: 3;
+$z-index-xl: 4;
+
+//
+// Custom Sizes
+//
+$horizontal-space: 6.25rem;
+$horizontal-foo-padding: 2.875rem;
