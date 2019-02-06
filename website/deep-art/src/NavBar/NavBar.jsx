@@ -50,7 +50,7 @@ export default class NavBar extends Component {
     return (
       <Nav>
         <Link hoverIndicator="false" style={{ textDecoration: 'none' }} href={'/'}>Gen Studio</Link>
-        <Search href="/">
+        <Search href="/search/1">
           <SearchDesc>Explore the MET Collection</SearchDesc>
           <SearchIcon src={search} alt={'Explore the MET Collection'} />
         </Search>
