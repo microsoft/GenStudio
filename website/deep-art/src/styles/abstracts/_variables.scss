@@ -45,9 +45,9 @@ $box-shaodw-4: 0 1px 2px rgba($color-base-lighter, 0.5);
 //
 // #Animations
 //
-$animation-speed-slow: 0.35s;
-$animation-speed-regular: 0.25s;
-$animation-type: ease-in;
+$animation-speed: 0.25s;
+$animation-type-in: ease-in;
+$animation-type-cubic: cubic-bezier(0, 0, 0.3, 1);
 
 //
 // #Fonts
@@ -148,4 +148,5 @@ $container-width: 67.5rem; // 1080
 $content-width: 85.375rem; // 1366
 $horizontal-space: 6.25rem;
 $horizontal-foo-padding: 2.875rem;
+$letter-spacing: 3px;
 $nav-unit: 6rem;
