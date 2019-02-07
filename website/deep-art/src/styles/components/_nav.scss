@@ -4,7 +4,7 @@
   display: flex;
   height: $nav-unit;
   justify-content: space-between;
-  margin-bottom: 1.25rem;
+  margin-bottom: $space-xl;
 
   &__link {
     align-items: center;
