@@ -70,13 +70,6 @@ const gTheme = {
 
 const mergeTheme = deepMerge(grommet, gTheme);
 
-
-const Body = styled.section`
-  flex: 1;
-  background: #FFFFFF;
-  z-index: 0;
-`;
-
 class App extends Component {
   render() {
     return (
@@ -86,7 +79,7 @@ class App extends Component {
             direction="column"
             style={{height: "100%", width: "100%"}}
           >
-            <Body>
+            <main className="main" role="main">
               <NavBar />
               <Claim />
               <Route exact path="/" component={SelectPage}/>
@@ -95,7 +88,7 @@ class App extends Component {
               <Route exact path="/map/:id" component={MapPage}/>
               <Route exact path="/search/:id" component={SearchPage}/>
               <Route exact path="/search" component={SearchPage}/>
-            </Body>
+            </main>
             <Footer/>
           </Box>
         </Grommet>
