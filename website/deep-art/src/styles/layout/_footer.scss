@@ -25,7 +25,7 @@
 
   &__link {
     display: block;
-    color: $color-shade-lighter;
+    color: $color-shade-medium;
     margin-right: $space-m;
     text-decoration: none;
     white-space: nowrap;
@@ -45,7 +45,7 @@
 
   &__lang {
     align-items: center;
-    color: $color-shade-lighter;
+    color: $color-shade-medium;
     display: flex;
     margin-bottom: $space-s;
     white-space: nowrap;
