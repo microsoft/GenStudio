@@ -11,12 +11,13 @@ function NavBar({ t }) {
   return (
     <nav className="nav">
       <a className="nav__link" href="/">
-        {t('global.title')}
+        <span>{t('global.title')}</span>
       </a>
-      <a className="nav__button" href="/search/1">
+      {/* TODO: Hidden search bar
+       <a className="nav__button" href="/search/1">
         <span className="nav__text">{t('nav.explore')}</span>
         <img className="nav__image" src={search} alt={t('nav.explore')} />
-      </a>
+      </a> */}
     </nav>
   );
 }
