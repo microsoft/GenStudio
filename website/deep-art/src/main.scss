@@ -28,14 +28,13 @@
 // 4. Layout-related sections
 @import
   '/styles/layout/header',
+  '/styles/layout/selectpage-head',
   '/styles/layout/footer';
 
 // 5. Components
 @import
   '/styles/components/btn',
-  '/styles/components/nav',
-  '/styles/components/claim',
-  '/styles/components/select';
+  '/styles/components/nav';
 
 // 6. Page-specific styles
 @import

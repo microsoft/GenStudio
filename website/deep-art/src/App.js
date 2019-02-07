@@ -11,7 +11,6 @@ import ExplorePage from './ExplorePage/ExplorePage.jsx';
 import SearchPage from './SearchPage/SearchPage.jsx';
 import MapPage from './MapPage/MapPage.jsx';
 import NavBar from './NavBar/NavBar.jsx';
-import Claim from './Claim/Claim.jsx'
 import Footer from './Footer/Footer.jsx';
 
 //GLOBAL THEME
@@ -80,7 +79,6 @@ class App extends Component {
           >
             <main className="main" role="main">
               <NavBar />
-              <Claim />
               <Route exact path="/" component={SelectPage}/>
               <Route exact path="/select" component={SelectPage}/>
               <Route exact path="/explore/:id" component={ExplorePage}/>
