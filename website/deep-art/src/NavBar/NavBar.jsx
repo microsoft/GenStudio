@@ -13,9 +13,9 @@ function NavBar({ t }) {
       <a className="nav__link" href="/">
         {t('global.title')}
       </a>
-      <a className="nav__btn" href="/search/1">
+      <a className="nav__button" href="/search/1">
         <span className="nav__text">{t('nav.explore')}</span>
-        <img className="nav__img" src={search} alt={t('nav.explore')} />
+        <img className="nav__image" src={search} alt={t('nav.explore')} />
       </a>
     </nav>
   );

@@ -1,7 +1,7 @@
 // -----------------------------------------------------------------------------
 // This file contains all styles related to the footer of the site/application.
 // -----------------------------------------------------------------------------
-.foo {
+.footer {
   background-color: $color-shade-light;
   font-size: 12px;
   margin-left: calc(#{$horizontal-space} * -1);
@@ -11,7 +11,7 @@
   padding-right: $horizontal-foo-padding;
   padding-left: $horizontal-foo-padding;
 
-  &__desc {
+  &__description {
     margin-bottom: $space-m;
     margin-top: initial;
   }
@@ -55,7 +55,7 @@
     }
   }
 
-  &__img {
+  &__image {
     margin-right: $space-s;
     height: $icon-m;
     width: $icon-m;
