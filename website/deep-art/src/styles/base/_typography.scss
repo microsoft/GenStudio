@@ -3,7 +3,7 @@
 //
 
 body {
-    color: $color-base;
+    color: $color-primary;
     font-family: $font-family-base;
 }
 
@@ -24,7 +24,7 @@ table,
 form,
 pre,
 hr {
-    margin-bottom: calc(#{$line-height} / #{$font-base});
+    margin-bottom: calc(#{$line-height} / #{$font-m});
 }
 
 code {

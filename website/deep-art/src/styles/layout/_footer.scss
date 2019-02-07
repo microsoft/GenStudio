@@ -37,7 +37,6 @@
 
   &__link {
     display: block;
-    color: $color-primary;
     font-weight: $font-weight-semibold;
     margin-right: $space-m;
     text-decoration: none;
@@ -78,7 +77,6 @@
   }
 
   &__text {
-    color: $color-primary;
     font-weight: $font-weight-semibold;
     white-space: nowrap;
   }
