@@ -32,8 +32,10 @@
 
 // 5. Components
 @import
+  '/styles/components/btn',
   '/styles/components/nav',
-  '/styles/components/claim';
+  '/styles/components/claim',
+  '/styles/components/select';
 
 // 6. Page-specific styles
 @import

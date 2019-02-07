@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SelectControl from './SelectControl.jsx';
 import ResultArt from './ResultArt.jsx';
-import { Box, Button, Grid, Paragraph, Text } from 'grommet';
+import { Box, Grid, Paragraph, Text } from 'grommet';
 
 const NUM_FROM_EACH_CAT = 2; //Number to choose from each category
 
@@ -42,7 +42,7 @@ export default class SelectPage extends Component {
 
     /**
      * choses N random unique elements from list and returns them in a list
-     * @param {any[]} list - list of elements of any type 
+     * @param {any[]} list - list of elements of any type
      * @param {*} n - the number of unqiue elements to choose. N <= list.length
      */
     pickNUniqueFromList(list, n){
@@ -62,7 +62,7 @@ export default class SelectPage extends Component {
     }
 
 
- 
+
     /**
      * Gets the list of object ids to be used on the landing page
      * While doing so, also populates choiceLists with subset lists, each list contianing one ObjID from each category
@@ -71,7 +71,7 @@ export default class SelectPage extends Component {
     getLandingPage(){
         let categories = Object.keys(this.state.curatedImages);
         let landingPageList = [];
- 
+
         let choiceLists = {}
         for (let j = 0; j < NUM_FROM_EACH_CAT; j++){
                 choiceLists[j] = [];
@@ -102,7 +102,7 @@ export default class SelectPage extends Component {
 
     /**
      * Changes the selection of an ID in state
-     * @param {int} key 
+     * @param {int} key
      * @param {int} ID - objID of the art being selected
      */
     changeSelectedImage(key, ID) {
@@ -144,7 +144,7 @@ export default class SelectPage extends Component {
         })
     }
 
- 
+
     /**
      * loads the images of the specified object IDs from the Met and saves it
      * into this.state.imgObjects
@@ -162,7 +162,7 @@ export default class SelectPage extends Component {
         this.setState({
             imgObjects: imgObjs
         });
-        
+
     }
 
     /**
@@ -185,9 +185,9 @@ export default class SelectPage extends Component {
             } else {
                 idList = [this.state.selectedImage.id].concat(this.state.choiceLists[1]);
             }
-            
+
         }
-        
+
         let url = "?id=" + this.state.selectedImage.id.toString()
             + "&ids=[" + idList.toString() + "]";
         url = encodeURIComponent(url);
@@ -209,19 +209,7 @@ export default class SelectPage extends Component {
                 rows={['5rem','3rem','flex','xsmall']}
                 gap='small'
             >
-                <Box gridArea='desc' >
-                    <Paragraph
-                        style={{ textAlign: 'center', marginTop: '40px' }}
-                        alignSelf={"center"}
-                        size={"large"}
-                    >
-                    Select an image to enter the AI studio
-                    </Paragraph>
-                </Box>
                 <Box gridArea='tags' direction='row' align='center' justify="center">
-                    <Text size={"large"}>
-                        Filter by category:
-                    </Text>
                     <SelectControl
                         sendObjectIds={this.getImageIDs}
                         clearOldImages={this.clearOldImages}
@@ -238,13 +226,11 @@ export default class SelectPage extends Component {
                 </Box>
                 <Box gridArea='buttons'>
                     <Box direction='row' style={{justifyContent: 'space-around'}}>
-                        <Box>
-                            <Button label='Generate' style={{textDecoration: "none", fontWeight: "500"}} href={this.generateArtUrlSuffix()} />
-                        </Box>
+                        <a className="button" href={this.generateArtUrlSuffix()}>Generate</a>
                         {/* <Box>
                             <Button label='Explore Similar' style={{textDecoration: "none"}} href={'/search/'+this.state.selectedImage.toString()}/>
                         </Box> */}
-                    </Box> 
+                    </Box>
                 </Box>
                 <Box gridArea='left'/>
                 <Box gridArea='right' />
