@@ -2,6 +2,7 @@
   "en": {
     "translation": {
       "global.title": "Gen Studio",
+      "global.claim": "Select an image to enter the AI studio",
       "global.learn_more": "Click here to learn more",
       "global.lang_eng": "Language: English",
       "global.lang_eng_description_us": "English (United States)",
