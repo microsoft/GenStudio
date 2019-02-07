@@ -16,13 +16,20 @@ $color-base-dark: lighten($color-base, 40);
 $color-base-light: lighten($color-base, 60);
 $color-base-lighter: lighten($color-base, 80);
 
+// Primary-Colors
+$color-primary: #002050;
+$color-secondary: #00b294;
+
 // #Greys
-$color-shade-light: #f2f2f2;
-$color-shade-lighter: #505050;
-$color-shade-lightest: #e0cccc;
+$color-shade-light: #f8f8f8;
+$color-shade-medium: #f2f2f2;
+$color-shade-dark: #e6e6e6;
+
+// #Text Colors
+$color-text-light: #ffffff;
 
 // #Slick Colors
-$color-slide-background: $color-shade-lighter;
+$color-slide-background: $color-shade-medium;
 $color-slide-text: #ff0000;
 
 // #Primary-Color
@@ -45,18 +52,9 @@ $animation-type: ease-in;
 //
 // #Fonts
 //
-$font-family-base:
-  'Segoe UI',
-  'SegoeUI',
-  -apple-system,
-  BlinkMacSystemFont,
-  'Roboto',
-  Helvetica,
-  Arial,
-  sans-serif,
-  'Apple Color Emoji',
-  'Segoe UI Emoji',
-  'Segoe UI Symbol';
+$font-family-base: 'Segoe UI', 'SegoeUI', -apple-system, BlinkMacSystemFont, 'Roboto', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+
+$font-family-heading: "'Playfair Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'";
 
 //
 // $Line-Height
@@ -148,3 +146,4 @@ $z-index-xl: 4;
 //
 $horizontal-space: 6.25rem;
 $horizontal-foo-padding: 2.875rem;
+$nav-unit: 6rem;
