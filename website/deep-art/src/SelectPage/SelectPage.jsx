@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import SelectControl from './SelectControl.jsx';
 import ResultArt from './ResultArt.jsx';
-import { Box, Grid } from 'grommet';
 import { NamespacesConsumer } from 'react-i18next';
 
 const NUM_FROM_EACH_CAT = 2; //Number to choose from each category
@@ -242,19 +241,7 @@ class SelectPage extends Component {
     return (
       <NamespacesConsumer>
         {t => (
-          <Grid
-            areas={[
-              { name: 'left', start: [0, 0], end: [0, 3] },
-              { name: 'desc', start: [1, 0], end: [1, 0] },
-              { name: 'tags', start: [1, 1], end: [1, 1] },
-              { name: 'select', start: [1, 2], end: [1, 2] },
-              { name: 'buttons', start: [1, 3], end: [1, 3] },
-              { name: 'right', start: [2, 0], end: [2, 3] },
-            ]}
-            columns={['flex', '80rem', 'flex']}
-            rows={['5rem', '3rem', 'flex', 'xsmall']}
-            gap="small"
-          >
+          <React.Fragment>
             <div className="selectpage__head">
               <h1 className="selectpage__claim">{t('global.claim')}</h1>
               <SelectControl
@@ -263,27 +250,14 @@ class SelectPage extends Component {
                 curatedImages={this.state.curatedImages}
               />
             </div>
-            <Box gridArea="select">
-              <ResultArt
-                images={this.state.imgObjects}
-                selectedImage={this.state.selectedImage}
-                selectImage={this.changeSelectedImage}
-                categorySelected={this.state.categorySelected}
-              />
-            </Box>
-            <Box gridArea="buttons">
-              <Box direction="row" style={{ justifyContent: 'space-around' }}>
-                <a className="button" href={this.generateArtUrlSuffix()}>
-                  Generate
-                </a>
-                {/* <Box>
-                            <Button label='Explore Similar' style={{textDecoration: "none"}} href={'/search/'+this.state.selectedImage.toString()}/>
-                        </Box> */}
-              </Box>
-            </Box>
-            <Box gridArea="left" />
-            <Box gridArea="right" />
-          </Grid>
+            <ResultArt
+              images={this.state.imgObjects}
+              selectedImage={this.state.selectedImage}
+              selectImage={this.changeSelectedImage}
+              categorySelected={this.state.categorySelected}
+            />
+            <a className="button" href={this.generateArtUrlSuffix()}>Generate</a>
+          </React.Fragment>
         )}
       </NamespacesConsumer>
     );
