@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Box, Select} from 'grommet';
+import { Select} from 'grommet';
 
 //const NUM_IMAGES_SEARCH_PAGE = 12;
 const NUM_FOR_SELECT = 7;
