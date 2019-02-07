@@ -81,25 +81,26 @@ $scale: 1.25;
 //
 // #Font-Size
 //
-$font-base: 1rem; // 16px
+$font-s: 0.75rem; // 12px
+$font-m: 1rem; // 16px
 
 //
 // #Spacing
 //
 $container-width: 50em; // 800px
 $container-padding: 1.25em; // 20px
-$space-default: $font-base; // Is dependant on $font-base and should be 1em;
+$space-default: $font-m; // Is dependant on $font-m and should be 1em;
 
 //
 // #Space Sizes
 //
-$space-xxs: $font-base / 8; // 2px
-$space-xs: $font-base / 4; // 4px
-$space-s: $font-base / 2; // 8px
-$space-m: $font-base; // 16px
-$space-l: $font-base * 2; // 32px
-$space-xl: $font-base * 4; // 64px
-$space-xxl: $font-base * 8; // 128px
+$space-xxs: $font-m / 8; // 2px
+$space-xs: $font-m / 4; // 4px
+$space-s: $font-m / 2; // 8px
+$space-m: $font-m; // 16px
+$space-l: $font-m * 2; // 32px
+$space-xl: $font-m * 4; // 64px
+$space-xxl: $font-m * 8; // 128px
 
 //
 // #Border-Radius Sizes
@@ -143,6 +144,8 @@ $z-index-xl: 4;
 //
 // Custom Sizes
 //
+$container-width: 67.5rem; // 1080
+$content-width: 85.375rem; // 1366
 $horizontal-space: 6.25rem;
 $horizontal-foo-padding: 2.875rem;
 $nav-unit: 6rem;
