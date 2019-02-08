@@ -2,28 +2,30 @@
 // This file contains all styles related to the .button component
 // -------------------------------------------------------------
 .button {
-  background-color: $color-secondary;
+  background-color: transparent;
+  border: 2px solid $color-secondary;
   border-radius: initial;
-  box-shadow: -10px 10px 0 0 rgba($color-shade-medium, 1);
-  color: $color-text-light;
-  font-size: 0.875rem;
+  color: $color-secondary;
+  font-size: $font-s;
   font-weight: $font-weight-bold;
   letter-spacing: $letter-spacing;
   text-decoration: none;
+  margin-left: 0;
+  margin-right: 0;
   padding-bottom: $space-m;
-  padding-left: $space-xl;
-  padding-right: $space-xl;
+  padding-left: $space-l;
+  padding-right: $space-l;
   padding-top: $space-m;
   text-transform: uppercase;
   transition-duration: $animation-speed;
-  transition-property: box-shadow, background-color;
+  transition-property: color, background-color;
   transition-timing-function: $animation-type-cubic;
   vertical-align: middle;
   will-change: box-shadow;
 
   &:hover {
-    background-color: darken($color-secondary, 10%);
-    box-shadow: -10px 10px 0 0 rgba($color-shade-dark, 1);
+    background-color: $color-secondary;
+    color: $color-text-light;
   }
 
   &:active {
