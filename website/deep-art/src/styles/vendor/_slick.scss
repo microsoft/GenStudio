@@ -6,10 +6,6 @@
   display: block;
   box-sizing: border-box;
   -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   -ms-touch-action: pan-y;
   touch-action: pan-y;
@@ -158,13 +154,6 @@ h3 {
   padding: 10px;
 }
 
-.slick-slide img {
-  border: 5px solid #fff;
-  display: block;
-  margin: auto;
-  max-width: 80%;
-}
-
 .slick-slide img.slick-loading {
   border: 0;
 }
@@ -233,20 +222,22 @@ h3 {
   text-transform: uppercase;
   width: $arrow-size;
 
-  @include transition(background-color, color, box-shadow);
+  @include transition(background-color, color);
 
   &:hover {
     background-color: $color-secondary;
-    box-shadow: none;
     color: $color-text-light;
   }
 
   &:focus {
-    border: 2px solid $color-secondary;
-    color: $color-secondary;
+    background-color: darken($color-secondary, 5%);
+    border: 2px solid darken($color-secondary, 5%);
   }
 }
 
+//
+// Slick additions
+//
 .button {
   background-color: $color-slide-background;
   padding: 10px 20px;
@@ -256,4 +247,35 @@ h3 {
   font-size: 20px;
   border-radius: 5px;
   min-height: 45px;
+}
+
+.slick-img {
+  border: 5px solid #fff;
+  display: block;
+  margin: auto;
+  max-width: 80%;
+  object-fit: cover;
+  height: 100%;
+  z-index: calc(#{$z-index-s} * -1);
+}
+
+.slick-prev,
+.slick-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: $z-index-xl;
+}
+
+.slick-next {
+  right: calc((#{$arrow-size} / 2) * -1);
+}
+
+.slick-slide > div {
+  height: 300px;
+
+  button,
+  img {
+    height: inherit;
+  }
 }
