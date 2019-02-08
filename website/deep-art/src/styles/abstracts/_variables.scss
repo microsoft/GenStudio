@@ -21,15 +21,16 @@ $color-primary: #002050;
 $color-secondary: #00b294;
 
 // #Greys
-$color-shade-light: #f8f8f8;
-$color-shade-medium: #f2f2f2;
 $color-shade-dark: #e6e6e6;
+$color-shade-medium: #f2f2f2;
+$color-shade-light: #f8f8f8;
 
 // #Text Colors
 $color-text-light: #ffffff;
 
 // #Slick Colors
 $color-slide-background: $color-shade-medium;
+$color-arrow-background: $color-white;
 $color-slide-text: #ff0000;
 
 // #Primary-Color
@@ -150,3 +151,8 @@ $horizontal-space: 6.25rem;
 $horizontal-foo-padding: 2.875rem;
 $letter-spacing: 3px;
 $nav-unit: 6rem;
+
+//
+// Slick carousel custom Sizes
+//
+$arrow-size: 6rem;
