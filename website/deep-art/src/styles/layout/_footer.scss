@@ -64,6 +64,10 @@
     @media (min-width: $mq-s) {
       margin-bottom: initial;
     }
+
+    span {
+      font-weight: $font-weight-semibold;
+    }
   }
 
   &__image {
