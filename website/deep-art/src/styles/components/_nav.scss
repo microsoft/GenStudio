@@ -3,7 +3,7 @@
 // -------------------------------------------------------------
 .nav {
   align-items: center;
-  background-color: $color-shade-light;
+  border-bottom: 1px solid $color-shade-light;
   display: flex;
   height: $nav-unit;
   justify-content: space-between;
