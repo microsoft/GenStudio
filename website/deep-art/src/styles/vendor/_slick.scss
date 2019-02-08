@@ -103,7 +103,7 @@
   display: none;
 }
 
-
+//
 // Custom Styles
 //
 h3 {
@@ -223,15 +223,28 @@ h3 {
 }
 
 .slick-arrow {
-  background-color: grey;
-}
+  background-color: $color-arrow-background;
+  border: 2px solid transparent;
+  border-radius: calc(#{$arrow-size} / 2);
+  box-shadow: 0 2px 20px 0 rgba(0, 32, 80, 0.3);
+  color: $color-primary;
+  font-weight: $font-weight-semibold;
+  height: $arrow-size;
+  text-transform: uppercase;
+  width: $arrow-size;
 
-.slick-arrow:hover {
-  background-color: grey;
-}
+  @include transition(background-color, color, box-shadow);
 
-.slick-arrow:focus {
-  background-color: grey;
+  &:hover {
+    background-color: $color-secondary;
+    box-shadow: none;
+    color: $color-text-light;
+  }
+
+  &:focus {
+    border: 2px solid $color-secondary;
+    color: $color-secondary;
+  }
 }
 
 .button {
