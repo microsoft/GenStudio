@@ -3,6 +3,8 @@
     display: flex;
     height: 94px;
     justify-content: space-between;
+
+    @include container-centered();
   }
 
   &__claim {
@@ -12,7 +14,6 @@
     font-weight: $font-weight-light;
     line-height: initial;
     margin-bottom: $space-m;
-    margin-left: $space-xxl;
     margin-top: 0;
     position: relative;
     width: 400px;
@@ -28,8 +29,8 @@
   }
 
   .gAXUqz {
-    border-color: transparent !important;
-    box-shadow: none !important;
+    border-color: transparent !important; // Overwrites dinamic class added by grommet library
+    box-shadow: none !important; // Overwrites dinamic class added by grommet library
   }
 
   &__head button {
@@ -71,4 +72,9 @@
       }
     }
   }
+}
+
+.selectpage__head + div + div > .button {
+  display: inline-block;
+  margin-bottom: $space-xl;
 }

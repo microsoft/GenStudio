@@ -256,7 +256,9 @@ class SelectPage extends Component {
               selectImage={this.changeSelectedImage}
               categorySelected={this.state.categorySelected}
             />
-            <a className="button" href={this.generateArtUrlSuffix()}>Generate</a>
+            <div className="u-container-centered">
+              <a className="button" href={this.generateArtUrlSuffix()}>Generate</a>
+            </div>
           </React.Fragment>
         )}
       </NamespacesConsumer>
