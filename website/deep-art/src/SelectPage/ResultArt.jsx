@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Slider from 'react-slick';
 
-import { Box, Button, Image } from 'grommet';
+import { Button } from 'grommet';
 
 /**
  * The grid of thumbnails of art
@@ -36,32 +36,19 @@ export default class ResultArt extends Component {
     }
 
     const listItems = imagesToDisplay.map((image, i) => (
-      <div>
         <Button
-          hoverIndicator
           style={{ outline: 'none' }}
           key={i}
-          onClick={() => {this.props.selectImage(image.key, image.id);}}
+          onClick={() => { this.props.selectImage(image.key, image.id); }}
+          key={i}
+          border={this.props.selectedImage.key === image.key ? { color: '#002050', size: '2px' } : { color: '#ffffff', size: '2px' }}
         >
-          <Box
-            border={this.props.selectedImage.key === image.key ? { color: '#000000', size: '2px' } : { color: 'white', size: '2px' }}
-            height="small"
-            width="small"
-            key={i}
-            style={{ focus: { outline: 0 } }}
-          >
-            <Image src={image.img} fit="cover" style={{ height: '100%', zIndex: '-1' }} />
-          </Box>
+          <img className="slick-img" src={image.img} />
         </Button>
-      </div>
     ));
 
     return (
-      <div>
-        <Slider {...settings}>
-          {listItems}
-        </Slider>
-      </div>
+      <Slider {...settings}>{listItems}</Slider>
     );
   }
 }
