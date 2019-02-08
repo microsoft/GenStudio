@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
 
-import HomeSlider from './HomeSlider.jsx';
+import Slider from 'react-slick';
 
-import { Box, Button, Image, Grid } from 'grommet';
-import styled from 'styled-components';
-
-const GridWrapper = styled(Box)`
-  flex-grow: 1;
-  direction: row;
-  align-items: center;
-`;
+import { Box, Button, Image } from 'grommet';
 
 /**
  * The grid of thumbnails of art
@@ -28,31 +21,46 @@ export default class ResultArt extends Component {
   }
 
   render() {
+    const settings = {
+      className: 'center',
+      centerMode: true,
+      infinite: true,
+      centerPadding: '60px',
+      slidesToShow: 3,
+      speed: 500,
+    };
+
     let imagesToDisplay = this.props.images;
     if (this.props.categorySelected) {
       imagesToDisplay = imagesToDisplay.slice(0, 6);
     }
 
+    const listItems = imagesToDisplay.map((image, i) => (
+      <div>
+        <Button
+          hoverIndicator
+          style={{ outline: 'none' }}
+          key={i}
+          onClick={() => {this.props.selectImage(image.key, image.id);}}
+        >
+          <Box
+            border={this.props.selectedImage.key === image.key ? { color: '#000000', size: '2px' } : { color: 'white', size: '2px' }}
+            height="small"
+            width="small"
+            key={i}
+            style={{ focus: { outline: 0 } }}
+          >
+            <Image src={image.img} fit="cover" style={{ height: '100%', zIndex: '-1' }} />
+          </Box>
+        </Button>
+      </div>
+    ));
+
     return (
       <div>
-        <GridWrapper>
-          <Grid columns={['small', 'small', 'small', 'small', 'small', 'small']} rows={'meduim'} gap="medium" margin="40px">
-            {imagesToDisplay.map((image, i) => (
-              <Button hoverIndicator style={{ outline: 'none' }} key={i} onClick={() => { this.props.selectImage(image.key, image.id); }}>
-                <Box
-                  border={this.props.selectedImage.key === image.key ? { color: '#000000', size: '2px' } : { color: 'white', size: '2px' }}
-                  height="small"
-                  width="small"
-                  key={i}
-                  style={{ focus: { outline: 0 } }}
-                >
-                  <Image src={image.img} fit="cover" style={{ height: '100%', zIndex: '-1' }} />
-                </Box>
-              </Button>
-            ))}
-          </Grid>
-        </GridWrapper>
-        <HomeSlider />
+        <Slider {...settings}>
+          {listItems}
+        </Slider>
       </div>
     );
   }

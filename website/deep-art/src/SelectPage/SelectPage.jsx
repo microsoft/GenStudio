@@ -152,6 +152,11 @@ class SelectPage extends Component {
   componentDidMount() {
     let landingPageList = this.getLandingPage();
     this.objIDsToImages(landingPageList);
+
+    console.log("this.state.imgObjects", this.state.imgObjects);
+    console.log("this.state.selectedImage", this.state.selectedImage);
+    console.log("this.changeSelectedImage", this.changeSelectedImage);
+    console.log("this.state.categorySelected", this.state.categorySelected);
   }
 
   /**
