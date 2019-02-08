@@ -3,15 +3,10 @@
 // -----------------------------------------------------------------------------
 .footer {
   font-size: $font-s;
-  margin-left: calc(#{$horizontal-space} * -1);
-  margin-right: calc(#{$horizontal-space} * -1);
-  margin-left: auto;
-  margin-right: auto;
   padding-top: $space-m;
   padding-bottom: $space-m;
-  padding-right: $horizontal-foo-padding;
-  padding-left: $horizontal-foo-padding;
-  max-width: $container-width;
+
+  @include container-centered();
 
   &__description {
     font-weight: $font-weight-semibold;
