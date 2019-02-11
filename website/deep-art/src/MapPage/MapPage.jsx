@@ -42,18 +42,20 @@ class MapExplorePage extends Component {
               <h1 className="claim">{t('map.title')}</h1>
               <div className="map__data">
                 <p className="map__description">{t('map.description')}</p>
-                <div className="map__plot">
+                <div className="map__original">
                   test asdasdasdas
                 </div>
               </div>
 
-              <GenArt
-                message={this.state.message}
-                image={this.state.genImg}
-                data={this.state.genArr}
-              />
+              <div className="map__result">
+                <GenArt
+                  message={this.state.message}
+                  image={this.state.genImg}
+                  data={this.state.genArr}
+                />
 
-              <div id="myPlot" className="plot" />
+                <div className="plot" id="myPlot" />
+              </div>
             </div>
           </section>
         )}
