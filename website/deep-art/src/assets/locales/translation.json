@@ -10,6 +10,9 @@
 
       "nav.explore": "Explore the MET Collection",
 
+      "map.title": "Gan",
+      "map.description": "A trained GAN (Generative Adversarial Network) contains a model of a shared feature space underlying a collection of images. Based on given artworks from The Met collection, the GAN allows you to explore and visualize the spaces in between selected artworks from The Met’s Open Access collection.",
+
       "foo.desc": "Gen Studio is a prototype concepts which was created over a two-day hackathon with collaborators across The Met, Microsoft, and MIT.",
       "foo.privacy_cookies": "Privacy & Cookies",
       "foo.terms_use": "Terms of use",
