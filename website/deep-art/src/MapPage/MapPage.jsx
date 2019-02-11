@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import GenArt from './GenArt.jsx';
-import { Box, Grid, Text } from 'grommet';
 import setupPlotly from './map.js';
+
+import { NamespacesConsumer } from 'react-i18next';
 
 /**
  * A map explore page to explore the latent space of BigGAN
  */
-export default class MapExplorePage extends Component {
+// export default class MapExplorePage extends Component {
+class MapExplorePage extends Component {
     constructor(props) {
         super(props);
-        this.state ={
-            cursorPoint: null
+        this.state = {
+            cursorPoint: null,
         };
     }
 
@@ -28,48 +30,20 @@ export default class MapExplorePage extends Component {
 
     render() {
         return (
-            <Grid
-                fill="horizontal"
-                areas={[
-                    { name: 'text', start: [0, 0], end: [1,0] },
-                    { name: 'image', start: [0, 1], end: [0, 1] },
-                    { name: 'map', start: [1, 1], end: [1, 1] },  
-                ]}
-                columns={['medium','flex']}
-                rows={["xsmall","45rem"]}
-                gap='small'
-                style={{paddingLeft: "3rem", paddingRight: "3rem"}}
-            >
+            <NamespacesConsumer>
+                {t => (
+                    <div className="u-container-centered">
+                        <h1 className="claim">{t('map.title')}</h1>
+                        <p>{t('map.description')}</p>
 
-                <Box fill gridArea='text'>
-                    <Box fill style={{flexFlow: "column", alignSelf:"start", justifyContent:"space-around"}}>
-                        <Text style={{fontWeight:"550"}}>
-                            Explore the mind of a Generative Adversarial Network that has been trained to create artworks from the Met's collection!
-                        </Text>
-                        <Text style={{fontWeight:"550"}}>
-                            Click or drag the cursor to generate art. Click "Explore Similiar" to find your object's closest matches in the MET.
-                        </Text>
-                        
+                        <GenArt message={this.state.message} image={this.state.genImg} data={this.state.genArr}/>
 
-                    </Box>
-                </Box>
-
-                <Box gridArea='image' direction='column' align="center" style={{justifyItems: "center"}}>
-                        <GenArt message={this.state.message} image={this.state.genImg} data={this.state.genArr} />
-                </Box>
-
-                <Box gridArea='map' background="accent-3"
-                    id="plotlyBox"
-                    style={{ padding: '2px', width: "100%", justifySelf: "center", justifyItems: "center" }}
-                    round="small"
-                >
-                    <div id="myPlot" className="plot"></div>
-                </Box>
-            </Grid>
-        );          
+                        <div id="myPlot" className="plot" />
+                    </div>
+                )}
+            </NamespacesConsumer>
+        );
     }
-
-   
 }
 
-
+export default MapExplorePage;

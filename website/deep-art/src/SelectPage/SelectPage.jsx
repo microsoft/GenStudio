@@ -248,7 +248,7 @@ class SelectPage extends Component {
         {t => (
           <React.Fragment>
             <div className="selectpage__head">
-              <h1 className="selectpage__claim">{t('global.claim')}</h1>
+              <h1 className="claim">{t('global.claim')}</h1>
               <SelectControl
                 sendObjectIds={this.getImageIDs}
                 clearOldImages={this.clearOldImages}
