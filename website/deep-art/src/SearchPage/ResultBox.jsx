@@ -6,6 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import LazyLoad from 'react-lazy-load';
 
 /**
  * One box in the Result Grid
@@ -21,6 +22,7 @@ export default class ResultBox extends Component {
     //Material UI version
     render(){
         let media = (this.props.data.PrimaryImageURL === undefined || this.props.data.PrimaryImageURL === null) ? 
+        <LazyLoad>
         <CardMedia 
         component="img"
         src={this.props.data.PrimaryImageUrl}
@@ -29,6 +31,7 @@ export default class ResultBox extends Component {
             alignItems:"ceneter", 
             maxWidth:"500px", width:"fit-content", maxHeight: "500px", objectFit:'contain'}}
         />
+        </LazyLoad>
         :
         <CircularProgress style={{color: "#6A6A6A"}} />;
         
