@@ -19,17 +19,17 @@ $color-base-lighter: lighten($color-base, 80);
 // Primary-Colors
 $color-primary: #002050;
 $color-secondary: #00b294;
+$color-secondary-hover: #008272;
 
 // #Greys
 $color-shade-dark: #e6e6e6;
-$color-shade-medium: #f2f2f2;
 $color-shade-light: #f8f8f8;
 
 // #Text Colors
 $color-text-light: #ffffff;
 
 // #Slick Colors
-$color-slide-background: $color-shade-medium;
+$color-slide-background: $color-shade-light;
 $color-arrow-background: $color-white;
 $color-slide-text: #ff0000;
 
@@ -38,10 +38,7 @@ $color-slide-text: #ff0000;
 //
 // #Box-Shadow
 //
-$box-shaodw-1: 0 1px 2px rgba($color-base-darker, 0.5);
-$box-shaodw-2: 0 1px 2px rgba($color-base-dark, 0.5);
-$box-shaodw-3: 0 1px 2px rgba($color-base-light, 0.5);
-$box-shaodw-4: 0 1px 2px rgba($color-base-lighter, 0.5);
+$box-shadow: 0 2px 10px 0 rgba($color-primary, 0.3);
 
 //
 // #Animations
@@ -84,6 +81,7 @@ $scale: 1.25;
 //
 $font-s: 0.75rem; // 12px
 $font-m: 1rem; // 16px
+$font-l: 1.125; // 18px
 
 //
 // #Spacing
@@ -150,6 +148,8 @@ $content-width: 85.375rem; // 1366
 $horizontal-space: 6.25rem;
 $horizontal-foo-padding: 2.875rem;
 $letter-spacing: 3px;
+$map-description-width: 34rem; // 544px
+$map-description-margin: 8rem;
 $nav-unit: 6rem;
 
 //
