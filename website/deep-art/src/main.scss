@@ -36,8 +36,10 @@
 // 5. Components
 @import
   '/styles/components/btn',
-  '/styles/components/nav';
+  '/styles/components/nav',
+  '/styles/components/gen-art',
+  '/styles/components/plot';
 
 // 6. Page-specific styles
 @import
-  '/styles/pages/home';
+  '/styles/pages/map';

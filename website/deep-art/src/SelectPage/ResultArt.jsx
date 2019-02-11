@@ -24,7 +24,7 @@ export default class ResultArt extends Component {
       centerMode: true,
       infinite: true,
       centerPadding: '60px',
-      slidesToShow: 3,
+      slidesToShow: 5,
       speed: 500,
     };
 
@@ -34,6 +34,20 @@ export default class ResultArt extends Component {
     }
 
     const listItems = imagesToDisplay.map((image, i) => (
+      // <Button
+      //   style={{ outline: 'none' }}
+      //   key={i}
+      //   onClick={() => {
+      //     this.props.selectImage(image.key, image.id);
+      //   }}
+      //   border={
+      //     this.props.selectedImage.key === image.key
+      //       ? { color: '#002050', size: '2px' }
+      //       : { color: '#ffffff', size: '2px' }
+      //   }
+      // >
+      //   <img className="slick-img" src={image.img} alt={image.img.id} />
+      // </Button>
       <img
         className="slick-img"
         src={image.img}

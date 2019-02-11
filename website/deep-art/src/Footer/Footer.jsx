@@ -2,7 +2,7 @@ import React from 'react';
 
 import { withNamespaces } from 'react-i18next';
 
-import globe from '../images/globe.svg';
+import globe from '../images/icon-earth.svg';
 
 /**
  * The Navigational Bar across the top of the page
