@@ -216,17 +216,17 @@ h3 {
   border: 2px solid transparent;
   border-radius: calc(#{$arrow-size} / 2);
   box-shadow: 0 2px 20px 0 rgba(0, 32, 80, 0.3);
-  color: $color-primary;
+  color: transparent;
   font-weight: $font-weight-semibold;
   height: $arrow-size;
   text-transform: uppercase;
+  position: relative;
   width: $arrow-size;
 
-  @include transition(background-color, color);
+  @include transition(background-color);
 
   &:hover {
     background-color: $color-secondary;
-    color: $color-text-light;
   }
 
   &:focus {
