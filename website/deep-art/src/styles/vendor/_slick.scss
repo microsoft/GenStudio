@@ -230,8 +230,8 @@ h3 {
   }
 
   &:focus {
-    background-color: darken($color-secondary, 5%);
-    border: 2px solid darken($color-secondary, 5%);
+    background-color: $color-secondary-hover;
+    border: 2px solid $color-secondary-hover;
   }
 }
 
