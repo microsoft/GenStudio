@@ -9,43 +9,57 @@ import { NamespacesConsumer } from 'react-i18next';
  */
 // export default class MapExplorePage extends Component {
 class MapExplorePage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            cursorPoint: null,
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      cursorPoint: null,
+    };
+  }
 
-    componentDidMount() {
-        //Decode the url data
-        let url = this.props.match.params.id.toString();
-        url = decodeURIComponent(url);
-        let selectedArt = url.split('&')[0].slice(4);
-        let artArr = url.split('&')[1].slice(4);
-        artArr = JSON.parse(artArr);
+  componentDidMount() {
+    //Decode the url data
+    let url = this.props.match.params.id.toString();
+    url = decodeURIComponent(url);
+    let selectedArt = url.split('&')[0].slice(4);
+    let artArr = url.split('&')[1].slice(4);
+    artArr = JSON.parse(artArr);
 
-        //Setup the Plotly graph
-        setupPlotly(this, artArr, selectedArt);
-    }
+    //Setup the Plotly graph
+    setupPlotly(this, artArr, selectedArt);
+  }
 
-    render() {
-        return (
-            <NamespacesConsumer>
-                {t => (
-                    <section className="map">
+  render() {
+    return (
+      <NamespacesConsumer>
+        {t => (
+          <section className="map">
+            <div className="map__header">
+              <button className="map__tab is-active">Method 1</button>
+              <button className="map__tab">Method 2</button>
+            </div>
+            <div className="map__content">
 
+              <h1 className="claim">{t('map.title')}</h1>
+              <div className="map__data">
+                <p className="map__description">{t('map.description')}</p>
+                <div className="map__plot">
+                  test asdasdasdas
+                </div>
+              </div>
 
-                        <h1 className="claim">{t('map.title')}</h1>
-                        <p>{t('map.description')}</p>
+              <GenArt
+                message={this.state.message}
+                image={this.state.genImg}
+                data={this.state.genArr}
+              />
 
-                        <GenArt message={this.state.message} image={this.state.genImg} data={this.state.genArr}/>
-
-                        <div id="myPlot" className="plot" />
-                    </section>
-                )}
-            </NamespacesConsumer>
-        );
-    }
+              <div id="myPlot" className="plot" />
+            </div>
+          </section>
+        )}
+      </NamespacesConsumer>
+    );
+  }
 }
 
 export default MapExplorePage;
