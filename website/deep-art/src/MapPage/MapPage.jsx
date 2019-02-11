@@ -32,14 +32,16 @@ class MapExplorePage extends Component {
         return (
             <NamespacesConsumer>
                 {t => (
-                    <div className="map-container">
+                    <section className="map">
+
+
                         <h1 className="claim">{t('map.title')}</h1>
                         <p>{t('map.description')}</p>
 
                         <GenArt message={this.state.message} image={this.state.genImg} data={this.state.genArr}/>
 
                         <div id="myPlot" className="plot" />
-                    </div>
+                    </section>
                 )}
             </NamespacesConsumer>
         );
