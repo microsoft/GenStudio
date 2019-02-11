@@ -32,7 +32,7 @@ class MapExplorePage extends Component {
         return (
             <NamespacesConsumer>
                 {t => (
-                    <div className="u-container-centered">
+                    <div className="map-container">
                         <h1 className="claim">{t('map.title')}</h1>
                         <p>{t('map.description')}</p>
 

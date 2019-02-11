@@ -1,0 +1,11 @@
+// -----------------------------------------------------------------------------
+// This file contains styles that are specific to the map page.
+// -----------------------------------------------------------------------------
+
+.map-container {
+    @include container-centered();
+
+    .claim {
+        text-transform: uppercase;
+    }
+}
