@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import Slider from 'react-slick';
 
-import { Button } from 'grommet';
-
 /**
  * The grid of thumbnails of art
  *  images : List of ObjIDs to be displayed
