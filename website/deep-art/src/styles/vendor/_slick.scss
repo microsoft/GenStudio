@@ -267,6 +267,21 @@ h3 {
   z-index: $z-index-xl;
 }
 
+.slick-next:after,
+.slick-prev:after {
+  display: block;
+  height: $arrow-size;
+  width: 100%;
+}
+
+.slick-next:after {
+  content: url('./images/icon-chevron-right.svg');
+}
+
+.slick-prev:after {
+  content: url('./images/icon-chevron-left.svg');
+}
+
 .slick-next {
   right: calc((#{$arrow-size} / 2) * -1);
 }
