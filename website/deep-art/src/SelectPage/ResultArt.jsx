@@ -40,10 +40,9 @@ export default class ResultArt extends Component {
           style={{ outline: 'none' }}
           key={i}
           onClick={() => { this.props.selectImage(image.key, image.id); }}
-          key={i}
           border={this.props.selectedImage.key === image.key ? { color: '#002050', size: '2px' } : { color: '#ffffff', size: '2px' }}
         >
-          <img className="slick-img" src={image.img} />
+            <img className="slick-img" src={image.img} alt={image.id}/>
         </Button>
     ));
 
