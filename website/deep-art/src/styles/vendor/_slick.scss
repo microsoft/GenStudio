@@ -102,9 +102,7 @@
 //
 // Custom Styles
 //
-h3 {
-  background-color: $color-slide-background;
-  color: #fff;
+.slick-slide button {
   font-size: 36px;
   line-height: 100px;
   margin: 10px;
@@ -122,13 +120,12 @@ h3 {
   text-align: center;
 }
 
-.center .slick-center h3 {
-  color: $color-slide-text;
+.center .slick-center button {
   opacity: 1;
   transform: scale(1.08);
 }
 
-.center h3 {
+.center button {
   opacity: 0.8;
   transition: all 300ms ease;
 }
@@ -185,7 +182,7 @@ h3 {
 }
 
 @media (max-width: 768px) {
-  h3 {
+  .slick-slide button {
     font-size: 24px;
   }
 
@@ -194,13 +191,13 @@ h3 {
     margin-right: -40px;
   }
 
-  .center .slick-center h3 {
+  .center .slick-center button {
     color: $color-slide-text;
     opacity: 1;
     transform: scale(1);
   }
 
-  .center h3 {
+  .center button {
     opacity: 0.8;
     transform: scale(0.95);
     transition: all 300ms ease;
@@ -239,11 +236,9 @@ h3 {
 // Slick additions
 //
 .button {
-  background-color: $color-slide-background;
   padding: 10px 20px;
   margin: 0 20px;
   border: none;
-  color: white;
   font-size: 20px;
   border-radius: 5px;
   min-height: 45px;
@@ -293,4 +288,8 @@ h3 {
   img {
     height: inherit;
   }
+}
+
+.slick-active .slick-img {
+  // border: 5px solid red;
 }

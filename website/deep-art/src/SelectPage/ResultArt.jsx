@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 import Slider from 'react-slick';
 
-import { Button } from 'grommet';
-
 /**
  * The grid of thumbnails of art
  *  images : List of ObjIDs to be displayed
@@ -36,20 +34,29 @@ export default class ResultArt extends Component {
     }
 
     const listItems = imagesToDisplay.map((image, i) => (
-      <Button
-        style={{ outline: 'none' }}
+      // <Button
+      //   style={{ outline: 'none' }}
+      //   key={i}
+      //   onClick={() => {
+      //     this.props.selectImage(image.key, image.id);
+      //   }}
+      //   border={
+      //     this.props.selectedImage.key === image.key
+      //       ? { color: '#002050', size: '2px' }
+      //       : { color: '#ffffff', size: '2px' }
+      //   }
+      // >
+      //   <img className="slick-img" src={image.img} alt={image.img.id} />
+      // </Button>
+      <img
+        className="slick-img"
+        src={image.img}
+        alt={image.id}
         key={i}
-        onClick={() => {
-          this.props.selectImage(image.key, image.id);
-        }}
-        border={
-          this.props.selectedImage.key === image.key
-            ? { color: '#002050', size: '2px' }
-            : { color: '#ffffff', size: '2px' }
+        onClick={() => {this.props.selectImage(image.key, image.id);}}
+        border={this.props.selectedImage.key === image.key ? { color: '#002050', size: '2px' } : { color: '#ffffff', size: '2px' }
         }
-      >
-        <img className="slick-img" src={image.img} alt={image.img.id} />
-      </Button>
+      />
     ));
 
     return <Slider {...settings}>{listItems}</Slider>;
