@@ -26,28 +26,32 @@ export default class ResultArt extends Component {
       centerMode: true,
       infinite: true,
       centerPadding: '60px',
-      slidesToShow: 3,
+      slidesToShow: 5,
       speed: 500,
     };
 
     let imagesToDisplay = this.props.images;
     if (this.props.categorySelected) {
-        imagesToDisplay = imagesToDisplay.slice(0, 6);
+      imagesToDisplay = imagesToDisplay.slice(0, 6);
     }
 
     const listItems = imagesToDisplay.map((image, i) => (
-        <Button
-          style={{ outline: 'none' }}
-          key={i}
-          onClick={() => { this.props.selectImage(image.key, image.id); }}
-          border={this.props.selectedImage.key === image.key ? { color: '#002050', size: '2px' } : { color: '#ffffff', size: '2px' }}
-        >
-            <img className="slick-img" src={image.img} alt={image.img.id} />
-        </Button>
+      <Button
+        style={{ outline: 'none' }}
+        key={i}
+        onClick={() => {
+          this.props.selectImage(image.key, image.id);
+        }}
+        border={
+          this.props.selectedImage.key === image.key
+            ? { color: '#002050', size: '2px' }
+            : { color: '#ffffff', size: '2px' }
+        }
+      >
+        <img className="slick-img" src={image.img} alt={image.img.id} />
+      </Button>
     ));
 
-    return (
-      <Slider {...settings}>{listItems}</Slider>
-    );
+    return <Slider {...settings}>{listItems}</Slider>;
   }
 }
