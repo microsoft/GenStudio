@@ -1,0 +1,11 @@
+// ---------------------------------------------------------------
+// This file contains all styles related to the .plot component
+// ---------------------------------------------------------------
+.plot {
+  padding: 0;
+  margin: 0;
+  border-collapse: collapse;
+  width: calc(100% - #{$gen-width} - #{$map-padding});
+  height: 90%;
+  pad: 0;
+}
