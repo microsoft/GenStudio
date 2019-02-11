@@ -4,6 +4,7 @@
 
 .map {
   box-shadow: $box-shadow;
+  margin-bottom: 4.5rem;
   width: $container-width;
 
   @include container-centered();
@@ -31,7 +32,7 @@
   }
 
   &__content {
-    padding: 3rem;
+    padding: $map-padding;
   }
 
   &__data {
@@ -52,8 +53,12 @@
     margin-bottom: 3rem;
   }
 
-  &__plot {
+  &__original {
     max-width: clac(100% - #{$map-description-width} - #{$map-description-margin});
     width: 100%;
+  }
+
+  &__result {
+    display: flex;
   }
 }
