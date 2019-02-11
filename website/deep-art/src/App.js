@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Grommet, Box } from 'grommet';
 import { grommet } from "grommet/themes";
 import {deepMerge} from "grommet/utils";
-import styled from "styled-components";
 
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import './App.css';
@@ -12,7 +11,6 @@ import ExplorePage from './ExplorePage/ExplorePage.jsx';
 import SearchPage from './SearchPage/SearchPage.jsx';
 import MapPage from './MapPage/MapPage.jsx';
 import NavBar from './NavBar/NavBar.jsx';
-import Logo from './Logo/Logo.jsx'
 import Footer from './Footer/Footer.jsx';
 
 //GLOBAL THEME
@@ -70,13 +68,6 @@ const gTheme = {
 
 const mergeTheme = deepMerge(grommet, gTheme);
 
-
-const Body = styled.section`
-  flex: 1;
-  background: #FFFFFF;
-  z-index: 0;
-`;
-
 class App extends Component {
   render() {
     return (
@@ -86,16 +77,15 @@ class App extends Component {
             direction="column"
             style={{height: "100%", width: "100%"}}
           >
-            <Body>
+            <main className="main" role="main">
               <NavBar />
-              <Logo />
               <Route exact path="/" component={SelectPage}/>
               <Route exact path="/select" component={SelectPage}/>
               <Route exact path="/explore/:id" component={ExplorePage}/>
               <Route exact path="/map/:id" component={MapPage}/>
               <Route exact path="/search/:id" component={SearchPage}/>
               <Route exact path="/search" component={SearchPage}/>
-            </Body>
+            </main>
             <Footer/>
           </Box>
         </Grommet>

@@ -2,18 +2,25 @@
 // This file contains all styles related to the footer of the site/application.
 // -----------------------------------------------------------------------------
 .footer {
-  background-color: $color-shade-light;
-  font-size: 12px;
-  margin-left: calc(#{$horizontal-space} * -1);
-  margin-right: calc(#{$horizontal-space} * -1);
+  font-size: $font-s;
   padding-top: $space-m;
   padding-bottom: $space-m;
-  padding-right: $horizontal-foo-padding;
-  padding-left: $horizontal-foo-padding;
+
+  @include container-centered();
 
   &__description {
-    margin-bottom: $space-m;
+    font-weight: $font-weight-semibold;
     margin-top: initial;
+
+    span {
+      margin-right: $space-xxs;
+    }
+  }
+
+  &__divider {
+    background-color: $color-shade-dark;
+    height: 1px;
+    margin-bottom: $space-m;
   }
 
   &__links {
@@ -24,8 +31,9 @@
   }
 
   &__link {
+    color: $color-primary;
     display: block;
-    color: $color-shade-lighter;
+    font-weight: $font-weight-semibold;
     margin-right: $space-m;
     text-decoration: none;
     white-space: nowrap;
@@ -34,18 +42,21 @@
       display: initial;
     }
 
+    &:hover {
+      text-decoration: underline;
+    }
+
     &--strong {
-      color: $color-base-darkest;
+      color: $color-secondary;
       font-weight: $font-weight-semibold;
       margin-left: $space-xs;
-      text-decoration: underline;
       white-space: nowrap;
     }
   }
 
   &__lang {
     align-items: center;
-    color: $color-shade-lighter;
+    color: $color-secondary;
     display: flex;
     margin-bottom: $space-s;
     white-space: nowrap;
@@ -53,11 +64,20 @@
     @media (min-width: $mq-s) {
       margin-bottom: initial;
     }
+
+    span {
+      font-weight: $font-weight-semibold;
+    }
   }
 
   &__image {
     margin-right: $space-s;
     height: $icon-m;
     width: $icon-m;
+  }
+
+  &__text {
+    font-weight: $font-weight-semibold;
+    white-space: nowrap;
   }
 }

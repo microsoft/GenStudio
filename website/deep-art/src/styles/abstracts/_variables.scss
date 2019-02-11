@@ -16,10 +16,22 @@ $color-base-dark: lighten($color-base, 40);
 $color-base-light: lighten($color-base, 60);
 $color-base-lighter: lighten($color-base, 80);
 
+// Primary-Colors
+$color-primary: #002050;
+$color-secondary: #00b294;
+
 // #Greys
-$color-shade-light: #f2f2f2;
-$color-shade-lighter: #505050;
-$color-shade-lightest: #e0cccc;
+$color-shade-dark: #e6e6e6;
+$color-shade-medium: #f2f2f2;
+$color-shade-light: #f8f8f8;
+
+// #Text Colors
+$color-text-light: #ffffff;
+
+// #Slick Colors
+$color-slide-background: $color-shade-medium;
+$color-arrow-background: $color-white;
+$color-slide-text: #ff0000;
 
 // #Primary-Color
 
@@ -34,25 +46,15 @@ $box-shaodw-4: 0 1px 2px rgba($color-base-lighter, 0.5);
 //
 // #Animations
 //
-$animation-speed-slow: 0.35s;
-$animation-speed-regular: 0.25s;
-$animation-type: ease-in;
+$animation-speed: 0.25s;
+$animation-type-in: ease-in;
+$animation-type-cubic: cubic-bezier(0, 0, 0.3, 1);
 
 //
 // #Fonts
 //
-$font-family-base:
-  'Segoe UI',
-  'SegoeUI',
-  -apple-system,
-  BlinkMacSystemFont,
-  'Roboto',
-  Helvetica,
-  Arial,
-  sans-serif,
-  'Apple Color Emoji',
-  'Segoe UI Emoji',
-  'Segoe UI Symbol';
+$font-family-base: 'Segoe UI', 'SegoeUI', -apple-system, BlinkMacSystemFont, 'Roboto', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+$font-family-heading: 'Playfair Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
 //
 // $Line-Height
@@ -80,25 +82,26 @@ $scale: 1.25;
 //
 // #Font-Size
 //
-$font-base: 1rem; // 16px
+$font-s: 0.75rem; // 12px
+$font-m: 1rem; // 16px
 
 //
 // #Spacing
 //
 $container-width: 50em; // 800px
 $container-padding: 1.25em; // 20px
-$space-default: $font-base; // Is dependant on $font-base and should be 1em;
+$space-default: $font-m; // Is dependant on $font-m and should be 1em;
 
 //
 // #Space Sizes
 //
-$space-xxs: $font-base / 8; // 2px
-$space-xs: $font-base / 4; // 4px
-$space-s: $font-base / 2; // 8px
-$space-m: $font-base; // 16px
-$space-l: $font-base * 2; // 32px
-$space-xl: $font-base * 4; // 64px
-$space-xxl: $font-base * 8; // 128px
+$space-xxs: $font-m / 8; // 2px
+$space-xs: $font-m / 4; // 4px
+$space-s: $font-m / 2; // 8px
+$space-m: $font-m; // 16px
+$space-l: $font-m * 2; // 32px
+$space-xl: $font-m * 4; // 64px
+$space-xxl: $font-m * 8; // 128px
 
 //
 // #Border-Radius Sizes
@@ -142,5 +145,14 @@ $z-index-xl: 4;
 //
 // Custom Sizes
 //
+$container-width: 67.5rem; // 1080
+$content-width: 85.375rem; // 1366
 $horizontal-space: 6.25rem;
 $horizontal-foo-padding: 2.875rem;
+$letter-spacing: 3px;
+$nav-unit: 6rem;
+
+//
+// Slick carousel custom Sizes
+//
+$arrow-size: 6rem;

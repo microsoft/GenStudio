@@ -11,11 +11,14 @@
   '/styles/abstracts/mixins/fonts',
   '/styles/abstracts/mixins/crop-text',
   '/styles/abstracts/mixins/underline',
-  '/styles/abstracts/mixins/spacing';
+  '/styles/abstracts/mixins/spacing',
+  '/styles/abstracts/mixins/container-centered',
+  '/styles/abstracts/mixins/transition';
 
 // 2. Vendors
 @import
-  '/styles/vendor/normalize';
+  '/styles/vendor/normalize',
+  '/styles/vendor/slick';
 
 // 3. Base stuff
 @import
@@ -27,10 +30,12 @@
 // 4. Layout-related sections
 @import
   '/styles/layout/header',
+  '/styles/layout/selectpage-head',
   '/styles/layout/footer';
 
 // 5. Components
 @import
+  '/styles/components/btn',
   '/styles/components/nav';
 
 // 6. Page-specific styles
