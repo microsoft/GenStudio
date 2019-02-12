@@ -7,6 +7,7 @@ import InfoArt from "./InfoArt.jsx";
 import { Box, Grid, Paragraph } from "grommet";
 
 import MapExploreContainer from "../MapExploreContainer/MapExploreContainer.jsx";
+import ArtworkInfo from "../MapExploreContainer/ArtworkInfo.jsx";
 
 /**
  * Page for the Exploring feature
@@ -277,9 +278,9 @@ export default class ExplorePage extends Component {
   }
 
   render() {
-    console.log(this.state.apiData)
+    console.log(this.state.apiData);
     return (
-      <MapExploreContainer map={false} location={this.props.location}>
+      <MapExploreContainer map={false} location={this.props.location} apiData={this.state.apiData} imgData={this.state.imgData}>
         <Grid
           areas={[
             { name: "left", start: [0, 0], end: [0, 1] },
@@ -292,33 +293,10 @@ export default class ExplorePage extends Component {
           gap='small'
           style={{ padding: "1rem" }}
         >
-          <Box gridArea='info' direction='row' justify='center' align='center'>
-            <Box direction='column' justify='center' pad='medium'>
-              <Paragraph
-                style={{ textAlign: "center" }}
-                alignSelf={"center"}
-                size={"medium"}
-              >
-                {this.state.apiData.title}
-              </Paragraph>
-              <Paragraph
-                style={{ textAlign: "center" }}
-                alignSelf={"center"}
-                size={"medium"}
-              >
-                {this.state.apiData.objectDate}
-              </Paragraph>
-              <Paragraph
-                style={{ textAlign: "center" }}
-                alignSelf={"center"}
-                size={"medium"}
-              >
-                Artist: {this.state.apiData.artistDisplayName}
-              </Paragraph>
-            </Box>
-            <p>hiii</p>
-            <InfoArt image={this.state.imgData} />
-          </Box>
+          <ArtworkInfo
+            apiData={this.state.apiData}
+            imgData={this.state.imgData}
+          />
           <Box
             gridArea='explore'
             direction='row'
