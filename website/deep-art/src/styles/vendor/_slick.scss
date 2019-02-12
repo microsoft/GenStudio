@@ -10,6 +10,8 @@
   -ms-touch-action: pan-y;
   touch-action: pan-y;
   -webkit-tap-highlight-color: var(--slick-default-color);
+
+  max-width: 90%;
 }
 
 .slick-list {
@@ -20,7 +22,7 @@
   padding: 0;
 
   &:focus {
-    outline: none;
+    outline: 0;
   }
 
   &.dragging {
@@ -229,6 +231,7 @@
   &:focus {
     background-color: $color-secondary-hover;
     border: 2px solid $color-secondary-hover;
+    outline: 0;
   }
 }
 
