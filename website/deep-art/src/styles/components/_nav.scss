@@ -1,21 +1,39 @@
+// -------------------------------------------------------------
+// This file contains all styles related to the .nav component
+// -------------------------------------------------------------
 .nav {
   align-items: center;
+  border-bottom: 1px solid $color-shade-light;
   display: flex;
-  height: 3.125rem;
+  height: $nav-unit;
   justify-content: space-between;
-  margin-bottom: 1.25rem;
+  margin-bottom: $space-xl;
 
   &__link {
-    color: $color-base-darkest;
-    font-size: 1.25rem;
+    align-items: center;
+    background-color: $color-secondary;
+    display: flex;
+    height: inherit;
+    justify-content: center;
     text-decoration: none;
+    width: $nav-unit;
+
+    span {
+      color: $color-text-light;
+      font-family: $font-family-heading;
+      font-size: 1.25rem;
+      font-weight: $font-weight-black;
+      line-height: 0.9; // Magic string, do not change
+      max-width: 58px; // Magic string, do not change
+      width: 100%;
+    }
   }
 
   &__button {
     align-items: center;
-    border: 1px solid $color-shade-lightest;
+    border: 1px solid $color-shade-dark;
     border-radius: 1.5rem;
-    color: $color-shade-lighter;
+    color: $color-shade-light;
     display: flex;
     height: 2.125rem;
     justify-content: space-between;

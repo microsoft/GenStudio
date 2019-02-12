@@ -62,3 +62,10 @@
 .u-nowrap {
   white-space: nowrap;
 }
+
+//
+// Centers a container
+//
+.u-container-centered {
+  @include container-centered();
+}

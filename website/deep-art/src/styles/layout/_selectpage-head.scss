@@ -1,0 +1,60 @@
+.selectpage {
+  &__head {
+    display: flex;
+    height: 94px;
+    justify-content: space-between;
+    margin-bottom: $space-xl;
+
+    @include container-centered();
+  }
+
+  .gAXUqz {
+    border-color: transparent !important; // Overwrites dinamic class added by grommet library
+    box-shadow: none !important; // Overwrites dinamic class added by grommet library
+  }
+
+  &__head button {
+    align-self: self-end;
+  }
+
+  &__head button > div {
+    border: 2px solid $color-primary;
+    border-radius: 0;
+    width: 300px;
+
+    input {
+      border-radius: 0;
+      color: $color-primary;
+
+      &::-webkit-input-placeholder {
+        // Chrome/Opera/Safari
+        color: inherit;
+        font-weight: $font-weight-normal;
+      }
+
+      &::-moz-placeholder {
+        // Firefox 19+
+        color: inherit;
+        font-weight: $font-weight-normal;
+        opacity: 1;
+      }
+
+      &:-ms-input-placeholder {
+        // IE 10+
+        color: inherit;
+        font-weight: $font-weight-normal;
+      }
+
+      &:-moz-placeholder {
+        // Firefox 18-
+        color: inherit;
+        font-weight: $font-weight-normal;
+      }
+    }
+  }
+}
+
+.selectpage__head + div + div > .button {
+  display: inline-block;
+  margin-bottom: $space-xl;
+}

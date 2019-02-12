@@ -2,6 +2,7 @@
   "en": {
     "translation": {
       "global.title": "Gen Studio",
+      "global.claim": "Select an image to enter the AI studio",
       "global.learn_more": "Click here to learn more",
       "global.lang_eng": "Language: English",
       "global.lang_eng_description_us": "English (United States)",
@@ -9,7 +10,11 @@
 
       "nav.explore": "Explore the MET Collection",
 
-      "foo.desc": "Gen Studio is a prototype concept which was created over a two-day hackathon with collaborators across The Met, Microsoft, and MIT.",
+      "map.title": "Gan",
+      "map.description": "A trained GAN (Generative Adversarial Network) contains a model of a shared feature space underlying a collection of images. Based on given artworks from The Met collection, the GAN allows you to explore and visualize the spaces in between selected artworks from The Met’s Open Access collection.",
+      "map.explore": "Explore the map to discover new objects in the space between existing Met artworks",
+
+      "foo.desc": "Gen Studio is a prototype concepts which was created over a two-day hackathon with collaborators across The Met, Microsoft, and MIT.",
       "foo.privacy_cookies": "Privacy & Cookies",
       "foo.terms_use": "Terms of use",
       "foo.trademarks": "Trademarks",
