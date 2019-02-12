@@ -22,13 +22,13 @@ export default class ResultBox extends Component {
     //Material UI version
     render(){
         let media = (this.props.data.PrimaryImageURL === undefined || this.props.data.PrimaryImageURL === null) ? 
-            <LazyLoad throttle={200} height={500}>
+            <LazyLoad throttle={250} height={500}>
                 <CardMedia 
                 component="img"
                 src={this.props.data.PrimaryImageUrl}
                 style={{
                     alignSelf:"center", 
-                    alignItems:"ceneter", 
+                    alignItems:"center", 
                     maxWidth:"500px", width:"fit-content", maxHeight: "500px", objectFit:'contain'}}
                 />
             </LazyLoad>
