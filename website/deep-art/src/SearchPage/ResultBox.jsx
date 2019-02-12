@@ -22,7 +22,7 @@ export default class ResultBox extends Component {
     //Material UI version
     render(){
         let media = (this.props.data.PrimaryImageURL === undefined || this.props.data.PrimaryImageURL === null) ? 
-            <LazyLoad throttle={250} height={500}>
+            <LazyLoad throttle={250} height={500} placeholder={<CircularProgress style={{color: "#6A6A6A"}} />}>
                 <CardMedia 
                 component="img"
                 src={this.props.data.PrimaryImageUrl}
