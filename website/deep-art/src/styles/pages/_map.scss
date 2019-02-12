@@ -49,8 +49,9 @@
     font-size: $font-l;
     line-height: 1.78;
     margin-top: 0;
-    margin-right: $map-description-margin;
     margin-bottom: 3rem;
+    margin-right: $map-description-margin;
+    padding-bottom: 1.5rem;
   }
 
   &__original {

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import GenArt from "./GenArt.jsx";
 import setupPlotly from "./map.js";
-import { NamespacesConsumer } from "react-i18next";
 
 import MapExploreContainer from "../MapExploreContainer/MapExploreContainer.jsx";
 
@@ -31,7 +30,7 @@ class MapPage extends Component {
 
   render() {
     return (
-      <MapExploreContainer map={true}>
+      <MapExploreContainer map={true} location={this.props.location}>
         <div className='map__result'>
           <GenArt
             message={this.state.message}
