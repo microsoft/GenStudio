@@ -11,7 +11,9 @@
   touch-action: pan-y;
   -webkit-tap-highlight-color: transparent;
 
-  max-width: 90%;
+  @media (min-width: $mq-s) {
+    max-width: 90%;
+  }
 }
 
 .slick-list {
@@ -200,8 +202,10 @@
   }
 
   .center button {
-    transform: scale(0.95);
     transition: all 300ms ease;
+    @media (min-width: $mq-s) {
+      transform: scale(0.95);
+    }
   }
 }
 
@@ -279,12 +283,20 @@
   content: url('./images/icon-chevron-left.svg');
 }
 
-.slick-pre {
-  left: 0;
+.slick-prev {
+  left: calc(#{$arrow-size} / 2);
+
+  @media (min-width: $mq-s) {
+    left: 0;
+  }
 }
 
 .slick-next {
-  right: 0;
+  right: calc(#{$arrow-size} / 2);
+
+  @media (min-width: $mq-s) {
+    right: 0;
+  }
 }
 
 .slick-slide > div {
