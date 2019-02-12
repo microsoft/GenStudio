@@ -67,5 +67,8 @@
 // Centers a container
 //
 .u-container-centered {
+  padding-left: $space-m;
+  padding-right: $space-m;
+
   @include container-centered();
 }

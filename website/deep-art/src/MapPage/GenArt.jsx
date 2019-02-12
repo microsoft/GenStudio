@@ -77,7 +77,7 @@ export default class GenArt extends Component {
     const ImageBox = () => (
       <img
         src={'data:image/jpeg;base64,' + this.props.image}
-        fit="cover"
+        fit="contain"
         style={{ zIndex: '-1' }}
         alt={this.props.image.id}
       />

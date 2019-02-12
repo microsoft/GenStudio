@@ -16,15 +16,16 @@
     height: inherit;
     justify-content: center;
     text-decoration: none;
+    text-transform: uppercase;
     width: $nav-unit;
 
     span {
       color: $color-text-light;
       font-family: $font-family-heading;
-      font-size: 1.25rem;
+      font-size: 1rem;
       font-weight: $font-weight-black;
       line-height: 0.9; // Magic string, do not change
-      max-width: 58px; // Magic string, do not change
+      max-width: 60px; // Magic string, do not change
       width: 100%;
     }
   }

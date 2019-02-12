@@ -9,7 +9,11 @@
   user-select: none;
   -ms-touch-action: pan-y;
   touch-action: pan-y;
-  -webkit-tap-highlight-color: var(--slick-default-color);
+  -webkit-tap-highlight-color: transparent;
+
+  @media (min-width: $mq-s) {
+    max-width: 90%;
+  }
 }
 
 .slick-list {
@@ -20,7 +24,7 @@
   padding: 0;
 
   &:focus {
-    outline: none;
+    outline: 0;
   }
 
   &.dragging {
@@ -120,65 +124,65 @@
   text-align: center;
 }
 
-.center .slick-center button {
-  opacity: 1;
-  transform: scale(1.08);
-}
+.center {
+  .slick-center button {
+    opacity: 1;
+    transform: scale(1.08);
+  }
 
-.center button {
-  opacity: 0.8;
-  transition: all 300ms ease;
+  button {
+    transition: all 300ms ease;
+  }
 }
 
 .content {
   padding: 20px;
   margin: auto;
-}
 
-@media (min-width: 701px) {
-  .content {
+  @media (min-width: 701px) {
     width: 80%;
   }
-}
 
-@media (max-width: 700px) {
-  .content {
+  @media (max-width: 700px) {
     width: 70%;
   }
 }
 
-.slick-slide .image {
-  padding: 10px;
-}
+.slick-slide {
+  .image {
+    padding: 10px;
+  }
 
-.slick-slide img.slick-loading {
-  border: 0;
+  img.slick-loading {
+    border: 0;
+  }
 }
 
 .slick-slider {
   margin: 30px auto 50px;
 }
+
 .slick-dots {
   margin-left: 0;
 }
 
 .slick-thumb {
   bottom: -45px;
-}
 
-.slick-thumb li {
-  width: 60px;
-  height: 45px;
-}
+  li {
+    width: 60px;
+    height: 45px;
+  }
 
-.slick-thumb li img {
-  width: 100%;
-  height: 100%;
-  filter: grayscale(100%);
-}
+  li img {
+    width: 100%;
+    height: 100%;
+    filter: grayscale(100%);
+  }
 
-.slick-thumb li.slick-active img {
-  filter: grayscale(0%);
+  li.slick-active img {
+    filter: grayscale(0%);
+  }
 }
 
 @media (max-width: 768px) {
@@ -198,9 +202,10 @@
   }
 
   .center button {
-    opacity: 0.8;
-    transform: scale(0.95);
     transition: all 300ms ease;
+    @media (min-width: $mq-s) {
+      transform: scale(0.95);
+    }
   }
 }
 
@@ -229,6 +234,7 @@
   &:focus {
     background-color: $color-secondary-hover;
     border: 2px solid $color-secondary-hover;
+    outline: 0;
   }
 }
 
@@ -277,8 +283,20 @@
   content: url('./images/icon-chevron-left.svg');
 }
 
+.slick-prev {
+  left: calc(#{$arrow-size} / 2);
+
+  @media (min-width: $mq-s) {
+    left: 0;
+  }
+}
+
 .slick-next {
-  right: calc((#{$arrow-size} / 2) * -1);
+  right: calc(#{$arrow-size} / 2);
+
+  @media (min-width: $mq-s) {
+    right: 0;
+  }
 }
 
 .slick-slide > div {
@@ -288,8 +306,4 @@
   img {
     height: inherit;
   }
-}
-
-.slick-active .slick-img {
-  // border: 5px solid red;
 }
