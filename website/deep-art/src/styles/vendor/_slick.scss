@@ -279,8 +279,12 @@
   content: url('./images/icon-chevron-left.svg');
 }
 
+.slick-pre {
+  left: 0;
+}
+
 .slick-next {
-  right: calc((#{$arrow-size} / 2) * -1);
+  right: 0;
 }
 
 .slick-slide > div {
