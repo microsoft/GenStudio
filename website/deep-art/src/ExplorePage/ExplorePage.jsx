@@ -279,40 +279,17 @@ export default class ExplorePage extends Component {
 
   render() {
     return (
-      <MapExploreContainer map={false} location={this.props.location} apiData={this.state.apiData} imgData={this.state.imgData}>
-        <Grid
-          areas={[
-            { name: "left", start: [0, 0], end: [0, 1] },
-            { name: "info", start: [1, 0], end: [1, 0] },
-            { name: "explore", start: [1, 1], end: [1, 1] },
-            { name: "right", start: [2, 0], end: [2, 1] }
-          ]}
-          columns={["flex", "xlarge", "flex"]}
-          rows={["small", "large"]}
-          gap='small'
-          style={{ padding: "1rem" }}
-        >
-          <ArtworkInfo
-            apiData={this.state.apiData}
-            imgData={this.state.imgData}
-          />
-          <Box
-            gridArea='explore'
-            direction='row'
-            align='center'
-            justify='center'
-          >
-            <GenArt image={this.state.genImg} data={this.state.genArr} />
-
-            <Box>
-              <ExplorePalette
-                images={this.state.imgObjectsExplore}
-                addSeed={this.addSeed}
-                subSeed={this.subSeed}
-              />
-            </Box>
-          </Box>
-        </Grid>
+      <MapExploreContainer map={false} location={this.props.location}>
+        <div className='explore__result'>
+          <GenArt image={this.state.genImg} data={this.state.genArr} />
+          <div className='explore__palette'>
+            <ExplorePalette
+              images={this.state.imgObjectsExplore}
+              addSeed={this.addSeed}
+              subSeed={this.subSeed}
+            />
+          </div>
+        </div>
       </MapExploreContainer>
     );
   }

@@ -23,12 +23,12 @@ export default class SearchControl extends Component {
    * @param {*} n - the number of unqiue elements to choose. N <= list.length
    */
   pickNUniqueFromList(list, n) {
-    if (n > list.length) {
+    if (list && n > list.length) {
       return 'N IS TOO LARGE';
     }
 
     let output = [];
-    while (output.length < n) {
+    while (list && output && output.length < n) {
       let randIndex = Math.floor(Math.random() * list.length);
       let choice = list[randIndex];
       if (!output.includes(choice)) {

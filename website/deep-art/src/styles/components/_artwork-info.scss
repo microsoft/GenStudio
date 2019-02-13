@@ -1,0 +1,13 @@
+.artwork-info {
+  display: flex;
+
+  &__image {
+    flex: 1;
+    width: 15%;
+    height: 15%;
+  }
+
+  &__detail {
+    flex: 1
+  }
+}

@@ -21,7 +21,7 @@ export default class InfoArt extends Component {
           );
 
         return(
-            <ImageBox />   
+            <img src={this.props.image}/> 
         );
     }
 }

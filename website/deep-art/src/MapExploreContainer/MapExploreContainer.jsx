@@ -52,16 +52,16 @@ class MapExploreContainer extends Component {
   renderHeader = () => {
     const getClass = (page, isMapPage) => {
       if (page === 'map' && isMapPage) {
-        return "map__tab is-active"
+        return "map-explore__tab is-active"
       } else if (page === 'explore' && !isMapPage) {
-        return "map__tab is-active"
+        return "map-explore__tab is-active"
       } else {
-        return "map__tab"
+        return "map-explore__tab"
       }
     }
     return (
       <React.Fragment>
-        <div className="map__header">
+        <div className="map-explore__header">
           <button onClick={this.generatePath} id='map' className={getClass('map', this.props.map)}><NavLink to={this.generatePath('map')}>Map</NavLink></button>
           <button onClick={this.generatePath} id='explore' className={getClass('explore', this.props.map)}><NavLink to={this.generatePath('explore')}>Explore</NavLink></button>
         </div>
@@ -82,13 +82,15 @@ class MapExploreContainer extends Component {
     return (
       <NamespacesConsumer>
         {t => (
-          <section className="map">
+          <section className="map-explore">
             {this.renderHeader()}
-            <div className="map__content">
+            <div className="map-explore__content">
               <h1 className="claim">{t('map.title')}</h1>
-              <div className="map__data">
-                <p className="map__description">{t('map.description')}></p>
-                {(this.state.apiData && this.state.imgData) && this.renderArtworkInfo()}
+              <div className="map-explore__data">
+                <p className="map-explore__description">{t('map.description')}</p>
+                <div className="map-explore__artwork-info">
+                  {(this.state.apiData && this.state.imgData) && this.renderArtworkInfo()}
+                </div>
               </div>
               {this.props.children}
             </div>
