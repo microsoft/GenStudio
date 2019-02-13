@@ -4,10 +4,11 @@ import InfoArt from "../ExplorePage/InfoArt.jsx";
 
 //TODO translations for unknown values
 const ArtworkInfo = ({ apiData, imgData }) => {
+  console.log(apiData)
   const {title, objectDate, artistDisplayName} = apiData;
   return (
     <div className="artwork-info">
-      <img className="artwork-info__image" src={imgData}/> 
+      <img className="artwork-info__image" src={imgData} alt={apiData.objectName}/> 
       <div className="artwork-info__detail">
         <p className="artwork-info__label artwork-info__title">{title ? title : 'Unknown'}</p>
         <div><p className="artwork-info__label">Date:</p><span>{objectDate ? objectDate : 'Unknown'}</span></div>

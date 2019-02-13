@@ -33,8 +33,9 @@ class MapExploreContainer extends Component {
       if (Http.readyState === 4) {
         try {
           let response = JSON.parse(Http.responseText);
+          console.log(response)
           this.setState({
-            imgData: response.primaryImage,
+            imgData: response.primaryImageSmall,
             apiData: response
           });
         } catch(e) {
