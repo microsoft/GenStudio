@@ -28,7 +28,18 @@ class MapExplorePage extends Component {
     setupPlotly(this, artArr, selectedArt);
   }
 
+  setDateFormat() {
+
+  }
+
   render() {
+    const { apiData } = this.state;
+    const artistDisplayName = apiData && apiData.artistDisplayName;
+    const primaryImageSmall = apiData && apiData.primaryImageSmall;
+    const objectName = apiData && apiData.objectName;
+    const objectDate = apiData && apiData.objectDate;
+    const title = apiData && apiData.title;
+
     return (
       <NamespacesConsumer>
         {t => (
@@ -38,12 +49,22 @@ class MapExplorePage extends Component {
               <button className="map__tab">Method 2</button>
             </div>
             <div className="map__content">
-
               <h1 className="claim">{t('map.title')}</h1>
               <div className="map__data">
                 <p className="map__description">{t('map.description')}</p>
-                <div className="map__original">
-                  test asdasdasdas
+                <div className="original js-original">
+                  <img className="original__img" src={primaryImageSmall || 'Unknown'} alt={objectName || 'Unknown'} />
+                  <div className="original__content">
+                    <p className="original__description">{title}</p>
+                    <p className="original__data">
+                      <div className="original__title">{t('map.time')}:</div>
+                      <div className="original__text">{artistDisplayName || 'Unknown'}</div>
+                    </p>
+                    <time className="original__data">
+                      <div className="original__title">{t('map.date')}: </div>
+                      <div className="original__text">{objectDate || 'Unknown'}</div>
+                    </time>
+                  </div>
                 </div>
               </div>
 
@@ -54,7 +75,10 @@ class MapExplorePage extends Component {
                   data={this.state.genArr}
                 />
 
-                <div className="plot" id="myPlot" />
+                <div className="map__plot">
+                  <div className="map__plot-header">{t('map.explore')}</div>
+                  <div className="map__plot-graph" id="myPlot" />
+                </div>
               </div>
             </div>
           </section>
