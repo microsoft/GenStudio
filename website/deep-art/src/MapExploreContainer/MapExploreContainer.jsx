@@ -30,6 +30,15 @@ class MapExploreContainer extends Component {
     )
   }
 
+  renderArtworkInfo = () => {
+    return (
+      <ArtworkInfo
+        apiData={this.props.apiData}
+        imgData={this.props.imgData}
+      /> 
+    )
+  }
+
   render () {
     return (
       <NamespacesConsumer>
@@ -40,10 +49,7 @@ class MapExploreContainer extends Component {
               <h1 className="claim">{t('map.title')}</h1>
               <div className="map__data">
                 <p className="map__description">{t('map.description')}></p>
-                <ArtworkInfo
-            apiData={this.props.apiData}
-            imgData={this.props.imgData}
-          />
+                {this.props.apiData && this.renderArtworkInfo(this.props.apiData, this.props.imgData)}
                 
               </div>
               {this.props.children}

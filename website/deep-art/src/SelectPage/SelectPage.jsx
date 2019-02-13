@@ -234,6 +234,7 @@ class SelectPage extends Component {
 
     let url = '?id=' + this.state.selectedImage.id.toString() + '&ids=[' + idList.toString() + ']';
     url = encodeURIComponent(url);
+    console.log(urlBase + url)
     return urlBase + url;
   }
 
