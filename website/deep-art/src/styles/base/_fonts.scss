@@ -12,9 +12,8 @@
 @font-face {
   font-family: 'SegoeUI';
   src: url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/Semibold/latest.woff2') format('woff2'),
-       url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/Semibold/latest.woff')
-         format('woff'),
-    url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/Semibold/latest.ttf') format('ttf');
+       url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/Semibold/latest.woff') format('woff'),
+       url('//c.s-microsoft.com/static/fonts/segoe-ui/west-european/Semibold/latest.ttf') format('ttf');
   font-weight: $font-weight-semibold;
 }
 
@@ -28,12 +27,12 @@
 
 @font-face {
   font-family: 'Playfair Display';
-  src: url('./assets/fonts/PlayfairDisplayRegular.ttf') format('ttf');
+  src: url('./fonts/PlayfairDisplayRegular.ttf') format('truetype');
   font-weight: $font-weight-normal;
 }
 
 @font-face {
   font-family: 'Playfair Display';
-  src: url('./assets/fonts/PlayfairDisplayBlack.ttf') format('ttf');
+  src: url('./fonts/PlayfairDisplayBlack.ttf') format('truetype');
   font-weight: $font-weight-black;
 }
