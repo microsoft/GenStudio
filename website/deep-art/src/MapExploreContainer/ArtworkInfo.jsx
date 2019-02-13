@@ -4,7 +4,6 @@ import InfoArt from "../ExplorePage/InfoArt.jsx";
 
 //TODO translations for unknown values
 const ArtworkInfo = ({ apiData, imgData }) => {
-  console.log(apiData)
   const {title, objectDate, artistDisplayName} = apiData;
   return (
     <div className="artwork-info">
