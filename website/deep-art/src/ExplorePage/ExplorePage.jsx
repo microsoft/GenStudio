@@ -2,12 +2,8 @@ import React, { Component } from "react";
 
 import GenArt from "./GenArt.jsx";
 import ExplorePalette from "./ExplorePalette.jsx";
-import InfoArt from "./InfoArt.jsx";
-
-import { Box, Grid, Paragraph } from "grommet";
 
 import MapExploreContainer from "../MapExploreContainer/MapExploreContainer.jsx";
-import ArtworkInfo from "../MapExploreContainer/ArtworkInfo.jsx";
 
 /**
  * Page for the Exploring feature
@@ -50,7 +46,6 @@ export default class ExplorePage extends Component {
       Http.onreadystatechange = e => {
         if (Http.readyState === 4) {
           try {
-            //console.log(Http.response);
             this.setState(oldState => {
               return oldState.imgObjectsExplore.push({
                 img: btoa(

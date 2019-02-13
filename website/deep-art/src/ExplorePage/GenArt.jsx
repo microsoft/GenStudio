@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Box, Image } from "grommet";
 import { saveAs } from "file-saver";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
@@ -69,9 +68,10 @@ export default class GenArt extends Component {
       this.props.image === undefined ? (
         <CircularProgress style={{ color: "#6A6A6A" }} />
       ) : (
-        <Image
+        <img
           src={"data:image/jpeg;base64," + this.props.image}
           fit='cover'
+          alt={this.props.image.id}
           style={{ zIndex: "-1" }}
         />
       );
