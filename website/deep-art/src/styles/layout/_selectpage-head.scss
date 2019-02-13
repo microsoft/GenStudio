@@ -4,6 +4,8 @@
     height: 94px;
     justify-content: space-between;
     margin-bottom: $space-xl;
+    padding-left: $space-m;
+    padding-right: $space-m;
 
     @include container-centered();
   }
