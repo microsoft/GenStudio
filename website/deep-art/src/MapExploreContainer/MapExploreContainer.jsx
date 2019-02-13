@@ -69,11 +69,11 @@ class MapExploreContainer extends Component {
     )
   }
 
-  renderArtworkInfo = () => {
+  renderArtworkInfo = (t) => {
     return (
       <ArtworkInfo
+        t={t}
         apiData={this.state.apiData}
-        imgData={this.state.imgData}
       /> 
     )
   }
@@ -82,19 +82,34 @@ class MapExploreContainer extends Component {
     return (
       <NamespacesConsumer>
         {t => (
-          <section className="map-explore">
-            {this.renderHeader()}
-            <div className="map-explore__content">
-              <h1 className="claim">{t('map.title')}</h1>
-              <div className="map-explore__data">
-                <p className="map-explore__description">{t('map.description')}</p>
-                <div className="map-explore__artwork-info">
-                  {(this.state.apiData && this.state.imgData) && this.renderArtworkInfo()}
-                </div>
-              </div>
-              {this.props.children}
+          <section className='map'>
+          <div className='map__header'>
+            <button className='map__tab is-active'>Method 1</button>
+            <button className='map__tab'>Method 2</button>
+          </div>
+          <div className='map__content'>
+            <h1 className='claim'>{t("map.title")}</h1>
+            <div className='map__data'>
+              <p className='map__description'>{t("map.description")}</p>
+ 
             </div>
-          </section>
+
+            {this.props.children(t)}
+          </div>
+        </section>
+          // <section className="map-explore">
+          //   {this.renderHeader()}
+          //   <div className="map-explore__content">
+          //     <h1 className="claim">{t('map.title')}</h1>
+          //     <div className="map-explore__data">
+          //       <p className="map-explore__description">{t('map.description')}</p>
+          //       <div className="map-explore__artwork-info">
+          //         {(this.state.apiData && this.state.imgData) && this.renderArtworkInfo(t)}
+          //       </div>
+          //     </div>
+          //     {this.props.children}
+          //   </div>
+          // </section>
         )}
       </NamespacesConsumer>
     )

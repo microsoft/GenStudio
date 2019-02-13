@@ -34,29 +34,16 @@ export default class ResultArt extends Component {
     }
 
     const listItems = imagesToDisplay.map((image, i) => (
-      // <Button
-      //   style={{ outline: 'none' }}
-      //   key={i}
-      //   onClick={() => {
-      //     this.props.selectImage(image.key, image.id);
-      //   }}
-      //   border={
-      //     this.props.selectedImage.key === image.key
-      //       ? { color: '#002050', size: '2px' }
-      //       : { color: '#ffffff', size: '2px' }
-      //   }
-      // >
-      //   <img className="slick-img" src={image.img} alt={image.img.id} />
-      // </Button>
-      <img
-        className="slick-img"
-        src={image.img}
-        alt={image.id}
-        key={i}
-        onClick={() => {this.props.selectImage(image.key, image.id);}}
-        border={this.props.selectedImage.key === image.key ? { color: '#002050', size: '2px' } : { color: '#ffffff', size: '2px' }
-        }
-      />
+      <React.Fragment>
+        <img
+          className="slick-img"
+          src={image.img}
+          alt={image.id}
+          key={i}
+          onClick={() => {this.props.selectImage(image.key, image.id);}}
+          style={this.props.selectedImage.key === image.key ? { borderColor: '#002050', borderSize: '2px' } : { borderColor: '#ffffff', borderSize: '2px' }}
+        />
+      </React.Fragment>
     ));
 
     return <Slider {...settings}>{listItems}</Slider>;

@@ -23,22 +23,30 @@ class MapPage extends Component {
     let selectedArt = url.split("&")[0].slice(4);
     let artArr = url.split("&")[1].slice(4);
     artArr = JSON.parse(artArr);
-    const id = selectedArt;
+    // const id = selectedArt;
     //Setup the Plotly graph
     setupPlotly(this, artArr, selectedArt);
   }
 
+  setDateFormat() {}
+
   render() {
     return (
-      <MapExploreContainer map={true} location={this.props.location}>
-        <div className='map__result'>
-          <GenArt
-            message={this.state.message}
-            image={this.state.genImg}
-            data={this.state.genArr}
-          />
-          <div className='plot' id='myPlot' />
-        </div>
+      <MapExploreContainer>
+        {t => (
+          <div className='map__result'>
+            <GenArt
+              message={this.state.message}
+              image={this.state.genImg}
+              data={this.state.genArr}
+            />
+
+            <div className='map__plot'>
+              <div className='map__plot-header'>{t("map.explore")}</div>
+              <div className='map__plot-graph' id='myPlot' />
+            </div>
+          </div>
+        )}
       </MapExploreContainer>
     );
   }
