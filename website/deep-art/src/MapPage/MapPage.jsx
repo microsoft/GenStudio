@@ -22,10 +22,9 @@ class MapPage extends Component {
     //Decode the url data
     let url = this.props.match.params.id.toString();
     url = decodeURIComponent(url);
-    let selectedArt = url.split("&")[0].slice(4);
+    let selectedArt = url.split("&")[0].slice(4); //gives id of artwork
     let artArr = url.split("&")[1].slice(4);
     artArr = JSON.parse(artArr);
-    // const id = selectedArt;
     //Setup the Plotly graph
     setupPlotly(this, artArr, selectedArt);
     this.setState({url})
