@@ -2,5 +2,16 @@
 // This file contains all styles related to the .gen-art component
 // ---------------------------------------------------------------
 .gen-art {
+  margin-right: $space-l;
   width: $gen-width;
+
+  &__loader > div {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .button {
+    width: 100%;
+  }
 }

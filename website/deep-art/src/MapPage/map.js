@@ -65,9 +65,9 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
             name: 'primary',
             layer: "above",
             marker: {
-                size: 15,
-                color: 'rgb(0, 0, 0)',
-                symbol: "square",
+                size: 44,
+                color: '#002050',
+                symbol: "circle",
             },
         }
     ];
@@ -110,7 +110,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
     /**
    * Calls an API, sending a seed, and getting back an ArrayBuffer reprsenting that image
    * This function directly saves the image data and ArrayBuffer to state
-   * @param {string} seedArr - string version of a 1xSEED_LENGTH array of floats between -1,1  
+   * @param {string} seedArr - string version of a 1xSEED_LENGTH array of floats between -1,1
    * @param {Float[]} labelArr - data version of a 1000 length array of floats between 0,1
    */
     function getGenImage(seedArr, labelArr) {
@@ -240,7 +240,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
 
     /**
      * If a click is super close to a point, generates an image based on that point's object, then returns false
-     * @param {int[]} ids - list of object IDs, in the same order as distances 
+     * @param {int[]} ids - list of object IDs, in the same order as distances
      * @param {float[]} distances - list of distances from click to points, in same order as ids
      */
     function checkIfNotSuperClose(ids, distances){
@@ -269,7 +269,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
             let totalLabel = new Array(1000).fill(0);
             ratios.forEach(function (r, i) {
                 const index = idToIndex[ids[i]];
-    
+
                 const labels = stateHolder.state.images[index].labels;
                 const latents = stateHolder.state.images[index].latents;
                 totalLatent = addVector(totalLatent, scalarMultiplyVector(latents, r));
@@ -293,8 +293,8 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
 
     /**
      * Multiplies a vector by a scalar
-     * @param {Float[]} vec 
-     * @param {Float} scalar 
+     * @param {Float[]} vec
+     * @param {Float} scalar
      */
     function scalarMultiplyVector(vec, scalar) {
         return vec.map(v => v * scalar)
@@ -331,8 +331,8 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
 
     /**
      * Changes from mouse coords to plotly coords
-     * @param {int} x - x coord in pixels of the mouse 
-     * @param {int} y - y coord in pixels of the mouse 
+     * @param {int} x - x coord in pixels of the mouse
+     * @param {int} y - y coord in pixels of the mouse
      */
     function toPlotlyCoords(x, y) {
         const width = myPlot.clientWidth + 8;
@@ -346,7 +346,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
 
     /**
      * updates the location of the main marker and updates the generated image periodically
-     * @param {int[]} point - the point of the marker 
+     * @param {int[]} point - the point of the marker
      */
     function updatePOI(point) {
         Plotly.restyle(divName, { 'x': [[point[0]]], 'y': [[point[1]]] }, 1);

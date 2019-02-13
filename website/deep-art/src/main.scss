@@ -38,8 +38,11 @@
   '/styles/components/btn',
   '/styles/components/nav',
   '/styles/components/gen-art',
-  '/styles/components/plot';
+  '/styles/components/map-explore',
+  '/styles/components/artwork-info';
 
 // 6. Page-specific styles
 @import
-  '/styles/pages/map';
+  '/styles/pages/map',
+  '/styles/pages/explore';
+

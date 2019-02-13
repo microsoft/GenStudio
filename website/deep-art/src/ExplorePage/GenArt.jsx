@@ -1,51 +1,89 @@
-import React, { Component } from 'react';
-import { Box, Button, Image} from 'grommet';
-import { saveAs } from 'file-saver';
+import React, { Component } from "react";
+import { saveAs } from "file-saver";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 /**
  * The box containing the generated image
  * 'image' prop: The generated image, in base64 encoded ArrayBuffer format
  */
 export default class GenArt extends Component {
-    constructor(props){
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            image: 0,
+    this.state = {
+      image: 0,
+      objID: 0,
+      redirect: false
+    };
+    this.saveImage = this.saveImage.bind(this);
+  }
+
+  getSimilarArtID() {
+    let file = this.props.image;
+
+    const apiURL =
+      "https://methack-api.azure-api.net/ImageSimilarity/FindSimilarImages/Byte";
+    const key =
+      "?subscription-key=43d3f563ea224c4c990e437ada74fae8&neighbors=1";
+    const Http = new XMLHttpRequest();
+    const data = new FormData();
+    data.append("image", file);
+
+    Http.open("POST", apiURL + key);
+    Http.send(data);
+    Http.onreadystatechange = e => {
+      if (Http.readyState === 4) {
+        try {
+          let response = JSON.parse(Http.responseText);
+          let id = response.results[0].ObjectID;
+          if (id === undefined || id === null) {
+            id = 0;
+          }
+
+          this.setState({
+            objID: id,
+            redirect: true
+          });
+        } catch (e) {
+          console.log("malformed request:" + Http.responseText);
         }
-        this.saveImage = this.saveImage.bind(this);
+      }
     };
+  }
 
-    saveImage(){
-        let number = Math.floor(Math.random()*(10000));
-        let file = new File([this.props.data], "image"+number.toString()+".jpeg", {type: "image/jpeg"});
-        saveAs(file);
+  saveImage() {
+    let number = Math.floor(Math.random() * 10000);
+    let file = new File(
+      [this.props.data],
+      "image" + number.toString() + ".jpeg",
+      { type: "image/jpeg" }
+    );
+    saveAs(file);
+  }
 
-    };
+  render() {
+    let loadOrImage =
+      this.props.image === 0 ||
+      this.props.image === null ||
+      this.props.image === undefined ? (
+        <CircularProgress style={{ color: "#6A6A6A" }} />
+      ) : (
+        <img
+          src={"data:image/jpeg;base64," + this.props.image}
+          fit='cover'
+          alt={this.props.image.id}
+          style={{ zIndex: "-1" }}
+        />
+      );
 
-    render(){
-
-        const ImageBox = () => (
-            <Box
-                height="medium"
-                width="medium"
-                //border={{ color: "black", size: "4px" }}
-                round="small"
-                style={{ padding: "0px", marginTop: "10px", marginLeft: "10px",}}
-            >
-
-                <Image src={"data:image/jpeg;base64," + this.props.image} fit="cover" style={{zIndex: "-1"}} />
-            </Box>
-          );
-
-        return(
-        <Box direction="column" justify="between">
-            <ImageBox />
-            <Box pad="medium">
-                <Button label="Explore Similar" href={'/search'}/>
-                <Button label="Save Image" onClick={this.saveImage}/>
-            </Box>
-        </Box>    
-        );
-    }
+    return (
+      <div className='gen-art'>
+        <div className='gen-art__loader'>{loadOrImage}</div>
+        <button className='button'>Explore Similar</button>
+        <button className='button' onClick={this.saveImage}>
+          Save Image
+        </button>
+      </div>
+    );
+  }
 }

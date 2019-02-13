@@ -7,7 +7,7 @@
     "file-saver": "^2.0.0",
     "grommet": "^2.2.1",
     "i18next": "^12.0.0",
-    "plotly.js": "^1.44.2",
+    "plotly.js": "^1.44.4",
     "plotly.js-dist": "^1.44.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
