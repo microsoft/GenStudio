@@ -50,7 +50,6 @@ class MapExploreContainer extends Component {
               <div className="map__data">
                 <p className="map__description">{t('map.description')}></p>
                 {this.props.apiData && this.renderArtworkInfo(this.props.apiData, this.props.imgData)}
-                
               </div>
               {this.props.children}
             </div>
