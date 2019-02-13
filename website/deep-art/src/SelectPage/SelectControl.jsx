@@ -43,19 +43,19 @@ export default class SearchControl extends Component {
    * @param {String} category
    */
   onSelection(category) {
-    // this.setState({
-    //   selectedValue: category,
-    // });
+    this.setState({
+      selectedValue: category,
+    });
     // TODO: Review
-    if (this.selectedValue === 'All') {
-      this.setState({
-        selectedValue: null,
-      });
-    } else {
-      this.setState({
-        selectedValue: category,
-      });
-    }
+    // if (this.selectedValue === 'All') {
+    //   this.setState({
+    //     selectedValue: null,
+    //   });
+    // } else {
+    //   this.setState({
+    //     selectedValue: category,
+    //   });
+    // }
 
     let curatedImages = this.props.curatedImages;
     let IDs = this.pickNUniqueFromList(curatedImages[category], NUM_FOR_SELECT);
