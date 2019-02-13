@@ -9,10 +9,12 @@ import MapExploreContainer from "../MapExploreContainer/MapExploreContainer.jsx"
  */
 // export default class MapExplorePage extends Component {
 class MapPage extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      cursorPoint: null
+      cursorPoint: null,
+      url: ''
     };
   }
 
@@ -26,13 +28,14 @@ class MapPage extends Component {
     // const id = selectedArt;
     //Setup the Plotly graph
     setupPlotly(this, artArr, selectedArt);
+    this.setState({url})
   }
 
   setDateFormat() {}
 
   render() {
     return (
-      <MapExploreContainer>
+      <MapExploreContainer map={true} location={this.props.location}>
         {t => (
           <div className='map__result'>
             <GenArt

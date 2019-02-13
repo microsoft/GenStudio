@@ -280,16 +280,18 @@ export default class ExplorePage extends Component {
   render() {
     return (
       <MapExploreContainer map={false} location={this.props.location}>
-        <div className='explore__result'>
-          <GenArt image={this.state.genImg} data={this.state.genArr} />
-          <div className='explore__palette'>
-            <ExplorePalette
-              images={this.state.imgObjectsExplore}
-              addSeed={this.addSeed}
-              subSeed={this.subSeed}
-            />
+        {t => (
+          <div className='explore__result'>
+            <GenArt image={this.state.genImg} data={this.state.genArr} />
+            <div className='explore__palette'>
+              <ExplorePalette
+                images={this.state.imgObjectsExplore}
+                addSeed={this.addSeed}
+                subSeed={this.subSeed}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </MapExploreContainer>
     );
   }

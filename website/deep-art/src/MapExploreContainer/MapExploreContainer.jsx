@@ -7,7 +7,6 @@ class MapExploreContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      imgData: "",
       apiData: {}
     };
   }
@@ -83,33 +82,16 @@ class MapExploreContainer extends Component {
       <NamespacesConsumer>
         {t => (
           <section className='map'>
-          <div className='map__header'>
-            <button className='map__tab is-active'>Method 1</button>
-            <button className='map__tab'>Method 2</button>
-          </div>
+          {this.renderHeader()}
           <div className='map__content'>
             <h1 className='claim'>{t("map.title")}</h1>
             <div className='map__data'>
               <p className='map__description'>{t("map.description")}</p>
- 
+              {this.state.apiData && this.renderArtworkInfo(t)}
             </div>
-
             {this.props.children(t)}
           </div>
         </section>
-          // <section className="map-explore">
-          //   {this.renderHeader()}
-          //   <div className="map-explore__content">
-          //     <h1 className="claim">{t('map.title')}</h1>
-          //     <div className="map-explore__data">
-          //       <p className="map-explore__description">{t('map.description')}</p>
-          //       <div className="map-explore__artwork-info">
-          //         {(this.state.apiData && this.state.imgData) && this.renderArtworkInfo(t)}
-          //       </div>
-          //     </div>
-          //     {this.props.children}
-          //   </div>
-          // </section>
         )}
       </NamespacesConsumer>
     )
