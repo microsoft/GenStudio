@@ -278,7 +278,6 @@ export default class ExplorePage extends Component {
   }
 
   render() {
-    console.log(this.state.apiData);
     return (
       <MapExploreContainer map={false} location={this.props.location} apiData={this.state.apiData} imgData={this.state.imgData}>
         <Grid

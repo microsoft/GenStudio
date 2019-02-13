@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Box, Grid, Paragraph } from "grommet";
+import React from "react";
+import { Box, Paragraph } from "grommet";
 import InfoArt from "../ExplorePage/InfoArt.jsx";
 
 const ArtworkInfo = ({ apiData, imgData }) => {

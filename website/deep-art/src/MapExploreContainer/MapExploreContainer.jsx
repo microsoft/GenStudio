@@ -4,6 +4,45 @@ import {NavLink} from 'react-router-dom';
 import ArtworkInfo from "./ArtworkInfo.jsx";
 
 class MapExploreContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      imgData: "",
+      apiData: {}
+    };
+  }
+
+  componentDidMount() {
+    let url = this.props.location.pathname.split('/')[2]
+    //Decode the url data
+    url = decodeURIComponent(url);
+    let selectedArt = url.split("&")[0].slice(4);
+    const id = selectedArt;
+    this.getArtworkInfo(id);
+  }
+
+  getArtworkInfo = (id) => {
+    const baseMetUrl =
+      "https://collectionapi.metmuseum.org/public/collection/v1/objects/";
+    let metApiUrl = baseMetUrl + id;
+
+    const Http = new XMLHttpRequest();
+    Http.open("GET", metApiUrl);
+    Http.send();
+    Http.onreadystatechange = e => {
+      if (Http.readyState === 4) {
+        try {
+          let response = JSON.parse(Http.responseText);
+          this.setState({
+            imgData: response.primaryImage,
+            apiData: response
+          });
+        } catch(e) {
+          console.log("malformed request:" + Http.responseText);
+        }
+      }
+    }
+  }
   
   generatePath = (page) => {
     const pathname = this.props.location.pathname.split('/')[2]
@@ -33,8 +72,8 @@ class MapExploreContainer extends Component {
   renderArtworkInfo = () => {
     return (
       <ArtworkInfo
-        apiData={this.props.apiData}
-        imgData={this.props.imgData}
+        apiData={this.state.apiData}
+        imgData={this.state.imgData}
       /> 
     )
   }
@@ -49,7 +88,7 @@ class MapExploreContainer extends Component {
               <h1 className="claim">{t('map.title')}</h1>
               <div className="map__data">
                 <p className="map__description">{t('map.description')}></p>
-                {this.props.apiData && this.renderArtworkInfo(this.props.apiData, this.props.imgData)}
+                {(this.state.apiData && this.state.imgData) && this.renderArtworkInfo()}
               </div>
               {this.props.children}
             </div>
