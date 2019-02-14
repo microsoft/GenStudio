@@ -1,0 +1,35 @@
+.explore {
+  width: 100%;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 1.5rem;
+    grid-row-gap: 5.5rem;
+
+    // Overrides PaletteBox.jsx styles
+    .ldbqQH {
+      margin: 0;
+      height: auto;
+      width: auto;
+      z-index: 99;
+    }
+
+    // Overrides PaletteBox.jsx styles
+    .iznKJF {
+      margin-bottom: -70px;
+      margin-left: 0;
+    }
+
+    // Overrides PaletteBox.jsx styles
+    .StyledButton-sc-323bzc-0 {
+      align-items: center;
+      background-color: $color-shade-light;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      height: $button-size;
+      width: $button-size;
+    }
+  }
+}
