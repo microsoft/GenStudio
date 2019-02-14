@@ -28,4 +28,9 @@
   &:active {
     box-shadow: initial;
   }
+
+  &__actions {
+    margin-bottom: .5em;
+    width: 100%;
+  }
 }

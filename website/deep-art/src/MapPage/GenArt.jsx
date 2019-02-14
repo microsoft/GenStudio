@@ -82,7 +82,8 @@ export default class GenArt extends Component {
         alt={this.props.image.id}
       />
     );
-
+    
+    console.log(this.props.image)
     let loadOrImage = this.props.image === 0 || this.props.image === null || this.props.image === undefined ? (<CircularProgress style={{ color: '#6A6A6A' }} />) : (<ImageBox />);
     let message = this.props.point === null ? ('') : (<p>{this.props.message}</p>);
     if (this.state.redirect) {
@@ -97,7 +98,8 @@ export default class GenArt extends Component {
           <div className="gen-art__loader">
             {message}
           </div>
-          <button className="button" onClick={this.getSimilarArtID}>Explore Similar</button>
+          <button className="button button__actions" onClick={this.getSimilarArtID}>Explore Similar</button>
+          <button className="button button__actions" onClick={this.saveImage}> Save Image </button>
         </div>
       );
     }
