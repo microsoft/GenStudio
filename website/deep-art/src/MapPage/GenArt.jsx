@@ -73,6 +73,16 @@ export default class GenArt extends Component {
     };
   }
 
+  saveImage() {
+    let number = Math.floor(Math.random() * 10000);
+    let file = new File(
+      [this.props.data],
+      "image" + number.toString() + ".jpeg",
+      { type: "image/jpeg" }
+    );
+    saveAs(file);
+  }
+
   render() {
     const ImageBox = () => (
       <img
@@ -94,10 +104,11 @@ export default class GenArt extends Component {
           <div className="gen-art__loader">
             {loadOrImage}
           </div>
-          <div className="gen-art__loader">
+          <div className="gen-art__message">
             {message}
           </div>
           <button className="button" onClick={this.getSimilarArtID}>Explore Similar</button>
+          <button className='button' onClick={this.saveImage}>Save Image</button>
         </div>
       );
     }

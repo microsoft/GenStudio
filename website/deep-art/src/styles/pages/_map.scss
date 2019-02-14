@@ -79,7 +79,7 @@
   }
 
   &__plot {
-    width: calc(100% - #{$space-l} - #{$gen-width});
+    width: calc(100% - #{$space-l} - #{$gen-size});
   }
 
   &__plot-header {

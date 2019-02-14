@@ -3,10 +3,14 @@
 // ---------------------------------------------------------------
 .gen-art {
   margin-right: $space-l;
-  width: $gen-width;
+  position: relative;
+  width: $gen-size;
 
   &__loader {
     background-color: $color-shade-light;
+    height: $gen-size;
+    margin-bottom: $space-m;
+    width: $gen-size;
 
     img {
       display: block;
@@ -16,6 +20,7 @@
   }
 
   .button {
+    margin-bottom: $space-m;
     width: 100%;
   }
 }
