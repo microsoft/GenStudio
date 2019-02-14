@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Box, Image } from "grommet";
+import { Image } from "grommet";
 import { saveAs } from "file-saver";
 import CircularProgress from "@material-ui/core/CircularProgress";
 

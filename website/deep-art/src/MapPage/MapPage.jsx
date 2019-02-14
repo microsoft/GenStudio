@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import GenArt from "./GenArt.jsx";
-import setupPlotly from "./map.js";
+import {setupPlotly, destroyPlotly} from "./map.js";
 
 import MapExploreContainer from "../MapExploreContainer/MapExploreContainer.jsx";
 
@@ -28,6 +28,10 @@ class MapPage extends Component {
     //Setup the Plotly graph
     setupPlotly(this, artArr, selectedArt);
     this.setState({url})
+  }
+
+  componentWillUnmount() {
+    destroyPlotly();
   }
 
   setDateFormat() {}

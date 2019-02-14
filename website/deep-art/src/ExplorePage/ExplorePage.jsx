@@ -2,12 +2,8 @@ import React, { Component } from "react";
 
 import GenArt from "./GenArt.jsx";
 import ExplorePalette from "./ExplorePalette.jsx";
-import InfoArt from "./InfoArt.jsx";
-
-import { Box, Grid, Paragraph } from "grommet";
 
 import MapExploreContainer from "../MapExploreContainer/MapExploreContainer.jsx";
-import ArtworkInfo from "../MapExploreContainer/ArtworkInfo.jsx";
 
 /**
  * Page for the Exploring feature
