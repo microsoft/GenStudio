@@ -73,7 +73,7 @@ export default class GenArt extends Component {
     };
   }
 
-  saveImage() {
+  saveImageToLocal() {
     let number = Math.floor(Math.random() * 10000);
     let file = new File(
       [this.props.data],
@@ -108,7 +108,7 @@ export default class GenArt extends Component {
             {message}
           </div>
           <button className="button" onClick={this.getSimilarArtID}>Explore Similar</button>
-          <button className='button' onClick={this.saveImage}>Save Image</button>
+          <button className='button' onClick={this.saveImageToLocal}>Save Image</button>
         </div>
       );
     }
