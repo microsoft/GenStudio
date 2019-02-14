@@ -5,9 +5,9 @@
 .map {
   box-shadow: $box-shadow;
   margin-bottom: 4.5rem;
-  width: $container-width;
-
-  @include container-centered();
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
 
   &__header {
     font-weight: $font-weight-semibold;
@@ -57,7 +57,7 @@
   }
 
   &__data {
-    border-bottom: 1px solid $color-shade-light;
+    border-bottom: 1px solid $color-shade-dark;
     display: flex;
     margin-bottom: 3rem;
   }
