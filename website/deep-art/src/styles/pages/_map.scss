@@ -33,13 +33,25 @@
     }
   }
 
-  &__content {
-    padding: $map-padding;
+  &__box {
+    height: 54.375rem; // Do not change, we need a fixed height fo make the box-shadow transparency work
+
+    .map__content {
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(255,255,255,1) 80%);
+      margin-left: calc(#{$space-m} * -1);
+      margin-right: calc(#{$space-m} * -1);
+      padding-top: $map-padding;
+      padding-bottom: $map-padding;
+      padding-left: calc(#{$map-padding} + #{$space-m});
+      padding-right: calc(#{$map-padding} + #{$space-m});
+      height: 55rem; // Do not change, we need a fixed height fo make the box-shadow transparency work
+    }
   }
 
   &__data {
     border-bottom: 1px solid $color-shade-light;
     display: flex;
+    margin-bottom: 3rem;
   }
 
   .claim {
