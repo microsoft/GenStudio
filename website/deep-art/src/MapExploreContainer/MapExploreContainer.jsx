@@ -60,24 +60,8 @@ class MapExploreContainer extends Component {
     return (
       <React.Fragment>
         <div className="map__header">
-          {/* <button onClick={this.generatePath} id='map' className={getClass('map', this.props.map)}><NavLink to={this.generatePath('map')}>Map</NavLink></button>
-          <button onClick={this.generatePath} id='explore' className={getClass('explore', this.props.map)}><NavLink to={this.generatePath('explore')}>Explore</NavLink></button> */}
-          <NavLink
-            onClick={this.generatePath}
-            id="map"
-            className={getClass('map', this.props.map)}
-            to={this.generatePath('map')}
-          >
-            Map
-          </NavLink>
-          <NavLink
-            onClick={this.generatePath}
-            id="explore"
-            className={getClass('explore', this.props.map)}
-            to={this.generatePath('explore')}
-          >
-            Explore
-          </NavLink>
+          <NavLink onClick={this.generatePath} id="map" className={getClass('map', this.props.map)} to={this.generatePath('map')}>Map</NavLink>
+          <NavLink onClick={this.generatePath} id="explore" className={getClass('explore', this.props.map)} to={this.generatePath('explore')}>Explore</NavLink>
         </div>
       </React.Fragment>
     );
