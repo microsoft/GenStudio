@@ -97,7 +97,11 @@ export default class GenArt extends Component {
           <div className="gen-art__loader">
             {message}
           </div>
-          <button className="button" onClick={this.getSimilarArtID}>Explore Similar</button>
+          <button className="button" onClick={this.getSimilarArtID}>
+            {/* TODO: Pass the t, uncomment the code and remove the magic strings */}
+            {/* {t("map.similar")} */}
+            Explore Similar
+          </button>
         </div>
       );
     }

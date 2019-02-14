@@ -15,6 +15,7 @@ export default class GenArt extends Component {
       objID: 0,
       redirect: false
     };
+    this.getSimilarArtID = this.getSimilarArtID.bind(this);
     this.saveImage = this.saveImage.bind(this);
   }
 
@@ -79,8 +80,14 @@ export default class GenArt extends Component {
     return (
       <div className='gen-art'>
         <div className='gen-art__loader'>{loadOrImage}</div>
-        <button className='button'>Explore Similar</button>
+        <button className='button' onClick={this.getSimilarArtID}>
+          {/* TODO: Pass the t, uncomment the code and remove the magic strings */}
+          {/* {t("map.similar")} */}
+          Explore Similar
+        </button>
         <button className='button' onClick={this.saveImage}>
+          {/* TODO: Pass the t, uncomment the code and remove the magic strings */}
+          {/* {t("map.save")} */}
           Save Image
         </button>
       </div>
