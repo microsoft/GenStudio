@@ -7,15 +7,20 @@
   width: $gen-size;
 
   &__loader {
+    align-items: center;
     background-color: $color-shade-light;
+    display: flex;
+    justify-content: center;
     height: $gen-size;
     margin-bottom: $space-m;
+    position: relative;
     width: $gen-size;
 
     img {
       display: block;
       margin-left: auto;
       margin-right: auto;
+      z-index: $z-index-s !important;
     }
   }
 
