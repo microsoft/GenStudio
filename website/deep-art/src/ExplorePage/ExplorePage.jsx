@@ -278,7 +278,8 @@ export default class ExplorePage extends Component {
         {t => (
           <div className='explore__result'>
             <GenArt image={this.state.genImg} data={this.state.genArr} />
-            <div className='explore__palette'>
+            <div className='explore'>
+              <div className='map__plot-header'>{t("map.explore")}</div>
               <ExplorePalette
                 images={this.state.imgObjectsExplore}
                 addSeed={this.addSeed}
