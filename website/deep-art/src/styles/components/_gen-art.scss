@@ -5,10 +5,14 @@
   margin-right: $space-l;
   width: $gen-width;
 
-  &__loader > div {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  &__loader {
+    background-color: $color-shade-light;
+
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 
   .button {
