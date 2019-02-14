@@ -42,7 +42,7 @@ class MapExploreContainer extends Component {
       }
     }
   }
-  
+
   generatePath = (page) => {
     const pathname = this.props.location.pathname.split('/')[2]
     return `/${page}/${pathname}`
@@ -51,18 +51,20 @@ class MapExploreContainer extends Component {
   renderHeader = () => {
     const getClass = (page, isMapPage) => {
       if (page === 'map' && isMapPage) {
-        return "map-explore__tab is-active"
+        return "map__tab is-active"
       } else if (page === 'explore' && !isMapPage) {
-        return "map-explore__tab is-active"
+        return "map__tab is-active"
       } else {
-        return "map-explore__tab"
+        return "map__tab"
       }
     }
     return (
       <React.Fragment>
-        <div className="map-explore__header">
-          <button onClick={this.generatePath} id='map' className={getClass('map', this.props.map)}><NavLink to={this.generatePath('map')}>Map</NavLink></button>
-          <button onClick={this.generatePath} id='explore' className={getClass('explore', this.props.map)}><NavLink to={this.generatePath('explore')}>Explore</NavLink></button>
+        <div className="map__header">
+          {/* <button onClick={this.generatePath} id='map' className={getClass('map', this.props.map)}><NavLink to={this.generatePath('map')}>Map</NavLink></button>
+          <button onClick={this.generatePath} id='explore' className={getClass('explore', this.props.map)}><NavLink to={this.generatePath('explore')}>Explore</NavLink></button> */}
+          <NavLink onClick={this.generatePath} id='map' className={getClass('map', this.props.map)} to={this.generatePath('map')}>Map</NavLink>
+          <NavLink onClick={this.generatePath} id='explore' className={getClass('explore', this.props.map)} to={this.generatePath('explore')}>Explore</NavLink>
         </div>
       </React.Fragment>
     )
@@ -73,7 +75,7 @@ class MapExploreContainer extends Component {
       <ArtworkInfo
         t={t}
         apiData={this.state.apiData}
-      /> 
+      />
     )
   }
 

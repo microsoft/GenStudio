@@ -13,14 +13,14 @@ const ArtworkInfo = ({ apiData, t }) => {
       />
       <div className='original__content'>
         <p className='original__description'>{title}</p>
-        <p className='original__data'>
-          <span className='original__title'>{t("map.time")}:</span>
-          <span className='original__text'>{artistDisplayName || "Unknown"}</span>
-        </p>
         <time className='original__data'>
           <div className='original__title'>{t("map.date")}: </div>
           <div className='original__text'>{objectDate || "Unknown"}</div>
         </time>
+        <p className='original__data'>
+          <span className='original__title'>{t("map.artist")}:</span>
+          <span className='original__text'>{artistDisplayName || "Unknown"}</span>
+        </p>
       </div>
     </div>
   );

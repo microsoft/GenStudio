@@ -18,8 +18,10 @@
     background-color: $color-shade-light;
     border: none;
     color: $color-primary;
+    display: inline-block;
     padding: $space-m;
     text-align: center;
+    text-decoration: none;
 
     &:hover {
       cursor: pointer;

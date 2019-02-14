@@ -46,7 +46,6 @@ export default class ExplorePage extends Component {
       Http.onreadystatechange = e => {
         if (Http.readyState === 4) {
           try {
-            //console.log(Http.response);
             this.setState(oldState => {
               return oldState.imgObjectsExplore.push({
                 img: btoa(
