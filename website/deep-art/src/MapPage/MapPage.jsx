@@ -42,6 +42,7 @@ class MapPage extends Component {
         {t => (
           <div className='map__result'>
             <GenArt
+              t={t}
               message={this.state.message}
               image={this.state.genImg}
               data={this.state.genArr}

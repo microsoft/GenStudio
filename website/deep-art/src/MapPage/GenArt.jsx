@@ -108,14 +108,10 @@ export default class GenArt extends Component {
             {message}
           </div>
           <button className="button" onClick={this.getSimilarArtID}>
-            {/* TODO: Pass the t, uncomment the code and remove the magic strings */}
-            {/* {t("map.similar")} */}
-            Explore Similar
+            {this.props.t("map.similar")}
           </button>
           <button className='button' onClick={this.saveImageToLocal}>
-            {/* TODO: Pass the t, uncomment the code and remove the magic strings */}
-            {/* {t("map.save")} */}
-            Save Image
+            {this.props.t("map.save")}
           </button>
         </div>
       );

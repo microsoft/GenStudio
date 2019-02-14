@@ -81,14 +81,10 @@ export default class GenArt extends Component {
       <div className='gen-art'>
         <div className='gen-art__loader'>{loadOrImage}</div>
         <button className='button' onClick={this.getSimilarArtID}>
-          {/* TODO: Pass the t, uncomment the code and remove the magic strings */}
-          {/* {t("map.similar")} */}
-          Explore Similar
+          {this.props.t("map.similar")}
         </button>
         <button className='button' onClick={this.saveImage}>
-          {/* TODO: Pass the t, uncomment the code and remove the magic strings */}
-          {/* {t("map.save")} */}
-          Save Image
+          {this.props.t("map.save")}
         </button>
       </div>
     );
