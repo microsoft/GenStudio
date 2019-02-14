@@ -444,6 +444,6 @@ export function setupPlotly(stateHolder, objIDs, firstID) {
 }
 
 export function destroyPlotly() {
-    var Plotly = require('plotly.js-dist');
+    const Plotly = require('plotly.js-dist');
     Plotly.purge('myPlot');
 }
