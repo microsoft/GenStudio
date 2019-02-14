@@ -79,8 +79,8 @@ export default class GenArt extends Component {
     return (
       <div className='gen-art'>
         <div className='gen-art__loader'>{loadOrImage}</div>
-        <button className='button'>Explore Similar</button>
-        <button className='button' onClick={this.saveImage}>
+        <button className='button button__actions'>Explore Similar</button>
+        <button className='button button__actions' onClick={this.saveImage}>
           Save Image
         </button>
       </div>

@@ -11,7 +11,7 @@
       "nav.explore": "Explore the MET Collection",
 
       "map.title": "Gan",
-      "map.description": "A trained GAN (Generative Adversarial Network) contains a model of a shared feature space underlying a collection of images. Based on given artworks from The Met collection, the GAN allows you to explore and visualize the spaces in between selected artworks from The Met’s Open Access collection.",
+      "map.description": "A trained GAN (Generative Adversarial Network) contains a model of a shared feature space underlying a collection of images. Based on given artworks from The Met’s Open Access collection, the GAN allows you to explore and visualize the spaces in between those pieces.",
       "map.explore": "Explore the map to discover new objects in the space between existing Met artworks",
       "map.artist": "Artist",
       "map.date": "Date",

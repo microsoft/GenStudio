@@ -15,9 +15,12 @@
     display: flex;
     height: inherit;
     justify-content: center;
+    left: 0;
+    position: absolute;
     text-decoration: none;
     text-transform: uppercase;
     width: $nav-unit;
+
 
     span {
       color: $color-text-light;

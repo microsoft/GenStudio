@@ -23,11 +23,8 @@ function NavBar({ t }) {
             <span className="u-nowrap">{t('global.lang_eng_description_us')}</span>
           </div>
           <div>
-            <a className="footer__link" href="https://go.microsoft.com/fwlink/?LinkId=521839" target="_blank" rel="noopener noreferrer">{t('foo.privacy_cookies')}</a>
-            <a className="footer__link" href="https://go.microsoft.com/fwlink/?LinkID=206977" target="_blank" rel="noopener noreferrer">{t('foo.terms_use')}</a>
             <a className="footer__link" href="https://www.microsoft.com/trademarks" target="_blank" rel="noopener noreferrer">{t('foo.trademarks')}</a>
             <a className="footer__link" href="https://support.microsoft.com/en-us/contactus" target="_blank" rel="noopener noreferrer">{t('foo.report_abuse')}</a>
-            <span className="footer__text">{t('global.copyright')}</span>
           </div>
         </div>
       </footer>
