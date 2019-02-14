@@ -73,6 +73,16 @@ export default class GenArt extends Component {
     };
   }
 
+  saveImageToLocal() {
+    let number = Math.floor(Math.random() * 10000);
+    let file = new File(
+      [this.props.data],
+      "image" + number.toString() + ".jpeg",
+      { type: "image/jpeg" }
+    );
+    saveAs(file);
+  }
+
   render() {
     const ImageBox = () => (
       <img
@@ -82,7 +92,7 @@ export default class GenArt extends Component {
         alt={this.props.image.id}
       />
     );
-    
+
     console.log(this.props.image)
     let loadOrImage = this.props.image === 0 || this.props.image === null || this.props.image === undefined ? (<CircularProgress style={{ color: '#6A6A6A' }} />) : (<ImageBox />);
     let message = this.props.point === null ? ('') : (<p>{this.props.message}</p>);
@@ -95,11 +105,11 @@ export default class GenArt extends Component {
           <div className="gen-art__loader">
             {loadOrImage}
           </div>
-          <div className="gen-art__loader">
+          <div className="gen-art__message">
             {message}
           </div>
-          <button className="button button__actions" onClick={this.getSimilarArtID}>Explore Similar</button>
-          <button className="button button__actions" onClick={this.saveImage}> Save Image </button>
+          <button className="button" onClick={this.getSimilarArtID}>{this.props.t("map.similar")}</button>
+          <button className='button' onClick={this.saveImageToLocal}>{this.props.t("map.save")}</button>
         </div>
       );
     }

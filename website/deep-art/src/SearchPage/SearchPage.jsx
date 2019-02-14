@@ -153,7 +153,7 @@ export default class SearchPage extends Component {
         for (const [key, value] of Object.entries(this.state.tagData)) {
             if (value) {
                 const searchTokens = key.match(/\w+(?:'\w+)*/g); // Extract all individual words from tags
-                searchTags += '&&' + '(';
+                searchTags += '&&(';
                 for (let i = 0; i < searchTokens.length; i++) {
                     searchTags += searchTokens[i] + '||'; // Concat all individual words in a selected tag with 'Or' operator 
                 }

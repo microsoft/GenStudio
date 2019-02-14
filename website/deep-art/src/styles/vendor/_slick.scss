@@ -14,6 +14,10 @@
   @media (min-width: $mq-s) {
     max-width: 90%;
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .slick-list {

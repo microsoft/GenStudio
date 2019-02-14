@@ -1,6 +1,6 @@
 import Softmax from 'softmax-fn';
 
-export default function setupPlotly(stateHolder, objIDs, firstID) {
+export function setupPlotly(stateHolder, objIDs, firstID) {
     var Plotly = require('plotly.js-dist');
     const divName = 'myPlot'
     const myPlot = document.getElementById(divName);
@@ -441,4 +441,9 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
         //     firstTimeGenImage(id);
         // })
     };
+}
+
+export function destroyPlotly() {
+    const Plotly = require('plotly.js-dist');
+    Plotly.purge('myPlot');
 }

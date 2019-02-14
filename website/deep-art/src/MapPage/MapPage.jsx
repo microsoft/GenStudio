@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import GenArt from "./GenArt.jsx";
-import setupPlotly from "./map.js";
+import {setupPlotly, destroyPlotly} from "./map.js";
 
 import MapExploreContainer from "../MapExploreContainer/MapExploreContainer.jsx";
 
@@ -30,6 +30,10 @@ class MapPage extends Component {
     this.setState({url})
   }
 
+  componentWillUnmount() {
+    destroyPlotly();
+  }
+
   setDateFormat() {}
 
   render() {
@@ -38,6 +42,7 @@ class MapPage extends Component {
         {t => (
           <div className='map__result'>
             <GenArt
+              t={t}
               message={this.state.message}
               image={this.state.genImg}
               data={this.state.genArr}
