@@ -194,8 +194,18 @@ export default class SearchPage extends Component {
     return (
       <div className="search">
         <SearchControl sendChange={this.getSearch} />
-        <TagList tags={this.state.tags} tagData={this.state.tagData} tagChange={this.getTagChange}/>
-        <SearchGrid results={this.state.results} />
+        <div className="search__content">
+          <div className="search__tags">
+            <TagList
+              tags={this.state.tags}
+              tagData={this.state.tagData}
+              tagChange={this.getTagChange}
+            />
+          </div>
+          <div className="search__grid">
+            <SearchGrid results={this.state.results} />
+          </div>
+        </div>
       </div>
     );
   }
