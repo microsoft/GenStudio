@@ -72,9 +72,6 @@ class MapExploreContainer extends Component {
     return <ArtworkInfo t={t} apiData={this.state.apiData} />;
   };
 
-  setChildClass = () => {
-    return this.props.map ? 'map__content' : 'map__content is-explore'
-  }
   render() {
     return (
       <NamespacesConsumer>
@@ -82,7 +79,7 @@ class MapExploreContainer extends Component {
           <section className="map">
             {this.renderHeader()}
             <div className="map__box">
-              <div className={this.setChildClass()}>
+              <div className='map__content'>
                 <h1 className="claim">{t('map.title')}</h1>
                 <div className="map__data">
                   <p className="map__description">{t('map.description')}</p>
