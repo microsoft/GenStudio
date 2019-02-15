@@ -3,10 +3,8 @@
 // -----------------------------------------------------------------------------
 .footer {
   font-size: $font-s;
-  padding-top: $space-m;
-  padding-bottom: $space-m;
-
-  @include container-centered();
+  padding: $space-m;
+  width: 100%;
 
   &__description {
     font-weight: $font-weight-semibold;
