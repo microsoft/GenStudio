@@ -24,11 +24,9 @@ export default class GenArt extends Component {
 
   saveImage() {
     let number = Math.floor(Math.random() * 10000);
-    let file = new File([this.props.data], 'image' + number.toString() + '.jpeg', {
-      type: 'image/jpeg',
-    });
+    let blob = new Blob([this.props.data], { type: 'image/jpeg' });
 
-    saveAs(file);
+    saveAs(blob, 'image' + number.toString() + '.jpeg');
   }
 
   coordToCantorPair(x, y) {
