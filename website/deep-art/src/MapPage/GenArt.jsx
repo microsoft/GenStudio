@@ -24,11 +24,9 @@ export default class GenArt extends Component {
 
   saveImage() {
     let number = Math.floor(Math.random() * 10000);
-    let file = new File([this.props.data], 'image' + number.toString() + '.jpeg', {
-      type: 'image/jpeg',
-    });
+    let blob = new Blob([this.props.data], { type: 'image/jpeg' });
 
-    saveAs(file);
+    saveAs(blob, 'image' + number.toString() + '.jpeg');
   }
 
   coordToCantorPair(x, y) {
@@ -73,16 +71,6 @@ export default class GenArt extends Component {
     };
   }
 
-  saveImageToLocal() {
-    let number = Math.floor(Math.random() * 10000);
-    let file = new File(
-      [this.props.data],
-      "image" + number.toString() + ".jpeg",
-      { type: "image/jpeg" }
-    );
-    saveAs(file);
-  }
-
   render() {
     const ImageBox = () => (
       <img
@@ -93,7 +81,6 @@ export default class GenArt extends Component {
       />
     );
 
-    console.log(this.props.image)
     let loadOrImage = this.props.image === 0 || this.props.image === null || this.props.image === undefined ? (<CircularProgress style={{ color: '#6A6A6A' }} />) : (<ImageBox />);
     let message = this.props.point === null ? ('') : (<p>{this.props.message}</p>);
     if (this.state.redirect) {
@@ -109,7 +96,7 @@ export default class GenArt extends Component {
             {message}
           </div>
           <button className="button" onClick={this.getSimilarArtID}>{this.props.t("map.similar")}</button>
-          <button className='button' onClick={this.saveImageToLocal}>{this.props.t("map.save")}</button>
+          <button className="button" onClick={this.saveImage}>{this.props.t("map.save")}</button>
         </div>
       );
     }

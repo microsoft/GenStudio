@@ -54,12 +54,9 @@ export default class GenArt extends Component {
 
   saveImage() {
     let number = Math.floor(Math.random() * 10000);
-    let file = new File(
-      [this.props.data],
-      "image" + number.toString() + ".jpeg",
-      { type: "image/jpeg" }
-    );
-    saveAs(file);
+    let blob = new Blob([this.props.data], { type: 'image/jpeg' });
+
+    saveAs(blob, 'image' + number.toString() + '.jpeg');
   }
 
   render() {
