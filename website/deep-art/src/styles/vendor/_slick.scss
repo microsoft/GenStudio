@@ -217,6 +217,9 @@
   height: 180px;
 }
 
+//
+// Arrows
+//
 .slick-arrow {
   background-color: $color-arrow-background;
   border: 2px solid transparent;
@@ -236,9 +239,75 @@
   }
 
   &:focus {
-    background-color: $color-secondary-hover;
-    border: 2px solid $color-secondary-hover;
+    background-color: $color-primary;
+    border: 2px solid $color-primary;
     outline: 0;
+  }
+
+  &.slick-prev,
+  &.slick-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: $z-index-xl;
+
+    &:after {
+      display: block;
+      // height: 2.375rem;
+      // height: 100%;
+      // width: 1.25rem;
+      // width: 100%;
+      height: $arrow-size;
+      width: $arrow-size;
+    }
+  }
+
+  &.slick-next {
+    right: calc(#{$arrow-size} / 2);
+
+    @media (min-width: $mq-s) {
+      right: 0;
+    }
+
+    &:after {
+      content: '';
+      background-image: url('./images/icon-chevron-right.svg');
+      background-repeat: no-repeat;
+      background-position: -10px -60px;
+      background-size: $arrow-size;
+    }
+
+    &:focus:after {
+      content: '';
+      background-image: url('./images/icon-chevron-right-inverted.svg');
+      background-repeat: no-repeat;
+      background-position: -10px -60px;
+      background-size: $arrow-size;
+    }
+  }
+
+  &.slick-prev {
+    left: calc(#{$arrow-size} / 2);
+
+    @media (min-width: $mq-s) {
+      left: 0;
+    }
+
+    &:after {
+      content: '';
+      background-image: url('./images/icon-chevron-left.svg');
+      background-repeat: no-repeat;
+      background-position: -10px -60px;
+      background-size: $arrow-size;
+    }
+
+    &:focus:after {
+      content: '';
+      background-image: url('./images/icon-chevron-left-inverted.svg');
+      background-repeat: no-repeat;
+      background-position: -10px -60px;
+      background-size: $arrow-size;
+    }
   }
 }
 
@@ -262,45 +331,6 @@
   object-fit: cover;
   height: 100%;
   z-index: calc(#{$z-index-s} * -1);
-}
-
-.slick-prev,
-.slick-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: $z-index-xl;
-}
-
-.slick-next:after,
-.slick-prev:after {
-  display: block;
-  height: $arrow-size;
-  width: 100%;
-}
-
-.slick-next:after {
-  content: url('./images/icon-chevron-right.svg');
-}
-
-.slick-prev:after {
-  content: url('./images/icon-chevron-left.svg');
-}
-
-.slick-prev {
-  left: calc(#{$arrow-size} / 2);
-
-  @media (min-width: $mq-s) {
-    left: 0;
-  }
-}
-
-.slick-next {
-  right: calc(#{$arrow-size} / 2);
-
-  @media (min-width: $mq-s) {
-    right: 0;
-  }
 }
 
 .slick-slide > div {
