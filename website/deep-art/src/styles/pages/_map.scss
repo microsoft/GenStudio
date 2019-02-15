@@ -34,12 +34,10 @@
   }
 
   &__box {
-    margin-left: calc(#{$space-m} * -1);
-    margin-right: calc(#{$space-m} * -1);
-    padding-top: $map-padding;
+    padding-top: $space-xl;
     padding-bottom: 6rem;
-    padding-left: calc(#{$map-padding} + #{$space-m});
-    padding-right: calc(#{$map-padding} + #{$space-m});
+    padding-left: $space-xl;
+    padding-right: $space-xl;
   }
 
   &__data {
