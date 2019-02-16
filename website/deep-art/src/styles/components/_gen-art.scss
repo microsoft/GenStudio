@@ -24,6 +24,16 @@
     }
   }
 
+  &__share{
+    display: flex;
+    justify-content: center;
+
+    .SocialMediaShareButton{
+      margin-left: .5em;
+      margin-right:.5em; 
+    }
+  }
+
   .button {
     margin-bottom: $space-m;
     width: 100%;
