@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { saveAs } from "file-saver";
+import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon } from 'react-share';
+
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 /**
@@ -79,6 +81,14 @@ export default class GenArt extends Component {
         <div className='gen-art__loader'>{loadOrImage}</div>
         <button className='button' onClick={this.getSimilarArtID}>{this.props.t("map.similar")}</button>
         <button className='button' onClick={this.saveImage}>{this.props.t("map.save")}</button>
+        <div className="gen-art__share">
+            <FacebookShareButton url={window.location.href}>
+              <FacebookIcon size={48}/>
+            </FacebookShareButton>
+            <TwitterShareButton url={window.location.href}>
+              <TwitterIcon size={48}/>
+            </TwitterShareButton>
+        </div>
       </div>
     );
   }
