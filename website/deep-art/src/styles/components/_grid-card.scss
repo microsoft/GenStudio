@@ -1,5 +1,5 @@
 .grid-card {
-  margin-bottom: $space-m;
+  margin-bottom: $space-l;
   width: 100%;
 
   @media (min-width: $mq-s) {
@@ -16,12 +16,16 @@
 
   &__img {
     background-color: $color-shade-light;
-    height: 20rem;
+    height: 15rem;
     max-height: 31.25rem;
     max-width: 31.25rem;
     margin-bottom: $space-s;
     object-fit: contain;
     width: 100%;
+
+    @media (max-width: $mq-s){
+      height: 15rem;
+    }
   }
 
   &__link {
