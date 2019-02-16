@@ -5,6 +5,16 @@
   font-size: $font-s;
   padding: $space-m;
   width: 100%;
+  padding-top: $space-m;
+  padding-bottom: $space-m;
+
+  @media (max-width: $mq-l) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @include container-centered();
+
 
   &__description {
     font-weight: $font-weight-semibold;
@@ -30,7 +40,7 @@
 
   &__link {
     color: $color-primary;
-    display: block;
+    // display: block;
     font-weight: $font-weight-semibold;
     margin-right: $space-m;
     text-decoration: none;

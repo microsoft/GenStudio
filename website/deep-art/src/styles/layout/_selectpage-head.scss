@@ -1,11 +1,16 @@
 .selectpage {
   &__head {
     display: flex;
+    flex-wrap: wrap;
     height: 94px;
     justify-content: space-between;
     margin-bottom: $space-xl;
     padding-left: $space-m;
     padding-right: $space-m;
+
+    @media (max-width: $mq-s) {
+      height: auto;
+    }
 
     @include container-centered();
   }

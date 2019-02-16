@@ -8,10 +8,11 @@
   -webkit-touch-callout: none;
   user-select: none;
   -ms-touch-action: pan-y;
+  overflow: hidden;
   touch-action: pan-y;
   -webkit-tap-highlight-color: transparent;
 
-  @media (min-width: $mq-s) {
+  @media (max-width: $mq-s) {
     max-width: 100%;
   }
 
@@ -194,10 +195,10 @@
     font-size: 24px;
   }
 
-  .center {
-    margin-left: -40px;
-    margin-right: -40px;
-  }
+  // .center {
+  //   margin-left: -40px;
+  //   margin-right: -40px;
+  // }
 
   .center .slick-center button {
     color: $color-slide-text;
@@ -263,7 +264,7 @@
   }
 
   &.slick-next {
-    right: calc(#{$arrow-size} / 2);
+    right: calc(#{$arrow-size} / 3);
 
     @media (min-width: $mq-s) {
       right: 0;
@@ -287,7 +288,7 @@
   }
 
   &.slick-prev {
-    left: calc(#{$arrow-size} / 2);
+    left: calc(#{$arrow-size} / 3);
 
     @media (min-width: $mq-s) {
       left: 0;
@@ -331,10 +332,18 @@
   object-fit: cover;
   height: 100%;
   z-index: calc(#{$z-index-s} * -1);
+
+  @media (max-width: $mq-xsl){
+    max-width: 100%;
+  }
 }
 
 .slick-slide > div {
   height: 337px; // Needed to show the full slide height, do not change
+
+  @media (max-width: $mq-xsl){
+    height: 275px;
+  }
 
   button,
   img {
