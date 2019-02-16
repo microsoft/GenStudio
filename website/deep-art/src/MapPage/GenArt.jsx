@@ -98,12 +98,14 @@ export default class GenArt extends Component {
           </div>
           <button className="button" onClick={this.getSimilarArtID}>{this.props.t("map.similar")}</button>
           <button className="button" onClick={this.saveImage}>{this.props.t("map.save")}</button>
-          <FacebookShareButton url={window.location.href}>
-            <FacebookIcon/>
-          </FacebookShareButton>
-          <TwitterShareButton url={window.location.href}>
-            <TwitterIcon/>
-          </TwitterShareButton>
+          <div className="gen-art__share">
+            <FacebookShareButton url={window.location.href}>
+              <FacebookIcon size={48}/>
+            </FacebookShareButton>
+            <TwitterShareButton url={window.location.href}>
+              <TwitterIcon size={48}/>
+            </TwitterShareButton>
+          </div>
         </div>
       );
     }
