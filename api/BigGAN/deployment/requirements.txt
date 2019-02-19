@@ -1,0 +1,9 @@
+flask
+redis
+flask_cors
+numpy
+tensorflow-gpu
+tensorflow_hub
+Pillow
+scipy
+protobuf
