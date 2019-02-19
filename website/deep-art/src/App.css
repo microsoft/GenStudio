@@ -22,8 +22,18 @@
   color: #61dafb;
 }
 
+
+/* .scatterlayer {
+  pointer-events: all;
+  touch-action: none;
+} */
+
 .scatterlayer .trace:last-child path {
     pointer-events: all;
+}
+
+.scatterlayer .trace:last-of-type .points path{
+  pointer-events: all ;
 }
 
 @keyframes App-logo-spin {
