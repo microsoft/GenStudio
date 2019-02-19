@@ -7,6 +7,22 @@
     grid-column-gap: 1.5rem;
     grid-row-gap: 5.5rem;
 
+    @media (max-width: $mq-l){
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: $mq-s){
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (max-width: $mq-ss){
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: $mq-xs){
+      grid-template-columns: repeat(2, 1fr);
+    }
+
     // Overrides PaletteBox.jsx styles
     .ldbqQH {
       margin: 0;

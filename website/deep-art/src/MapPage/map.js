@@ -101,6 +101,40 @@ export function setupPlotly(stateHolder, objIDs, firstID) {
         }
     ).then(attach);
 
+    myPlot.addEventListener('touchenter', (event) => touchHandler(event));
+    myPlot.addEventListener('touchleave', (event) => touchHandler(event));
+    myPlot.addEventListener('touchstart', (event) => touchHandler(event));
+    myPlot.addEventListener('touchmove', (event) => touchHandler(event));
+    myPlot.addEventListener('touchend', (event) => touchHandler(event));
+
+    function touchHandler(event)
+    {
+        var touches = event.changedTouches,
+            first = touches[0],
+            type = "";
+        switch(event.type)
+        {
+            case "touchenter": type = "mouseover"; break;
+            case "touchleave": type = "mouseout";  break;
+            case "touchstart": type = "mousedown"; break;
+            case "touchmove":  type = "mousemove"; break;        
+            case "touchend":   type = "mouseup";   break;
+            default:           return;
+        }
+
+        var opts = {
+            bubbles: true,
+            screenX: first.screenX,
+            screenY: first.screenY,
+            clientX: first.clientX,
+            clientY: first.clientY,
+        };
+        
+        var simulatedEvent = new MouseEvent(type, opts);
+        
+        first.target.dispatchEvent(simulatedEvent);
+        event.preventDefault();
+    }
 
     /* ---------------------------------------------------------------------------
      * ---------------------------------------------------------------------------
@@ -370,6 +404,7 @@ export function setupPlotly(stateHolder, objIDs, firstID) {
 
     function startDragBehavior() {
         const drag = d3.behavior.drag();
+        
         drag.origin(function () {
             const transform = d3.select(this).attr("transform");
             const translate = transform.substring(10, transform.length - 1).split(/,| /);
@@ -419,6 +454,26 @@ export function setupPlotly(stateHolder, objIDs, firstID) {
         myPlot.addEventListener('click', function (evt) {
             updatePOI(toPlotlyCoords(evt.pageX, evt.pageY))
         });
+
+        // myPlot.addEventListener('touchstart', function (evt) {
+        //     // nozoom();
+        //     updatePOI(toPlotlyCoords(evt.pageX, evt.pageY))
+        // });
+
+        // myPlot.addEventListener('touchmove', function (evt) {
+        //     // nozoom();
+        //     updatePOI(toPlotlyCoords(evt.pageX, evt.pageY))
+        // });
+
+        // myPlot.addEventListener('enter', function (evt) {
+        //     nozoom();
+        //     updatePOI(toPlotlyCoords(evt.pageX, evt.pageY))
+        // });
+
+
+        // d3.on("touchstart", nozoom).call(drag);
+            // d3.on("touchmove", nozoom).call(drag);
+            // d3.enter().call(drag);
 
         // myPlot.on('plotly_click', function(data) {
         //     //console.log(JSON.stringify(data.points));

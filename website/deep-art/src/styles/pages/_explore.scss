@@ -1,6 +1,14 @@
 .explore {
+  width: calc(100% - 18.5rem);
+
+  @media (max-width: $mq-s){
+    order: 4;
+    width: 100%;
+  }
 
   &__result {
-    display: flex
+    display: flex;
+    
+
   }
 }

@@ -7,7 +7,9 @@
   margin-bottom: 4.5rem;
   margin-left: auto;
   margin-right: auto;
-  width: 70%;
+  max-width: 70%;
+
+  @include main-content_responsive();
 
   &__header {
     font-weight: $font-weight-semibold;
@@ -40,16 +42,29 @@
     padding-bottom: 6rem;
     padding-left: $space-xl;
     padding-right: $space-xl;
+
+    @media (max-width: $mq-s){
+      padding-left: $space-l;
+      padding-right: $space-l;
+    }
   }
 
   &__data {
     border-bottom: 1px solid $color-shade-dark;
     display: flex;
     margin-bottom: 3rem;
+    flex-wrap: wrap;
+    @media (max-width: $mq-s){
+      justify-content: space-between;
+    }
   }
 
   .claim {
     text-transform: uppercase;
+
+    @media (max-width: $mq-xs){
+      width: auto;
+    }
   }
 
   &__description {
@@ -60,6 +75,11 @@
     margin-right: $space-l;
     margin-bottom: 3rem;
     width: calc(70% - #{$space-l});
+
+    @media (max-width: $mq-s){
+      width: 100%;
+      margin-right: 0px;
+    }
   }
 
   &__result {
@@ -74,6 +94,11 @@
 
   &__plot {
     width: calc(100% - #{$space-l} - #{$gen-size});
+
+    @media (max-width: $mq-s){
+      order: 4;
+      width: 100%;
+    }
   }
 
   &__plot-header {

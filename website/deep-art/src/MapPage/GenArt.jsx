@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { saveAs } from 'file-saver';
+import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon } from 'react-share';
 
 import { Redirect } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -81,6 +82,8 @@ export default class GenArt extends Component {
       />
     );
 
+    let shareUrl =  encodeURI(window.location.href);
+
     let loadOrImage = this.props.image === 0 || this.props.image === null || this.props.image === undefined ? (<CircularProgress style={{ color: '#6A6A6A' }} />) : (<ImageBox />);
     let message = this.props.point === null ? ('') : (<p>{this.props.message}</p>);
     if (this.state.redirect) {
@@ -94,6 +97,14 @@ export default class GenArt extends Component {
           </div>
           <div className="gen-art__message">
             {message}
+          </div>
+          <div className="gen-art__share">
+            <FacebookShareButton url={shareUrl}>
+              <FacebookIcon size={36}/>
+            </FacebookShareButton>
+            <TwitterShareButton url={shareUrl}>
+              <TwitterIcon size={36}/>
+            </TwitterShareButton>
           </div>
           <button className="button" onClick={this.getSimilarArtID}>{this.props.t("map.similar")}</button>
           <button className="button" onClick={this.saveImage}>{this.props.t("map.save")}</button>
