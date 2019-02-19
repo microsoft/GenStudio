@@ -99,7 +99,7 @@ export default class GenArt extends Component {
             {message}
           </div>
           <div className="gen-art__share">
-            <FacebookShareButton url={window.location.href}>
+            <FacebookShareButton url={shareUrl}>
               <FacebookIcon size={36}/>
             </FacebookShareButton>
             <TwitterShareButton url={shareUrl}>
