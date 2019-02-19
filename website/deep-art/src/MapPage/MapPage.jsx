@@ -40,7 +40,7 @@ class MapPage extends Component {
     return (
       <MapExploreContainer map={true} location={this.props.location}>
         {t => (
-          <div className='map__result'>
+          <>
             <GenArt
               t={t}
               message={this.state.message}
@@ -52,7 +52,7 @@ class MapPage extends Component {
               <div className='map__plot-header'>{t("map.explore")}</div>
               <div className='map__plot-graph' id='myPlot' />
             </div>
-          </div>
+          </>
         )}
       </MapExploreContainer>
     );

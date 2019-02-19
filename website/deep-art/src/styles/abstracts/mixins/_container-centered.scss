@@ -7,3 +7,17 @@
   max-width: $container-width;
   width: 100%;
 }
+
+@mixin main-content_responsive {
+  @media (max-width: $mq-l){
+    max-width: 80%;
+  }
+
+  @media (max-width: $mq-m){
+    max-width: 90%;
+  }
+
+  @media (max-width: $mq-s){
+    max-width: 95%;
+  }
+}

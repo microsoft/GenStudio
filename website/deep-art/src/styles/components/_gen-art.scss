@@ -6,6 +6,16 @@
   position: relative;
   width: $gen-size;
 
+  @media (max-width: $mq-s){
+    order: 2;
+  }
+
+  @media (max-width: $mq-ss) and (min-width: $mq-xs){
+    height: auto;
+    margin-right: 0px;
+    width: 200px;
+  }
+
   &__loader {
     align-items: center;
     background-color: $color-shade-light;
@@ -16,16 +26,32 @@
     position: relative;
     width: $gen-size;
 
+    @media (min-width: $mq-xs){
+      height: auto;
+      width: auto;
+      background-color: white;
+    }
+
     img {
       display: block;
       margin-left: auto;
       margin-right: auto;
       z-index: $z-index-s !important;
+
+      @media (max-width: $mq-ss) and (min-width: $mq-xs){
+        height: 200px;
+        width: auto;
+      }
     }
   }
 
   .button {
     margin-bottom: $space-m;
     width: 100%;
+
+    @media (max-width: $mq-ss) and (min-width: $mq-xs) {
+      width: 200px;
+      font-size: $font-m*0.9;
+    }
   }
 }

@@ -1,6 +1,16 @@
 .original {
   display: flex;
-  width: 30%;
+  max-width: 30%;
+
+  @media (max-width: $mq-s){
+    order: 3;
+    max-width: calc(100% - 10rem);
+    flex-direction: column;
+  }
+
+  @media (max-width: $mq-xs){
+    display: none;
+  }
 
   &__img {
     background-color: $color-shade-light;
@@ -8,6 +18,17 @@
     margin-right: $space-m;
     object-fit: contain;
     width: $original-img-size;
+
+    @media (max-width: $mq-s){
+      align-self: end;
+      height: auto;
+      max-height: 256px;
+      width: auto;
+    }
+    @media (max-width: $mq-ss){
+      max-height: 200px;
+      max-width: 100%;
+    }
   }
 
   &__description,

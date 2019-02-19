@@ -276,7 +276,7 @@ export default class ExplorePage extends Component {
     return (
       <MapExploreContainer map={false} location={this.props.location}>
         {t => (
-          <div className='explore__result'>
+          <>
             <GenArt image={this.state.genImg} data={this.state.genArr} t={t} />
             <div className='explore'>
               <div className='map__plot-header'>{t("map.explore")}</div>
@@ -286,7 +286,7 @@ export default class ExplorePage extends Component {
                 subSeed={this.subSeed}
               />
             </div>
-          </div>
+          </>
         )}
       </MapExploreContainer>
     );

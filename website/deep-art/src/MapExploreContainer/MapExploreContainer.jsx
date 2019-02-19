@@ -82,10 +82,12 @@ class MapExploreContainer extends Component {
               <div className='map__content'>
                 <h1 className="claim">{t('map.title')}</h1>
                 <div className="map__data">
-                  <p className="map__description">{t('map.description')}</p>
+                  <div className="map__description">
+                    <p>{t('map.description')}</p>
+                  </div>
                   {this.state.apiData && this.renderArtworkInfo(t)}
+                  {this.props.children(t)}
                 </div>
-                {this.props.children(t)}
               </div>
             </div>
           </section>

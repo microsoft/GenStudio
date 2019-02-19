@@ -333,7 +333,7 @@
   height: 100%;
   z-index: calc(#{$z-index-s} * -1);
 
-  @media (max-width: $mq-xsl){
+  @media (max-width: $mq-ss){
     max-width: 100%;
   }
 }
@@ -341,7 +341,7 @@
 .slick-slide > div {
   height: 337px; // Needed to show the full slide height, do not change
 
-  @media (max-width: $mq-xsl){
+  @media (max-width: $mq-ss){
     height: 275px;
   }
 
