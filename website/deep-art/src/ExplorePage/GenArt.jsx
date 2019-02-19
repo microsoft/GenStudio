@@ -75,6 +75,8 @@ export default class GenArt extends Component {
           style={{ zIndex: "-1" }}
         />
       );
+    
+    let shareUrl = window.location.href;
 
     return (
       <div className='gen-art'>
@@ -82,10 +84,10 @@ export default class GenArt extends Component {
         <button className='button' onClick={this.getSimilarArtID}>{this.props.t("map.similar")}</button>
         <button className='button' onClick={this.saveImage}>{this.props.t("map.save")}</button>
         <div className="gen-art__share">
-            <FacebookShareButton url={window.location.href}>
+            <FacebookShareButton url={shareUrl}>
               <FacebookIcon size={48}/>
             </FacebookShareButton>
-            <TwitterShareButton url={window.location.href}>
+            <TwitterShareButton url={shareUrl}>
               <TwitterIcon size={48}/>
             </TwitterShareButton>
         </div>

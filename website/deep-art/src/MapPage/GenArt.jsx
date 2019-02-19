@@ -82,6 +82,8 @@ export default class GenArt extends Component {
       />
     );
 
+    let shareUrl =  window.location.href;
+
     let loadOrImage = this.props.image === 0 || this.props.image === null || this.props.image === undefined ? (<CircularProgress style={{ color: '#6A6A6A' }} />) : (<ImageBox />);
     let message = this.props.point === null ? ('') : (<p>{this.props.message}</p>);
     if (this.state.redirect) {
@@ -99,10 +101,10 @@ export default class GenArt extends Component {
           <button className="button" onClick={this.getSimilarArtID}>{this.props.t("map.similar")}</button>
           <button className="button" onClick={this.saveImage}>{this.props.t("map.save")}</button>
           <div className="gen-art__share">
-            <FacebookShareButton url={window.location.href}>
+            <FacebookShareButton url={shareUrl}>
               <FacebookIcon size={48}/>
             </FacebookShareButton>
-            <TwitterShareButton url={window.location.href}>
+            <TwitterShareButton url={shareUrl}>
               <TwitterIcon size={48}/>
             </TwitterShareButton>
           </div>
