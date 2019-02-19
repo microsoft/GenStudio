@@ -47,21 +47,11 @@
 
   &__share{
     display: flex;
-    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 1em;
 
     .SocialMediaShareButton{
-      margin-left: .5em;
-      margin-right:.5em; 
-    }
-  }
-
-  &__share{
-    display: flex;
-    justify-content: center;
-
-    .SocialMediaShareButton{
-      margin-left: .5em;
-      margin-right:.5em; 
+      margin-right:1em; 
     }
   }
 
