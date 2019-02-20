@@ -39,7 +39,6 @@ export default class GenArt extends Component {
 
   getSimilarArtID() {
     //let file = new File([this.props.data], "image.jpeg", {type: "image/jpeg"});
-
     let file = this.props.image;
 
     //const apiURL = 'https://imagedocker2.azurewebsites.net/FindSimilarImages/Byte';
