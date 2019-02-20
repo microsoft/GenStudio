@@ -310,10 +310,10 @@ def preprocessInput(img):
     global img_height
     global graph
     with graph.as_default():
-        np_img = np.array(img.resize((img_width, img_height)))
-        X = preprocess_input(np.expand_dims(np_img, axis=0).astype(np.float))
-        X = keras_model.predict(X)
-    return X
+        img = np.array(img.resize((img_width, img_height)))
+        img = preprocess_input(np.expand_dims(img, axis=0).astype(np.float))
+        img = keras_model.predict(img)
+    return img
 
 def preprocessInputBatch(img_array):
     '''
@@ -325,14 +325,14 @@ def preprocessInputBatch(img_array):
     global graph   
     
     #need to re-order the images to be the correct format (n, img_width, img_height, 3)
-    np_imgs = []
+    imgs = []
     for img in img_array:
-        np_img = np.array(img.resize((img_width,img_height)))
-        np_imgs.append(np_img)
-    np_imgs = np.array(np_imgs).astype(np.float)
+        img = np.array(img.resize((img_width,img_height)))
+        imgs.append(img)
+    imgs = np.array(imgs).astype(np.float)
     
     with graph.as_default():
-        X = preprocess_input(np_imgs)
+        X = preprocess_input(imgs)
         X = keras_model.predict(X)
     return X
         
