@@ -27,7 +27,8 @@ export function setupPlotly(stateHolder, objIDs, firstID) {
     //const locations = [[0.7,1.15], [1.15, 1.0], [1.2,.5], [0.9,.25], [.5, .25], [.2, .5], [.25, 1.0]]
 
     //Little bit of random:
-    const locations = [[0.7-.05,1.15-.01], [1.15+.01, 1.0+.02], [1.2+.03,.5+.04], [0.9+.01,.25-.03], [.5-.02, .25+0.0], [.2+.02, .5+.03], [.25+.04, 1.0+.05]];
+    const locations = [[0.7+.01,1.15-.01], [1.15+.01, 1.0+.02], [1.2+.03,.5+.04], [0.7+.01,.25-.0], [.2+.02, .5+.03], [.25+.04, 1.0+.05]];
+    // const locations = [[0.7-.05,1.15-.01], [1.15+.01, 1.0+.02], [1.2+.03,.5+.04], [0.9+.01,.25-.03], [.5-.02, .25+0.0], [.2+.02, .5+.03], [.25+.04, 1.0+.05]];
 
     const paintingUrls = paintingIds.map(id => thumbnailRoot + id.toString() + ".jpg");
     const imageProps = {
@@ -65,8 +66,8 @@ export function setupPlotly(stateHolder, objIDs, firstID) {
             name: 'primary',
             layer: "above",
             marker: {
-                size: 44,
-                color: '#002050',
+                size: 23,
+                color: '#000000',
                 symbol: "circle",
             },
         }

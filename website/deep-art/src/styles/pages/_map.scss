@@ -21,11 +21,16 @@
     border: none;
     color: $color-primary;
     display: inline-block;
-    padding: $space-m;
+    padding: $space-m $space-l;
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
-    width: 7.75rem;
+    // width: 7.75rem;
+
+    @media (max-width: $mq-xs)
+    {
+      width: 7.75rem;
+    }
 
     &:hover {
       cursor: pointer;
