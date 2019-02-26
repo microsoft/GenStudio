@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: imagesimilarity-container
-        image: <<image container>>
+        image: chrishoder2/imagesimilarity:ver03
         ports:
         - containerPort: 5000
         resources:
