@@ -67,7 +67,7 @@ export function setupPlotly(stateHolder, objIDs, firstID) {
             layer: "above",
             marker: {
                 size: 23,
-                color: '#000000',
+                color: '#666666',
                 symbol: "circle",
             },
         }

@@ -57,8 +57,8 @@
   &__data {
     border-bottom: 1px solid $color-shade-dark;
     display: flex;
-    margin-bottom: 3rem;
     flex-wrap: wrap;
+    padding-bottom: 5rem;
     @media (max-width: $mq-s){
       justify-content: space-between;
     }
@@ -80,6 +80,10 @@
     margin-right: $space-l;
     margin-bottom: 3rem;
     width: calc(70% - #{$space-l});
+
+    > p {
+      margin-top: 0;
+    }
 
     @media (max-width: $mq-s){
       width: 100%;
@@ -107,8 +111,9 @@
   }
 
   &__plot-header {
-    background-color: $color-primary;
-    color: $color-text-light;
+    background-color: $color-white;
+    border: 1px $color-primary solid;
+    color: $color-primary;
     margin-bottom: 1.5rem;
     padding-bottom: $space-xs;
     padding-top: $space-xs;

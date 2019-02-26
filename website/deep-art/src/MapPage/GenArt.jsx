@@ -91,22 +91,23 @@ export default class GenArt extends Component {
     } else {
       return (
         <div className="gen-art">
+          <div className="gen-art__header">Generated Image</div>
           <div className="gen-art__loader">
             {loadOrImage}
           </div>
           <div className="gen-art__message">
             {message}
           </div>
-          <div className="gen-art__share">
-            <FacebookShareButton url={shareUrl}>
-              <FacebookIcon size={36}/>
-            </FacebookShareButton>
-            <TwitterShareButton url={shareUrl}>
-              <TwitterIcon size={36}/>
-            </TwitterShareButton>
-          </div>
           <button className="button" onClick={this.getSimilarArtID}>{this.props.t("map.similar")}</button>
           <button className="button" onClick={this.saveImage}>{this.props.t("map.save")}</button>
+          <div className="gen-art__share">
+            <FacebookShareButton url={shareUrl}>
+              <FacebookIcon size={36} iconBgStyle={{fill:'#000000'}}/>
+            </FacebookShareButton>
+            <TwitterShareButton url={shareUrl}>
+              <TwitterIcon size={36} iconBgStyle={{fill:'#000000'}}/>
+            </TwitterShareButton>
+          </div>
         </div>
       );
     }

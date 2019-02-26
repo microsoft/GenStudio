@@ -11,10 +11,10 @@ function NavBar({ t }) {
     return (
       <footer className="footer">
         <p className="footer__description">
-          <span>{t('foo.desc')}</span>
-          <a className="footer__link footer__link--strong" href={'https://www.microsoft.com/inculture/arts/met-microsoft-mit-ai-open-access-hack'} target="_blank" rel="noopener noreferrer">
+          <span>Gen Studio is an experimental collaboration across The Met, Microsoft, and MIT. Learn more about the <a href="https://www.microsoft.com/inculture/arts/met-microsoft-mit-ai-open-access-hack/" target="_blank" rel="noopener noreferrer"> collaboration</a> and The Met’s <a href="https://www.metmuseum.org/blogs/now-at-the-met/2019/met-microsoft-mit-art-open-data-artificial-intelligence" target="_blank" rel="noopener noreferrer"> Open Access Program</a>. View the source code <a href="https://github.com/Microsoft/deep-art" target="_blank" rel="noopener noreferrer">here</a>.</span>
+          {/* <a className="footer__link footer__link--strong" href={'https://www.microsoft.com/inculture/arts/met-microsoft-mit-ai-open-access-hack'} target="_blank" rel="noopener noreferrer">
             {t('global.learn_more')}
-          </a>
+          </a> */}
         </p>
         <div className="footer__divider"></div>
         <div className="footer__links">
@@ -23,7 +23,6 @@ function NavBar({ t }) {
             <span className="u-nowrap">{t('global.lang_eng_description_us')}</span>
           </div>
           <div>
-            <a className="footer__link" href="https://www.microsoft.com/trademarks" target="_blank" rel="noopener noreferrer">{t('foo.trademarks')}</a>
             <a className="footer__link" href="https://support.microsoft.com/en-us/contactus" target="_blank" rel="noopener noreferrer">{t('foo.report_abuse')}</a>
           </div>
         </div>

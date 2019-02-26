@@ -64,4 +64,11 @@
       font-size: $font-m*0.9;
     }
   }
+
+  &__header {
+    color: $color-base-dark;
+    font-size: $font-l;
+    font-weight: $font-weight-semibold;
+    margin-bottom: .5rem;
+  }
 }

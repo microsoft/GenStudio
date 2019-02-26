@@ -1,5 +1,5 @@
 .original {
-  display: flex;
+  display: inline;
   max-width: 30%;
 
   @media (max-width: $mq-s){
@@ -57,5 +57,25 @@
   &__title {
     font-weight: $font-weight-semibold;
     margin-right: $space-xs;
+  }
+
+  &__header{
+    color: $color-base-dark;
+    font-size: $font-m;
+    font-weight: $font-weight-semibold;
+    margin-bottom: .5rem;
+
+    @media (max-width: $mq-s){
+      font-size: $font-l;
+    }
+  }
+
+  &__container{
+    display: flex;
+    flex-direction: row;
+
+    @media (max-width: $mq-s){
+      flex-direction: column;
+    }
   }
 }

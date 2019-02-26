@@ -6,23 +6,26 @@ const ArtworkInfo = ({ apiData, t }) => {
 
   return (
     <div className='original'>
-      <img
-        className='original__img'
-        src={primaryImageSmall || "Unknown"}
-        alt={objectName || "Unknown"}
-      />
-      <div className='original__content'>
-        <p className='original__description'>{title}</p>
-        <time className='original__data'>
-          <div className='original__title'>{t("map.date")}: </div>
-          <div className='original__text'>{objectDate || "Unknown"}</div>
-        </time>
-        <p className='original__data'>
-          <span className='original__title'>{t("map.artist")}:</span>
-          <span className='original__text'>{artistDisplayName || "Unknown"}</span>
-        </p>
+        <div className='original__header'> Original Selection </div>
+        <div className='original__container'>
+          <img
+            className='original__img'
+            src={primaryImageSmall || "Unknown"}
+            alt={objectName || "Unknown"}
+          />
+          <div className='original__content'>
+            <p className='original__description'>{title}</p>
+            <time className='original__data'>
+              <div className='original__title'>{t("map.date")}: </div>
+              <div className='original__text'>{objectDate || "Unknown"}</div>
+            </time>
+            <p className='original__data'>
+              <span className='original__title'>{t("map.artist")}:</span>
+              <span className='original__text'>{artistDisplayName || "Unknown"}</span>
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
   );
 };
 
