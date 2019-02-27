@@ -23,6 +23,8 @@
   &:hover {
     background-color: $color-base-dark;
     color: $color-text-light;
+    border-color: $color-grey;
+    cursor: pointer;
   }
 
   &:active {
