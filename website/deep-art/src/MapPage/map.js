@@ -310,7 +310,6 @@ export function setupPlotly(stateHolder, objIDs, firstID) {
                 totalLatent = addVector(totalLatent, scalarMultiplyVector(latents, r));
                 totalLabel = addVector(totalLabel, scalarMultiplyVector(labels, r));
             });
-            stateHolder.setState({ message: `Top Ratios: ${ratios.map(r => r.toPrecision(1)).slice(0,3)}` });
             getGenImage(`[[${totalLatent.toString()}]]`, totalLabel);
         }
 
