@@ -27,9 +27,9 @@
     text-transform: uppercase;
     // width: 7.75rem;
 
-    @media (max-width: $mq-xs)
+    @media (max-width: $mq-ss)
     {
-      width: 7.75rem;
+      width: 12rem;
     }
 
     &:hover {

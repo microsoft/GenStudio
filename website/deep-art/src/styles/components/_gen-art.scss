@@ -34,7 +34,7 @@
 
     img {
       display: block;
-      margin-left: auto;
+      // margin-left: auto;
       margin-right: auto;
       z-index: $z-index-s !important;
 
@@ -52,6 +52,10 @@
 
     .SocialMediaShareButton{
       margin-right:1em; 
+
+      :hover{
+        cursor: pointer;
+      }
     }
   }
 
