@@ -4,6 +4,7 @@ import ResultArt from './ResultArt.jsx';
 import { NamespacesConsumer } from 'react-i18next';
 
 const NUM_FROM_EACH_CAT = 2; //Number to choose from each category
+const NUM_MAX_RESULTS = 6;
 
 /**
  * Page for selecting an image to start generating on
@@ -221,7 +222,7 @@ class SelectPage extends Component {
 
     //If a category is selected, then just use the current set of images
     if (this.state.categorySelected) {
-      idList = this.state.imgObjects.slice(0, 7).map(ob => ob.id);
+      idList = this.state.imgObjects.slice(0, NUM_MAX_RESULTS).map(ob => ob.id);
 
       //Else, you are in the default landing page and should take the selected image and a choiceList that does not contain the selected image
     } else {
@@ -230,11 +231,37 @@ class SelectPage extends Component {
       } else {
         idList = [this.state.selectedImage.id].concat(this.state.choiceLists[1]);
       }
+      idList = idList.slice(0,NUM_MAX_RESULTS);
     }
 
-    let url = '?id=' + this.state.selectedImage.id.toString() + '&ids=[' + idList.toString() + ']';
-    url = encodeURIComponent(url);
-    return urlBase + url;
+    
+    // Randomly selects an image if no image is selected from the array of imgObjects
+    if(this.state.selectedImage.id === 0){
+      let imgSet = this.state.imgObjects.slice(0, NUM_MAX_RESULTS).map(ob => ob.id);
+      let randomId;
+
+      for(var i = 0 ; i < imgSet.length ; i++){
+        let count = 0;
+        for(var x = 0 ; x < idList.length ; x++){
+          count++;
+          if(imgSet[i] === idList[x]){
+            break;
+          }
+        }
+        if(count === 6){
+          randomId = imgSet[i]
+
+          idList[0] = randomId;
+          let url = '?id=' + randomId.toString() + '&ids=[' + idList.toString() + ']';
+          url = encodeURIComponent(url);
+          return urlBase + url;
+        }
+      }
+    } else {
+      let url = '?id=' + this.state.selectedImage.id.toString() + '&ids=[' + idList.toString() + ']';
+      url = encodeURIComponent(url);
+      return urlBase + url;
+    }
   }
 
   render() {

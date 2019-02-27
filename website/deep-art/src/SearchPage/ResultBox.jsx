@@ -30,7 +30,7 @@ export default class ResultBox extends Component {
 
     return (
       <div class="grid-card">
-        <a className="grid-card__link" href={this.props.data.LinkResource} target="_blank">{media}</a>
+        <a className="grid-card__link" href={this.props.data.LinkResource} target="_blank" rel="noopener noreferrer">{media}</a>
         <p className="grid-card__title">{this.props.data.Title}</p>
         <p className="grid-card__text">{this.props.data.Department}</p>
       </div>

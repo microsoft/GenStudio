@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { saveAs } from "file-saver";
 import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon } from 'react-share';
 
+import { Redirect } from 'react-router-dom';
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 /**
@@ -78,20 +79,30 @@ export default class GenArt extends Component {
     
     let shareUrl = encodeURI(window.location.href);
 
-    return (
-      <div className='gen-art'>
-        <div className='gen-art__loader'>{loadOrImage}</div>
-        <div className="gen-art__share">
-            <FacebookShareButton url={shareUrl}>
-              <FacebookIcon size={36}/>
-            </FacebookShareButton>
-            <TwitterShareButton url={shareUrl}>
-              <TwitterIcon size={36}/>
-            </TwitterShareButton>
+    if (this.state.redirect) {
+      let link = `/search/${this.state.objID}`;
+      return <Redirect push to={link} />;
+    } else {
+      return (
+        <div className='gen-art'>          
+          <div className="gen-art__header">Generated Image</div>
+          <div className='gen-art__loader'>
+            {loadOrImage}
+          </div>
+          <button className='button' onClick={this.getSimilarArtID}>{this.props.t("map.similar")}</button>
+          <button className='button' onClick={this.saveImage}>{this.props.t("map.save")}</button>
+          <div className="gen-art__share">
+              <FacebookShareButton url={shareUrl}>
+                <FacebookIcon size={36} iconBgStyle={{fill:'#000000'}}
+                />
+              </FacebookShareButton>
+              <TwitterShareButton url={shareUrl}>
+                <TwitterIcon size={36} iconBgStyle={{fill:'#000000'}}
+                />
+              </TwitterShareButton>
+          </div>
         </div>
-        <button className='button' onClick={this.getSimilarArtID}>{this.props.t("map.similar")}</button>
-        <button className='button' onClick={this.saveImage}>{this.props.t("map.save")}</button>
-      </div>
-    );
+      );
+    }
   }
 }

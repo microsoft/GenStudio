@@ -235,11 +235,11 @@
 
   @include transition(background-color);
 
-  &:hover {
-    background-color: $color-secondary;
-  }
+  // &:hover {
+  //   background-color: $color-primary;
+  // }
 
-  &:focus {
+  &:focus, &:hover {
     background-color: $color-primary;
     border: 2px solid $color-primary;
     outline: 0;
@@ -278,7 +278,7 @@
       background-size: $arrow-size;
     }
 
-    &:focus:after {
+    &:focus:after, &:hover:after {
       content: '';
       background-image: url('./images/icon-chevron-right-inverted.svg');
       background-repeat: no-repeat;
@@ -302,7 +302,7 @@
       background-size: $arrow-size;
     }
 
-    &:focus:after {
+    &:focus:after,&:hover:after {
       content: '';
       background-image: url('./images/icon-chevron-left-inverted.svg');
       background-repeat: no-repeat;

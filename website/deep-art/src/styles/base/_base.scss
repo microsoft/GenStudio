@@ -47,12 +47,12 @@ body {
     position: relative;
     width: 400px;
 
-    &:before {
-      background-color: $color-secondary;
-      content: '';
-      height: 2px;
-      position: absolute;
-      top: calc(#{$space-s} * -1);
-      width: 48px;
-    }
+    // &:before {
+    //   background-color: $color-secondary;
+    //   content: '';
+    //   height: 2px;
+    //   position: absolute;
+    //   top: calc(#{$space-s} * -1);
+    //   width: 48px;
+    // }
   }

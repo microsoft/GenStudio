@@ -61,8 +61,8 @@ class MapExploreContainer extends Component {
     return (
       <React.Fragment>
         <div className="map__header">
-          <NavLink onClick={this.generatePath} id="map" className={getClass('map', this.props.map)} to={this.generatePath('map')}>Map</NavLink>
-          <NavLink onClick={this.generatePath} id="explore" className={getClass('explore', this.props.map)} to={this.generatePath('explore')}>Explore</NavLink>
+          <NavLink onClick={this.generatePath} id="map" className={getClass('map', this.props.map)} to={this.generatePath('map')}>Explore Map</NavLink>
+          <NavLink onClick={this.generatePath} id="explore" className={getClass('explore', this.props.map)} to={this.generatePath('explore')}>Combine Features</NavLink>
         </div>
       </React.Fragment>
     );
@@ -80,7 +80,7 @@ class MapExploreContainer extends Component {
             {this.renderHeader()}
             <div className="map__box">
               <div className='map__content'>
-                <h1 className="claim">{t('map.title')}</h1>
+                {/* <h1 className="claim">{t('map.title')}</h1> */}
                 <div className="map__data">
                   <div className="map__description">
                     <p>{t('map.description')}</p>
