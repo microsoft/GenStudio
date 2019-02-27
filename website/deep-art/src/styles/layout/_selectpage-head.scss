@@ -22,12 +22,18 @@
 
   &__head button {
     align-self: self-end;
+    border-color: $color-primary;
+    box-shadow: 0 0 0px 0px $color-primary;
   }
 
   &__head button > div {
     border: 2px solid $color-primary;
     border-radius: 0;
     width: 300px;
+
+    svg {
+      stroke: $color-grey;
+    }
 
     input {
       border-radius: 0;
@@ -64,4 +70,8 @@
 .selectpage__head + div + div > .button {
   display: inline-block;
   margin-bottom: $space-xl;
+}
+
+.czusFq{
+  background: $color-grey !important;
 }
