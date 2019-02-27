@@ -84,7 +84,8 @@ export default class GenArt extends Component {
       return <Redirect push to={link} />;
     } else {
       return (
-        <div className='gen-art'>
+        <div className='gen-art'>          
+          <div className="gen-art__header">Generated Image</div>
           <div className='gen-art__loader'>
             {loadOrImage}
           </div>

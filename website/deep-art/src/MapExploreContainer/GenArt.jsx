@@ -89,7 +89,6 @@ export default class GenArt extends Component {
     } else {
       return (
         <div className="gen-art">
-          <div className="gen-art__header">Generated Image</div>
           <div className="gen-art__loader">
             {loadOrImage}
           </div>
