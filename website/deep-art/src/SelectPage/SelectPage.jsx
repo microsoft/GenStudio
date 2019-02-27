@@ -144,6 +144,7 @@ class SelectPage extends Component {
 
     this.setState({
       choiceLists: choiceLists,
+      curatedImages: Object.assign({}, this.state.curatedImages, { All: landingPageList })
     });
 
     return landingPageList;
@@ -233,10 +234,9 @@ class SelectPage extends Component {
       }
       idList = idList.slice(0,NUM_MAX_RESULTS);
     }
-
     
-    // Randomly selects an image if no image is selected from the array of imgObjects
-    if(this.state.selectedImage.id === 0){
+    // Randomly selects an image if no image is selected from the array of imgObjects and category not selected
+    if(this.state.selectedImage.id === 0 && !this.state.categorySelected){
       let imgSet = this.state.imgObjects.slice(0, NUM_MAX_RESULTS).map(ob => ob.id);
       let randomId;
 
