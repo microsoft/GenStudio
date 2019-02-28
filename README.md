@@ -60,6 +60,12 @@ GANs are great at generating new works of art, but we wanted to see if the GAN c
 
 ### GAN Latent Space Traversal
 
+To explore the spaces between objects in our GAN we first invert the objects to get their positions in "latent" space. This latent space is learned by the network, and each point in it corresponds to a unique artwork when mapped through the generator network. To interpolate between the points we use plain-old vector interpolation, though depending on the noise you train your GAN with, you might get better performance by transforming to spherical coordinates before the interpolation (because of [the magic of high dimensional gaussians](https://www.cs.cmu.edu/~avrim/598/chap2only.pdf)). 
+
+<p align="center">
+  <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/code-space-interp.jpg">
+</p>
+
 ### Reverse Image Search
 
 
