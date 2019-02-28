@@ -1,9 +1,10 @@
-
-![Main Image](https://deepartstorage.blob.core.windows.net/public/assets/gen_studio.gif)
-
 [website]:https://ms-genstudio-dev.azurewebsites.net/
 
 # Gen Studio
+
+<p align="center">
+  <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/gen_studio.gif">
+</p>
 
 [Gen Studio](#website) is a prototype created by collaborators from The Metropolitan Museum of Art (The Met), Microsoft, and Massachusetts Institute of Technology (MIT). This site allows users to visually explore Generative Adversarial Networks (GANs) for high resolution art creation. 
 
@@ -29,21 +30,32 @@ Generative Adversarial Networks (GANs) are a special kind of deep network capabl
 
 In our case we use a GAN to sample from the space of art in The Metropolitan Museum of Art's Open Access Collection.
 
-![GAN](https://deepartstorage.blob.core.windows.net/public/assets/gan-architecture.jpg)
+<p align="center">
+  <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/gan-architecture.jpg">
+</p>
 
 GANs consist of two components: A Generator and a Descriminator. The generator aims to create new art, and the descriminator aims to critique the art and discover ways to tell generated art from existing art. Both networks are trained in competition until the generator can create realistic works of art, and the descriminator can no longer tell the difference. 
 
-![Training](https://deepartstorage.blob.core.windows.net/public/assets/training.gif)
+<p align="center">
+  <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/training.gif">
+</p>
+
 
 
 ### GAN Inversion with Semantic Loss
 
-![semantic-inversion](https://deepartstorage.blob.core.windows.net/public/assets/semantic-inversion.jpg)
+
+<p align="center">
+  <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/semantic-inversion.jpg">
+</p>
+
+
 
 GANs are great at generating new works of art, but we wanted to see if the GAN could recreate existing works in The MET's collection. To achieve this, we used a technique called neural network inversion. Instead of learning the weights of a generator network, we keep those weights constant and instead learn the noise pattern in order to mazimize the similarity between the GAN output and a target work. We discovered that in order for this approach to be successful, one would need to match both the target image's pixels as well as its "high-level" semantic content.
 
-![inversion](https://deepartstorage.blob.core.windows.net/public/assets/inversion.gif)
-
+<p align="center">
+  <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/inversion.gif">
+</p>
 
 
 ### GAN Latent Space Traversal
@@ -52,10 +64,11 @@ GANs are great at generating new works of art, but we wanted to see if the GAN c
 
 
 
-
 # Architecture
 
-![architecture](https://deepartstorage.blob.core.windows.net/public/assets/architecture.svg)
+<p align="center">
+  <img width="100%" src="https://deepartstorage.blob.core.windows.net/public/assets/architecture.svg">
+</p>
 
 
 ### Frontend:
