@@ -10,6 +10,7 @@
     "plotly.js": "^1.44.4",
     "plotly.js-dist": "^1.44.1",
     "react": "^16.7.0",
+    "react-appinsights": "^2.0.2",
     "react-dom": "^16.7.0",
     "react-i18next": "^8.1.0",
     "react-lazyload": "^2.5.0",
