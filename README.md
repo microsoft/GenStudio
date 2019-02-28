@@ -66,6 +66,11 @@ GANs are great at generating new works of art, but we wanted to see if the GAN c
 
 To explore the spaces between objects in our GAN we first invert the objects to get their positions in "latent" space. This latent space is learned by the network, and each point in it corresponds to a unique artwork when mapped through the generator network. To interpolate between the points we use plain-old vector interpolation, though depending on the noise you train your GAN with, you might get better performance by transforming to spherical coordinates before the interpolation (because of [the magic of high dimensional gaussians](https://www.cs.cmu.edu/~avrim/598/chap2only.pdf)). 
 
+
+<p align="center">
+  <img width="80%" src="https://deepartstorage.blob.core.windows.net/public/assets/interpolation.gif">
+</p>
+
 ### Reverse Image Search
 
 <p align="center">
@@ -117,6 +122,7 @@ The following docs walk through how to deploy and set up your own APIs and websi
 
 1. [Build the website](./website/README.md)
 1. [Deploy the APIs](./api/README.md)
+1. [Build the Search Index](https://github.com/Azure/mmlspark/blob/master/notebooks/samples/AzureSearchIndex%20-%20Met%20Artworks.ipynb)
 
 
 # Contributors
