@@ -3,7 +3,9 @@
 # Gen Studio
 
 <p align="center">
-  <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/gen_studio.gif">
+  <a href="https://ms-genstudio-dev.azurewebsites.net/">
+    <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/gen_studio.gif">
+  </a>
 </p>
 
 [Gen Studio](#website) is a prototype created by collaborators from The Metropolitan Museum of Art (The Met), Microsoft, and Massachusetts Institute of Technology (MIT). This site allows users to visually explore Generative Adversarial Networks (GANs) for high resolution art creation. 
