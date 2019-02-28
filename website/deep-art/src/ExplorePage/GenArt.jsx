@@ -77,7 +77,9 @@ export default class GenArt extends Component {
         />
       );
     
-    let shareUrl = encodeURI(window.location.href);
+    let aux = window.location.pathname.split('/')[2];
+    let shareUrl = window.location.href.replace(aux,encodeURIComponent(decodeURIComponent(aux)));
+    let smMessage = "Look at the new art that I've just created";
 
     if (this.state.redirect) {
       let link = `/search/${this.state.objID}`;
@@ -96,7 +98,7 @@ export default class GenArt extends Component {
                 <FacebookIcon size={36} iconBgStyle={{fill:'#000000'}}
                 />
               </FacebookShareButton>
-              <TwitterShareButton url={shareUrl}>
+              <TwitterShareButton url={shareUrl} title={smMessage}>
                 <TwitterIcon size={36} iconBgStyle={{fill:'#000000'}}
                 />
               </TwitterShareButton>

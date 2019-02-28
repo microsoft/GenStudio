@@ -81,7 +81,9 @@ export default class GenArt extends Component {
       />
     );
 
-    let shareUrl =  encodeURI(window.location.href);
+    let aux = window.location.pathname.split('/')[2];
+    let shareUrl = window.location.href.replace(aux,encodeURIComponent(decodeURIComponent(aux)));
+    let smMessage = "Look at the new art that I've just created";
 
     let loadOrImage = this.props.image === 0 || this.props.image === null || this.props.image === undefined ? (<CircularProgress style={{ color: '#6A6A6A' }} />) : (<ImageBox />);
     let message = this.props.point === null ? ('') : (<p>{this.props.message}</p>);
@@ -104,7 +106,7 @@ export default class GenArt extends Component {
             <FacebookShareButton url={shareUrl}>
               <FacebookIcon size={36} iconBgStyle={{fill:'#000000'}}/>
             </FacebookShareButton>
-            <TwitterShareButton url={shareUrl}>
+            <TwitterShareButton url={shareUrl} title={smMessage}>
               <TwitterIcon size={36} iconBgStyle={{fill:'#000000'}}/>
             </TwitterShareButton>
           </div>
