@@ -79,6 +79,9 @@ To explore the spaces between objects in our GAN we first invert the objects to 
 
 To create a reverse image search engine, we first map the MET's images into a space where distance is more meaningful, aka the output of a truncated pretrained ResNet50 model. In this space, images that seem similiar to us are close together and their positions are roughly invariant to small transformations like scaling, brightness, rotations etc. This is starkly opposed to pixel space, where inperceptably small translations like scaling or rotating can completely change the distance between images. Once we have all of the Met's images featurized, we create an efficient Nearest Neighbor lookup tree frequently referred to as a (k-d tree)[https://en.wikipedia.org/wiki/K-d_tree]. This lets us lookup approximate nearest neighbors in feature space without comparing our vector to all other image features. At each node of this tree, we store the pointer to the MET image so that we can quickly return it to the caller. We use [the annoy library](https://github.com/spotify/annoy) for fast NN indexes. 
 
+<p align="center">
+  <img width="80%" src="https://deepartstorage.blob.core.windows.net/public/assets/nearest_neighbors.jpg">
+</p>
 
 # Architecture
 
