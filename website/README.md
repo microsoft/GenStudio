@@ -1,8 +1,9 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Build the website
+Follow these steps to build the website. Note that many of the APIs are referenced within the site code and will need to be changed if you are deploying a full version of the site. 
 
 ## Available Scripts
 
-The first time you work with the code, please install its dependencies with:
+The first time you work with the code, navigate to `website\deep-art` and install our dependencies with:
 
 ### `npm install`
 
@@ -25,9 +26,4 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 ### `npm run build`
 
 Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
