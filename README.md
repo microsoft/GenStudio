@@ -60,13 +60,19 @@ GANs are great at generating new works of art, but we wanted to see if the GAN c
 
 ### GAN Latent Space Traversal
 
-To explore the spaces between objects in our GAN we first invert the objects to get their positions in "latent" space. This latent space is learned by the network, and each point in it corresponds to a unique artwork when mapped through the generator network. To interpolate between the points we use plain-old vector interpolation, though depending on the noise you train your GAN with, you might get better performance by transforming to spherical coordinates before the interpolation (because of [the magic of high dimensional gaussians](https://www.cs.cmu.edu/~avrim/598/chap2only.pdf)). 
-
 <p align="center">
   <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/code-space-interp.jpg">
 </p>
 
+To explore the spaces between objects in our GAN we first invert the objects to get their positions in "latent" space. This latent space is learned by the network, and each point in it corresponds to a unique artwork when mapped through the generator network. To interpolate between the points we use plain-old vector interpolation, though depending on the noise you train your GAN with, you might get better performance by transforming to spherical coordinates before the interpolation (because of [the magic of high dimensional gaussians](https://www.cs.cmu.edu/~avrim/598/chap2only.pdf)). 
+
 ### Reverse Image Search
+
+<p align="center">
+  <img width="80%" src="https://deepartstorage.blob.core.windows.net/public/assets/nn-lookup.jpg">
+</p>
+
+To create a reverse image search engine, we first map the MET's images into a space where distance is more meaningful, aka the output of a truncated pretrained ResNet50 model. In this space, images that seem similiar to us are close together and their positions are roughly invariant to small transformations like scaling, brightness, rotations etc. This is starkly opposed to pixel space, where inperceptably small translations like scaling or rotating can completely change the distance between images. Once we have all of the Met's images featurized, we create an efficient Nearest Neighbor lookup tree frequently referred to as a (k-d tree)[https://en.wikipedia.org/wiki/K-d_tree]. This lets us lookup approximate nearest neighbors in feature space without comparing our vector to all other image features. At each node of this tree, we store the pointer to the MET image so that we can quickly return it to the caller. We use [the annoy library](https://github.com/spotify/annoy) for fast NN indexes. 
 
 
 # Architecture
