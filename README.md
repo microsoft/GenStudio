@@ -16,9 +16,11 @@ You can also learn more about [the collaboration](https://www.microsoft.com/incu
 
 # Goal of the Project
 
-We created an online experience called Gen Studio where users can explore generated, dreamlike images created by AI. These images are created using a GAN, which can randomly sample from the space of possible artworks. We then take this trained GAN and invert it to create an algorithm capable of finding the closest match, in the GANs ‘mind’, to the real artwork in The Met. This allows us to not just create random works, but to interpolate between real artworks in the collection. 
+Our goal is to inspire others to explore the world of art and the world of AI. We hope that publishing this website will help anyone with an internet connection discover or create works of art they love. Art captures humanity's intricate structure, from great struggles, and triumphs to the beautifully commonplace. We hope that by using the GAN as a tool, you too can feel the rush of creation that has driven so many great artists and creators throughout the ages. This project was prototyped by a passionate group during a two day hackathon, and brought to life by some amazing students and engineers. Thank you for trying our website and please feel free to [send us feedback](mailto:marhamil@microsoft.com).
 
 # The Website
+
+We created an online experience called Gen Studio where users can explore generated, dreamlike images created by AI. These images are created using a GAN, which can randomly sample from the space of possible artworks. We then take this trained GAN and invert it to create an algorithm capable of finding the closest match, in the GANs ‘mind’, to the real artwork in The Met. This allows us to not just create random works, but to interpolate between real artworks in the collection. 
 
 We present two simple ways of exploring the GANs underlying 140-dimensional space of art. Our first visualization lets users explore a two-dimensional slice of the vast “latent” space of the GAN. Users can move throughout this space and see how the GANs generated images change based on proximity to real images in The Met’s collection. Our second visualization gives the user precise control of how to blend different works together. We hope that users use this site to learn more about the inferred visual structure underlying The Met’s collection and to create and recombine artwork that draws from a variety of styles, materials, and forms. 
 
@@ -110,7 +112,7 @@ The backend for the site uses the following services:
 
 These services make it possible to generate new images in real-time and are responsible for the website’s interactive look and feel. AKS dramatically streamlines the path to production services on GPU hardware. The AKS cluster provides backend GPU compute for the GAN evaluation service, and the reverse image search service.
 
-A core challenge we encountered was how to explore around the latent space of existing MET artworks. The network inversion technique, described in the techniques section above, is time intensive. To make this responsive, we precomputed inversions to thousands of images from the met collection and stored the results in Azure Storage. Thus, we could treat them as fast static assets.
+A core challenge we encountered was how to explore around the latent space of existing MET artworks. The network inversion technique, described in the techniques section above, is time intensive. To make this responsive, we pre-computed inversions to thousands of images from the met collection and stored the results in Azure Storage. Thus, we could treat them as fast static assets.
 
 To create the image search experience, we loaded the entire open access collection into an Azure Databricks cluster. We used Microsoft Machine Learning for Apache Spark (MMLSpark) to enrich these images with annotations from the Azure Computer Vision API. We then pushed these enriched documents to the Azure Search Service.
 
