@@ -12,7 +12,7 @@
 
       "map.title": "Gan",
       "map.description": "Based on given artworks from The Met’s Open Access collection, a Generative Adversarial Network (GAN) allows you to explore and visualize the spaces in between those pieces.",
-      "map.explore": "Click or drag to explore the space between them",
+      "map.explore": "Tap to explore the space between artworks",
       "map.combine": "Explore the space between existing objects",
       "map.artist": "Artist",
       "map.date": "Date",

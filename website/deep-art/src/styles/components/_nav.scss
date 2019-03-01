@@ -19,6 +19,9 @@
     text-transform: uppercase;
     width: $nav-unit;
 
+    img{
+      max-height: 6rem;
+    }
 
     span {
       color: $color-text-light;

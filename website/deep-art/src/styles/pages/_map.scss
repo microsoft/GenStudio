@@ -32,6 +32,18 @@
       width: 12rem;
     }
 
+    @media (max-width: $mq-s)
+    {
+      width: 10rem;
+    }
+
+    @media (max-width: $mq-xs)
+    {
+      width: 8.5rem;
+      padding: $space-m $space-m;
+    }
+
+       
     &:hover {
       cursor: pointer;
     }

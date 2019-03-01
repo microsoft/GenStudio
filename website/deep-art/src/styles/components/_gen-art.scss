@@ -67,6 +67,10 @@
       width: 200px;
       font-size: $font-m*0.9;
     }
+
+    @media (max-width: $mq-xs){
+      width: calc(100% - 2rem);
+    }
   }
 
   &__header {

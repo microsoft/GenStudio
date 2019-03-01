@@ -31,6 +31,10 @@
     border-radius: 0;
     width: 300px;
 
+    @media (max-width: $mq-s){
+      width: auto;
+    }
+
     svg {
       stroke: $color-grey;
     }
