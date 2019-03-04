@@ -1,51 +1,110 @@
-import React, { Component } from 'react';
-import { Box, Button, Image} from 'grommet';
-import { saveAs } from 'file-saver';
+import React, { Component } from "react";
+import { saveAs } from "file-saver";
+import { FacebookShareButton, FacebookIcon, TwitterShareButton, TwitterIcon } from 'react-share';
+
+import { Redirect } from 'react-router-dom';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 /**
  * The box containing the generated image
  * 'image' prop: The generated image, in base64 encoded ArrayBuffer format
  */
 export default class GenArt extends Component {
-    constructor(props){
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            image: 0,
+    this.state = {
+      image: 0,
+      objID: 0,
+      redirect: false
+    };
+    this.getSimilarArtID = this.getSimilarArtID.bind(this);
+    this.saveImage = this.saveImage.bind(this);
+  }
+
+  getSimilarArtID() {
+    let file = this.props.image;
+
+    const apiURL =
+      "https://methack-api.azure-api.net/ImageSimilarity/FindSimilarImages/Byte";
+    const key =
+      "?subscription-key=43d3f563ea224c4c990e437ada74fae8&neighbors=1";
+    const Http = new XMLHttpRequest();
+    const data = new FormData();
+    data.append("image", file);
+
+    Http.open("POST", apiURL + key);
+    Http.send(data);
+    Http.onreadystatechange = e => {
+      if (Http.readyState === 4) {
+        try {
+          let response = JSON.parse(Http.responseText);
+          let id = response.results[0].ObjectID;
+          if (id === undefined || id === null) {
+            id = 0;
+          }
+
+          this.setState({
+            objID: id,
+            redirect: true
+          });
+        } catch (e) {
+          console.log("malformed request:" + Http.responseText);
         }
-        this.saveImage = this.saveImage.bind(this);
+      }
     };
+  }
 
-    saveImage(){
-        let number = Math.floor(Math.random()*(10000));
-        let file = new File([this.props.data], "image"+number.toString()+".jpeg", {type: "image/jpeg"});
-        saveAs(file);
+  saveImage() {
+    let number = Math.floor(Math.random() * 10000);
+    let blob = new Blob([this.props.data], { type: 'image/jpeg' });
 
-    };
+    saveAs(blob, 'image' + number.toString() + '.jpeg');
+  }
 
-    render(){
+  render() {
+    let loadOrImage =
+      this.props.image === 0 ||
+      this.props.image === null ||
+      this.props.image === undefined ? (
+        <CircularProgress style={{ color: "#6A6A6A" }} />
+      ) : (
+        <img
+          src={"data:image/jpeg;base64," + this.props.image}
+          fit='cover'
+          alt={this.props.image.id}
+          style={{ zIndex: "-1" }}
+        />
+      );
+    
+    let aux = window.location.pathname.split('/')[2];
+    let shareUrl = window.location.href.replace(aux,encodeURIComponent(decodeURIComponent(aux)));
+    let smMessage = "Look at the new art that I've just created";
 
-        const ImageBox = () => (
-            <Box
-                height="medium"
-                width="medium"
-                //border={{ color: "black", size: "4px" }}
-                round="small"
-                style={{ padding: "0px", marginTop: "10px", marginLeft: "10px",}}
-            >
-
-                <Image src={"data:image/jpeg;base64," + this.props.image} fit="cover" style={{zIndex: "-1"}} />
-            </Box>
-          );
-
-        return(
-        <Box direction="column" justify="between">
-            <ImageBox />
-            <Box pad="medium">
-                <Button label="Explore Similar" href={'/search'}/>
-                <Button label="Save Image" onClick={this.saveImage}/>
-            </Box>
-        </Box>    
-        );
+    if (this.state.redirect) {
+      let link = `/search/${this.state.objID}`;
+      return <Redirect push to={link} />;
+    } else {
+      return (
+        <div className='gen-art'>          
+          <div className="gen-art__header">Generated Image</div>
+          <div className='gen-art__loader'>
+            {loadOrImage}
+          </div>
+          <button className='button' onClick={this.getSimilarArtID}>{this.props.t("map.similar")}</button>
+          <button className='button' onClick={this.saveImage}>{this.props.t("map.save")}</button>
+          <div className="gen-art__share">
+              <FacebookShareButton url={shareUrl}>
+                <FacebookIcon size={36} iconBgStyle={{fill:'#000000'}}
+                />
+              </FacebookShareButton>
+              <TwitterShareButton url={shareUrl} title={smMessage}>
+                <TwitterIcon size={36} iconBgStyle={{fill:'#000000'}}
+                />
+              </TwitterShareButton>
+          </div>
+        </div>
+      );
     }
+  }
 }

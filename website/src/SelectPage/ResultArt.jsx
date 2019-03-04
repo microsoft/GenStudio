@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
-import { Box, Button, Image, Grid} from 'grommet';
-import styled from "styled-components";
 
-const GridWrapper = styled(Box)`
-    flex-grow: 1;
-    direction: row;
-    align-items: center;     
-`
+import Slider from 'react-slick';
 
 /**
  * The grid of thumbnails of art
@@ -16,52 +10,68 @@ const GridWrapper = styled(Box)`
  *  categorySelected : the selected category
  */
 export default class ResultArt extends Component {
-    constructor(props){
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            selectedID: 0,
+    this.state = {
+      selectedID: 0,
+    };
+  }
+
+  render() {
+    const settings = {
+      className: 'center',
+      centerMode: true,
+      infinite: true,
+      centerPadding: '60px',
+      slidesToShow: 5,
+      speed: 500,
+      swipeToSlide: true,
+      adaptiveHeight: true,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            infinite: true
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2,
+            initialSlide: 2
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
         }
+      ]
     };
 
-    render() {
-        let imagesToDisplay = this.props.images;
-        if (this.props.categorySelected) {
-            imagesToDisplay = imagesToDisplay.slice(0, 6);
-        }
-        return(
-            <GridWrapper>
-                <Grid
-                    columns={["small", "small", "small", "small", "small", "small"]}
-                    rows={"meduim"}
-                    gap="medium"
-                    margin="40px"
-                >
-                    {imagesToDisplay.map((image, i) => (
-                        <Button
-                            hoverIndicator
-                            style={{ outline: 'none' }}
-                            key={i}
-                            onClick={() => { this.props.selectImage(image.key, image.id) }}
-                        >
-                            <Box border=
-                                {this.props.selectedImage.key === image.key ? { color: "#000000", size: "2px" } : { color: "white", size: "2px" }}
-                                height="small"
-                                width="small"
-                                key={i}
-                                style={{focus: {outline:0}}}
-                        >
-                                <Image
-                                    src={image.img}
-                                    fit="cover"
-                                    style={{ height: '100%', zIndex: "-1"}}
-                                />
-                            
-                        </Box>
-                        </Button>
-                    ))}
-                </Grid>
-            </GridWrapper>    
-        );
+    let imagesToDisplay = this.props.images;
+    if (this.props.categorySelected) {
+      imagesToDisplay = imagesToDisplay.slice(0, 6);
     }
+
+    const listItems = imagesToDisplay.map((image, i) => (
+      <React.Fragment key={image.id}>
+        <img
+          className="slick-img"
+          src={image.img}
+          alt={image.id}
+          onClick={() => {this.props.selectImage(image.key, image.id);}}
+          style={this.props.selectedImage.key === image.key ? { borderColor: '#002050', borderSize: '2px' } : { borderColor: '#ffffff', borderSize: '2px' }}
+        />
+      </React.Fragment>
+    ));
+
+    return <Slider {...settings}>{listItems}</Slider>;
+  }
 }

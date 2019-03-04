@@ -1,0 +1,38 @@
+// -------------------------------------------------------------
+// This file contains all styles related to the .button component
+// -------------------------------------------------------------
+.button {
+  background-color: transparent;
+  border: 2px solid $color-secondary;
+  border-radius: initial;
+  color: $color-secondary;
+  font-size: $font-l;
+  font-weight: $font-weight-bold;
+  letter-spacing: $letter-spacing;
+  text-decoration: none;
+  margin-left: 0;
+  margin-right: 0;
+  padding: $space-m;
+  text-transform: uppercase;
+  transition-duration: $animation-speed;
+  transition-property: color, background-color;
+  transition-timing-function: $animation-type-cubic;
+  vertical-align: middle;
+  will-change: box-shadow;
+
+  &:hover {
+    background-color: $color-base-dark;
+    color: $color-text-light;
+    border-color: $color-grey;
+    cursor: pointer;
+  }
+
+  &:active {
+    box-shadow: initial;
+  }
+
+  &__actions {
+    margin-top: .5em;
+    width: 100%;
+  }
+}

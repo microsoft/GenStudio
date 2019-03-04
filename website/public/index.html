@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns#">
   <head>
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="theme-color" content="#000000" />
     <!--
       manifest.json provides metadata used when your web app is added to the
@@ -22,13 +19,26 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#00b294">
+
+    <!-- Chrome for Android Toolbar Color-->
+    <meta name="theme-color" content="#00b294">
     <title>Gen Studio</title>
-    <style type="text/css">
-      body {
-        margin: 0;
-      }
-    </style>
+    <!-- Twitter Meta Data -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Gen Studio" />
+    <meta name="twitter:description" content="A trained GAN (Generative Adversarial Network) contains a model of a shared feature space underlying a collection of images. Based on given artworks from The Met’s Open Access collection, the GAN allows you to explore and visualize the spaces in between those pieces." />
+    <meta name="twitter:image" content="https://ailabstorages.blob.core.windows.net/experimentsassets/Social/GenStudio.PNG" />
+
+    <meta property="og:title" content="Gen Studio"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:image" content="https://ailabstorages.blob.core.windows.net/experimentsassets/Social/GenStudio.PNG"/>
+    <meta property="og:description" content="A trained GAN (Generative Adversarial Network) contains a model of a shared feature space underlying a collection of images. Based on given artworks from The Met’s Open Access collection, the GAN allows you to explore and visualize the spaces in between those pieces."/>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

@@ -1,0 +1,47 @@
+// -----------------------------------------------------------------------------
+// This file contains the Modular-Scale placeholders using Major Third ratio (1.25)
+// -----------------------------------------------------------------------------
+// https://www.modularscale.com/?1&em&1.25
+
+// Remember to install modularscale-sass: npm install modularscale-sass --save-dev
+@import '../../../node_modules/modularscale-sass/stylesheets/modularscale';
+
+$modularscale: (
+    base: $font-m,
+    ratio: $scale,
+);
+
+@mixin heading-h1() {
+    font-size: ms(9);
+    margin-top: 0;
+}
+
+@mixin heading-h2() {
+    font-size: ms(5);
+    margin-top: 0;
+}
+
+@mixin heading-h3() {
+    font-size: ms(4);
+    margin-top: 0;
+}
+
+@mixin heading-h4() {
+    font-size: ms(3);
+    margin-top: 0;
+}
+
+@mixin heading-h5() {
+    font-size: ms(2);
+    margin-top: 0;
+}
+
+@mixin heading-h6() {
+    font-size: ms(1);
+    margin-top: 0;
+}
+
+@mixin body-text() {
+   font-size: ms(0);
+   margin-top: 0;
+}

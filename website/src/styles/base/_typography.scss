@@ -1,0 +1,12 @@
+//
+// Basic typography style for copy text
+//
+
+body {
+    color: $color-primary;
+    font-family: $font-family-base;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}

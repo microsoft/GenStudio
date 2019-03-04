@@ -1,0 +1,51 @@
+// 1. Configuration and helpers
+@import
+  '/styles/abstracts/variables',
+  '/styles/abstracts/functions',
+  '/styles/abstracts/mixins/arrows',
+  '/styles/abstracts/mixins/aspect-ratio',
+  '/styles/abstracts/mixins/baseline',
+  '/styles/abstracts/mixins/custom-properties',
+  '/styles/abstracts/mixins/ellipsis',
+  '/styles/abstracts/mixins/ellipsis-multiline',
+  '/styles/abstracts/mixins/fonts',
+  '/styles/abstracts/mixins/crop-text',
+  '/styles/abstracts/mixins/underline',
+  '/styles/abstracts/mixins/spacing',
+  '/styles/abstracts/mixins/container-centered',
+  '/styles/abstracts/mixins/transition';
+
+// 2. Vendors
+@import
+  '/styles/vendor/normalize',
+  '/styles/vendor/slick';
+
+// 3. Base stuff
+@import
+  '/styles/base/base',
+  '/styles/base/fonts',
+  '/styles/base/typography',
+  '/styles/base/utilities';
+
+// 4. Layout-related sections
+@import
+  '/styles/layout/header',
+  '/styles/layout/selectpage-head',
+  '/styles/layout/footer';
+
+// 5. Components
+@import
+  '/styles/components/btn',
+  '/styles/components/explore',
+  '/styles/components/search',
+  '/styles/components/grid-card',
+  '/styles/components/original',
+  '/styles/components/nav',
+  '/styles/components/gen-art',
+  '/styles/components/artwork-info';
+
+// 6. Page-specific styles
+@import
+  '/styles/pages/map',
+  '/styles/pages/explore';
+

@@ -22,20 +22,18 @@
   color: #61dafb;
 }
 
+
+/* .scatterlayer {
+  pointer-events: all;
+  touch-action: none;
+} */
+
 .scatterlayer .trace:last-child path {
     pointer-events: all;
 }
 
-.plot {
-    background-image: url('../src/images/background.jpeg');
-    background-color: rgba(0,0,0,.2);
-    background-size: cover;
-    padding: 0;
-    margin: 0;
-    border-collapse: collapse;
-    width: 100%;
-    height: 90%;
-    pad: 0;
+.scatterlayer .trace:last-of-type .points path{
+  pointer-events: all ;
 }
 
 @keyframes App-logo-spin {

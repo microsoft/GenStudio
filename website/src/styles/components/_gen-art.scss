@@ -1,0 +1,82 @@
+// ---------------------------------------------------------------
+// This file contains all styles related to the .gen-art component
+// ---------------------------------------------------------------
+.gen-art {
+  margin-right: $space-l;
+  position: relative;
+  width: $gen-size;
+
+  @media (max-width: $mq-s){
+    order: 2;
+  }
+
+  @media (max-width: $mq-ss) and (min-width: $mq-xs){
+    height: auto;
+    margin-right: 0px;
+    width: 200px;
+  }
+
+  &__loader {
+    align-items: center;
+    background-color: $color-shade-light;
+    display: flex;
+    justify-content: center;
+    height: $gen-size;
+    margin-bottom: $space-m;
+    position: relative;
+    width: $gen-size;
+
+    @media (min-width: $mq-xs){
+      height: auto;
+      width: auto;
+      background-color: white;
+    }
+
+    img {
+      display: block;
+      // margin-left: auto;
+      margin-right: auto;
+      z-index: $z-index-s !important;
+
+      @media (max-width: $mq-ss) and (min-width: $mq-xs){
+        height: 200px;
+        width: auto;
+      }
+    }
+  }
+
+  &__share{
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1em;
+
+    .SocialMediaShareButton{
+      margin-right:1em; 
+
+      :hover{
+        cursor: pointer;
+      }
+    }
+  }
+
+  .button {
+    margin-bottom: $space-m;
+    width: 100%;
+
+    @media (max-width: $mq-ss) and (min-width: $mq-xs) {
+      width: 200px;
+      font-size: $font-m*0.9;
+    }
+
+    @media (max-width: $mq-xs){
+      width: calc(100% - 2rem);
+    }
+  }
+
+  &__header {
+    color: $color-base-dark;
+    font-size: $font-l;
+    font-weight: $font-weight-semibold;
+    margin-bottom: .5rem;
+  }
+}

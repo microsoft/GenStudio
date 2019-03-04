@@ -1,0 +1,61 @@
+// -------------------------------------------------------------
+// This file contains all styles related to the .nav component
+// -------------------------------------------------------------
+.nav {
+  align-items: center;
+  border-bottom: 1px solid $color-shade-dark;
+  display: flex;
+  height: $nav-unit;
+  justify-content: space-between;
+  margin-bottom: $space-xl;
+
+  &__link {
+    align-items: center;
+    display: flex;
+    height: inherit;
+    left: 0;
+    position: absolute;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: $nav-unit;
+
+    img{
+      max-height: 6rem;
+    }
+
+    span {
+      color: $color-text-light;
+      font-family: $font-family-heading;
+      font-size: 1rem;
+      font-weight: $font-weight-black;
+      line-height: 0.9; // Magic string, do not change
+      max-width: 60px; // Magic string, do not change
+      width: 100%;
+    }
+  }
+
+  &__button {
+    align-items: center;
+    border: 1px solid $color-shade-dark;
+    border-radius: 1.5rem;
+    color: $color-shade-light;
+    display: flex;
+    height: 2.125rem;
+    justify-content: space-between;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-decoration: none;
+    width: 15rem;
+  }
+
+  &__text {
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  &__image {
+    margin-left: 0.5rem;
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+}
