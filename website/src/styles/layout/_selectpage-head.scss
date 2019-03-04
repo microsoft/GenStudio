@@ -1,0 +1,81 @@
+.selectpage {
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    height: 94px;
+    justify-content: space-between;
+    margin-bottom: $space-xl;
+    padding-left: $space-m;
+    padding-right: $space-m;
+
+    @media (max-width: $mq-s) {
+      height: auto;
+    }
+
+    @include container-centered();
+  }
+
+  .gAXUqz {
+    border-color: transparent !important; // Overwrites dinamic class added by grommet library
+    box-shadow: none !important; // Overwrites dinamic class added by grommet library
+  }
+
+  &__head button {
+    align-self: self-end;
+    border-color: $color-primary;
+    box-shadow: 0 0 0px 0px $color-primary;
+  }
+
+  &__head button > div {
+    border: 2px solid $color-primary;
+    border-radius: 0;
+    width: 300px;
+
+    @media (max-width: $mq-s){
+      width: auto;
+    }
+
+    svg {
+      stroke: $color-grey;
+    }
+
+    input {
+      border-radius: 0;
+      color: $color-primary;
+
+      &::-webkit-input-placeholder {
+        // Chrome/Opera/Safari
+        color: inherit;
+        font-weight: $font-weight-normal;
+      }
+
+      &::-moz-placeholder {
+        // Firefox 19+
+        color: inherit;
+        font-weight: $font-weight-normal;
+        opacity: 1;
+      }
+
+      &:-ms-input-placeholder {
+        // IE 10+
+        color: inherit;
+        font-weight: $font-weight-normal;
+      }
+
+      &:-moz-placeholder {
+        // Firefox 18-
+        color: inherit;
+        font-weight: $font-weight-normal;
+      }
+    }
+  }
+}
+
+.selectpage__head + div + div > .button {
+  display: inline-block;
+  margin-bottom: $space-xl;
+}
+
+.czusFq{
+  background: $color-grey !important;
+}

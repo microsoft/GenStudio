@@ -1,0 +1,29 @@
+{
+  "en": {
+    "translation": {
+      "global.title": "Gen Studio",
+      "global.claim": "Select an image to enter the AI studio",
+      "global.learn_more": "Click here to learn more",
+      "global.lang_eng": "Language: English",
+      "global.lang_eng_description_us": "English (United States)",
+      "global.copyright": "© Microsoft 2019",
+
+      "nav.explore": "Explore the MET Collection",
+
+      "map.title": "Gan",
+      "map.description": "Based on given artworks from The Met’s Open Access collection, a Generative Adversarial Network (GAN) allows you to explore and visualize the spaces in between those pieces.",
+      "map.explore": "Tap to explore the space between artworks",
+      "map.combine": "Explore the space between existing objects",
+      "map.artist": "Artist",
+      "map.date": "Date",
+      "map.similar": "Explore Similar",
+      "map.save": "Save Image",
+
+      "foo.desc": "Gen Studio is a prototype concepts which was created over a two-day hackathon with collaborators across The Met, Microsoft, and MIT.",
+      "foo.privacy_cookies": "Privacy & Cookies",
+      "foo.terms_use": "Terms of use",
+      "foo.trademarks": "Trademarks",
+      "foo.report_abuse": "Report abuse"
+    }
+  }
+}

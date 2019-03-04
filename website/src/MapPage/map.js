@@ -1,6 +1,6 @@
 import Softmax from 'softmax-fn';
 
-export default function setupPlotly(stateHolder, objIDs, firstID) {
+export function setupPlotly(stateHolder, objIDs, firstID) {
     var Plotly = require('plotly.js-dist');
     const divName = 'myPlot'
     const myPlot = document.getElementById(divName);
@@ -27,7 +27,8 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
     //const locations = [[0.7,1.15], [1.15, 1.0], [1.2,.5], [0.9,.25], [.5, .25], [.2, .5], [.25, 1.0]]
 
     //Little bit of random:
-    const locations = [[0.7-.05,1.15-.01], [1.15+.01, 1.0+.02], [1.2+.03,.5+.04], [0.9+.01,.25-.03], [.5-.02, .25+0.0], [.2+.02, .5+.03], [.25+.04, 1.0+.05]];
+    const locations = [[0.7+.01,1.15-.01], [1.15+.01, 1.0+.02], [1.2+.03,.5+.04], [0.7+.01,.25-.0], [.2+.02, .5+.03], [.25+.04, 1.0+.05]];
+    // const locations = [[0.7-.05,1.15-.01], [1.15+.01, 1.0+.02], [1.2+.03,.5+.04], [0.9+.01,.25-.03], [.5-.02, .25+0.0], [.2+.02, .5+.03], [.25+.04, 1.0+.05]];
 
     const paintingUrls = paintingIds.map(id => thumbnailRoot + id.toString() + ".jpg");
     const imageProps = {
@@ -65,9 +66,9 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
             name: 'primary',
             layer: "above",
             marker: {
-                size: 15,
-                color: 'rgb(0, 0, 0)',
-                symbol: "square",
+                size: 23,
+                color: '#666666',
+                symbol: "circle",
             },
         }
     ];
@@ -101,6 +102,40 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
         }
     ).then(attach);
 
+    myPlot.addEventListener('touchenter', (event) => touchHandler(event));
+    myPlot.addEventListener('touchleave', (event) => touchHandler(event));
+    myPlot.addEventListener('touchstart', (event) => touchHandler(event));
+    myPlot.addEventListener('touchmove', (event) => touchHandler(event));
+    myPlot.addEventListener('touchend', (event) => touchHandler(event));
+
+    function touchHandler(event)
+    {
+        var touches = event.changedTouches,
+            first = touches[0],
+            type = "";
+        switch(event.type)
+        {
+            case "touchenter": type = "mouseover"; break;
+            case "touchleave": type = "mouseout";  break;
+            case "touchstart": type = "mousedown"; break;
+            case "touchmove":  type = "mousemove"; break;        
+            case "touchend":   type = "mouseup";   break;
+            default:           return;
+        }
+
+        var opts = {
+            bubbles: true,
+            screenX: first.screenX,
+            screenY: first.screenY,
+            clientX: first.clientX,
+            clientY: first.clientY,
+        };
+        
+        var simulatedEvent = new MouseEvent(type, opts);
+        
+        first.target.dispatchEvent(simulatedEvent);
+        event.preventDefault();
+    }
 
     /* ---------------------------------------------------------------------------
      * ---------------------------------------------------------------------------
@@ -110,7 +145,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
     /**
    * Calls an API, sending a seed, and getting back an ArrayBuffer reprsenting that image
    * This function directly saves the image data and ArrayBuffer to state
-   * @param {string} seedArr - string version of a 1xSEED_LENGTH array of floats between -1,1  
+   * @param {string} seedArr - string version of a 1xSEED_LENGTH array of floats between -1,1
    * @param {Float[]} labelArr - data version of a 1000 length array of floats between 0,1
    */
     function getGenImage(seedArr, labelArr) {
@@ -240,7 +275,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
 
     /**
      * If a click is super close to a point, generates an image based on that point's object, then returns false
-     * @param {int[]} ids - list of object IDs, in the same order as distances 
+     * @param {int[]} ids - list of object IDs, in the same order as distances
      * @param {float[]} distances - list of distances from click to points, in same order as ids
      */
     function checkIfNotSuperClose(ids, distances){
@@ -269,13 +304,12 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
             let totalLabel = new Array(1000).fill(0);
             ratios.forEach(function (r, i) {
                 const index = idToIndex[ids[i]];
-    
+
                 const labels = stateHolder.state.images[index].labels;
                 const latents = stateHolder.state.images[index].latents;
                 totalLatent = addVector(totalLatent, scalarMultiplyVector(latents, r));
                 totalLabel = addVector(totalLabel, scalarMultiplyVector(labels, r));
             });
-            stateHolder.setState({ message: `Top Ratios: ${ratios.map(r => r.toPrecision(1)).slice(0,3)}` });
             getGenImage(`[[${totalLatent.toString()}]]`, totalLabel);
         }
 
@@ -293,8 +327,8 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
 
     /**
      * Multiplies a vector by a scalar
-     * @param {Float[]} vec 
-     * @param {Float} scalar 
+     * @param {Float[]} vec
+     * @param {Float} scalar
      */
     function scalarMultiplyVector(vec, scalar) {
         return vec.map(v => v * scalar)
@@ -331,8 +365,8 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
 
     /**
      * Changes from mouse coords to plotly coords
-     * @param {int} x - x coord in pixels of the mouse 
-     * @param {int} y - y coord in pixels of the mouse 
+     * @param {int} x - x coord in pixels of the mouse
+     * @param {int} y - y coord in pixels of the mouse
      */
     function toPlotlyCoords(x, y) {
         const width = myPlot.clientWidth + 8;
@@ -346,7 +380,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
 
     /**
      * updates the location of the main marker and updates the generated image periodically
-     * @param {int[]} point - the point of the marker 
+     * @param {int[]} point - the point of the marker
      */
     function updatePOI(point) {
         Plotly.restyle(divName, { 'x': [[point[0]]], 'y': [[point[1]]] }, 1);
@@ -370,6 +404,7 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
 
     function startDragBehavior() {
         const drag = d3.behavior.drag();
+        
         drag.origin(function () {
             const transform = d3.select(this).attr("transform");
             const translate = transform.substring(10, transform.length - 1).split(/,| /);
@@ -420,6 +455,26 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
             updatePOI(toPlotlyCoords(evt.pageX, evt.pageY))
         });
 
+        // myPlot.addEventListener('touchstart', function (evt) {
+        //     // nozoom();
+        //     updatePOI(toPlotlyCoords(evt.pageX, evt.pageY))
+        // });
+
+        // myPlot.addEventListener('touchmove', function (evt) {
+        //     // nozoom();
+        //     updatePOI(toPlotlyCoords(evt.pageX, evt.pageY))
+        // });
+
+        // myPlot.addEventListener('enter', function (evt) {
+        //     nozoom();
+        //     updatePOI(toPlotlyCoords(evt.pageX, evt.pageY))
+        // });
+
+
+        // d3.on("touchstart", nozoom).call(drag);
+            // d3.on("touchmove", nozoom).call(drag);
+            // d3.enter().call(drag);
+
         // myPlot.on('plotly_click', function(data) {
         //     //console.log(JSON.stringify(data.points));
         //     let coord = null;
@@ -441,4 +496,9 @@ export default function setupPlotly(stateHolder, objIDs, firstID) {
         //     firstTimeGenImage(id);
         // })
     };
+}
+
+export function destroyPlotly() {
+    const Plotly = require('plotly.js-dist');
+    Plotly.purge('myPlot');
 }
