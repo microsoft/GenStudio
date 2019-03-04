@@ -1,8 +1,14 @@
+# Build the website
+Follow these steps to build the website. Note that many of the APIs are referenced within the site code and will need to be changed if you are deploying a full version of the site. 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
-In the project directory, you can run:
+The first time you work with the code, navigate to `website\deep-art` and install our dependencies with:
+
+### `npm install`
+
+Once the dependencies are installed, start the website with:
 
 ### `npm start`
 
