@@ -104,5 +104,6 @@ venv.bak/
 .mypy_cache/
 
 # Project specific ignores
-node_modules
+node_modules/
 .vs
+*.package-lock.json
