@@ -1,5 +1,3 @@
-[website]:https://ms-genstudio-dev.azurewebsites.net/
-
 # Gen Studio
 
 <p align="center">
@@ -8,9 +6,9 @@
   </a>
 </p>
 
-[Gen Studio](#website) is a prototype created by collaborators from The Metropolitan Museum of Art (The Met), Microsoft, and Massachusetts Institute of Technology (MIT). This site allows users to visually explore Generative Adversarial Networks (GANs) for high resolution art creation. 
+[Gen Studio](https://ms-genstudio-dev.azurewebsites.net/) is a prototype created by collaborators from The Metropolitan Museum of Art (The Met), Microsoft, and Massachusetts Institute of Technology (MIT). This site allows users to visually explore Generative Adversarial Networks (GANs) for high resolution art creation. 
 
-Try it for yourself and create your own unique neural artworks [here!](#website)
+Try it for yourself and create your own unique neural artworks [here!](https://ms-genstudio-dev.azurewebsites.net/)
 
 You can also learn more about [the collaboration](https://www.microsoft.com/inculture/arts/met-microsoft-mit-ai-open-access-hack/) and [The Met’s Open Access Program](https://www.metmuseum.org/blogs/now-at-the-met/2019/met-microsoft-mit-art-open-data-artificial-intelligence). 
 
@@ -137,7 +135,11 @@ Special thanks to the entire Gen Studio team including:
 - Chris Hoder – AI Project Manager, Microsoft Applied AI – lead 
 - Matthew Ritchie – Dasha Zhukova Distinguished Visiting Artist at the MIT Center for Art, Science & Technology, MIT – lead 
 - Sarah Schwettmann, Brain + Cognitive Sciences, Knowledge Futures Group, MIT- lead 
-- Kim Benzel, Curator in Charge, Department of Ancient Near Eastern Art, The Met Julie Arslanoglu, Research Scientist, Department of Scientific Research, The Met 
+- Kim Benzel, Curator in Charge, Department of Ancient Near Eastern Art, The Met 
+- Julie Arslanoglu, Research Scientist, Department of Scientific Research, The Met 
+- Darius Bopp, MIT Student Extern with Microsoft Garage 
+- Diana Nguyen, MIT Student Extern with Microsoft Garage 
+- Elaine Zhang, MIT Student Extern with Microsoft Garage
 - Casey Hong, Software Engineer, Microsoft AI Rotation Program 
 - Dalitso Banda, Software Engineer, Microsoft AI Rotation Program 
 - Manon Knoertzer, Program Manager, Microsoft AI Rotation Program 
@@ -145,9 +147,6 @@ Special thanks to the entire Gen Studio team including:
 - Botong Ma, Graduate Student, Electrical Engineering and Computer Science, MIT 
 - Alonso Salas Infante, MIT Student Extern with Microsoft Garage 
 - Gillian Belto, MIT Student Extern with Microsoft Garage 
-- Darius Bopp, MIT Student Extern with Microsoft Garage 
-- Diana Nguyen, MIT Student Extern with Microsoft Garage 
-- Elaine Zhang, MIT Student Extern with Microsoft Garage 
 - SJ Klein, Underlayer, Knowledge Futures Group, MIT 
 - Luke Hewitt, Graduate Student, Brain and Cognitive Sciences, MIT 
 - Maddie Cusimano, Graduate Student, Brain and Cognitive Sciences, MIT 
