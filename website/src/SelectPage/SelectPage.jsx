@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import SelectControl from './SelectControl.jsx';
 import ResultArt from './ResultArt.jsx';
 import { NamespacesConsumer } from 'react-i18next';
+import {AppInsights} from "applicationinsights-js"
+
 
 const NUM_FROM_EACH_CAT = 2; //Number to choose from each category
 const NUM_MAX_RESULTS = 6;
@@ -95,6 +97,9 @@ class SelectPage extends Component {
     this.changeSelectedImage = this.changeSelectedImage.bind(this);
     this.getImageIDs = this.getImageIDs.bind(this);
     this.clearOldImages = this.clearOldImages.bind(this);
+
+    AppInsights.downloadAndSetup({ instrumentationKey: "7ca0d69b-9656-4f4f-821a-fb1d81338282" });
+    AppInsights.trackPageView("Select Page");
   }
 
   /**

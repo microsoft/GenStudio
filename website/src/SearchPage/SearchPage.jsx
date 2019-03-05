@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import SearchControl from './SearchControl.jsx';
 import TagList from './TagList.jsx';
 import SearchGrid from './SearchGrid.jsx';
+import {AppInsights} from "applicationinsights-js"
 
 const maxSearchResults = 30;
 const minTagLength = 2;
@@ -30,6 +31,8 @@ export default class SearchPage extends Component {
     this.updateTags = this.updateTags.bind(this);
     this.isValidUrl = this.isValidUrl.bind(this);
     this.getSearch = this.getSearch.bind(this);
+    AppInsights.downloadAndSetup({ instrumentationKey: "7ca0d69b-9656-4f4f-821a-fb1d81338282" });
+    AppInsights.trackPageView("Search Page");
   }
 
   componentDidMount() {

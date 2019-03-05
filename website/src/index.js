@@ -5,9 +5,14 @@ import './i18n';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import {AppInsights} from "applicationinsights-js"
 
-import ReactAI from 'react-appinsights';
-ReactAI.init({instrumentationKey:'4f750fc5-13d7-4145-84a6-a528aec1f9f6'});
+/* Call downloadAndSetup to download full ApplicationInsights script from CDN and initialize it with instrumentation key */
+AppInsights.downloadAndSetup({ instrumentationKey: "7ca0d69b-9656-4f4f-821a-fb1d81338282" });
+
+/* example: track page view */
+AppInsights.trackPageView("Landing Page");
+
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

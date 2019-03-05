@@ -3,6 +3,7 @@ import GenArt from "./GenArt.jsx";
 import {setupPlotly, destroyPlotly} from "./map.js";
 
 import MapExploreContainer from "../MapExploreContainer/MapExploreContainer.jsx";
+import {AppInsights} from "applicationinsights-js"
 
 /**
  * A map explore page to explore the latent space of BigGAN
@@ -16,6 +17,8 @@ class MapPage extends Component {
       cursorPoint: null,
       url: ''
     };
+    AppInsights.downloadAndSetup({ instrumentationKey: "7ca0d69b-9656-4f4f-821a-fb1d81338282" });
+    AppInsights.trackPageView("Map Page");
   }
 
   componentDidMount() {

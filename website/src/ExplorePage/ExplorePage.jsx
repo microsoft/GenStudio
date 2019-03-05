@@ -4,6 +4,8 @@ import GenArt from "./GenArt.jsx";
 import ExplorePalette from "./ExplorePalette.jsx";
 
 import MapExploreContainer from "../MapExploreContainer/MapExploreContainer.jsx";
+import {AppInsights} from "applicationinsights-js"
+
 
 /**
  * Page for the Exploring feature
@@ -23,6 +25,9 @@ export default class ExplorePage extends Component {
 
     this.addSeed = this.addSeed.bind(this);
     this.subSeed = this.subSeed.bind(this);
+
+    AppInsights.downloadAndSetup({ instrumentationKey: "7ca0d69b-9656-4f4f-821a-fb1d81338282" });
+    AppInsights.trackPageView("Explore Page");
   }
 
   /**
