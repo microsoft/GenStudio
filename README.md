@@ -14,7 +14,7 @@ You can also learn more about [the collaboration](https://www.microsoft.com/incu
 
 # Goal of the Project
 
-Our goal is to inspire others to explore the world of art and the world of AI. We hope that publishing this website will help anyone with an internet connection discover or create works of art they love. Art captures humanity's intricate structure, from great struggles, and triumphs to the beautifully commonplace. We hope that by using the GAN as a tool, you too can feel the rush of creation that has driven so many great artists and creators throughout the ages. This project was prototyped by a passionate group during a two day hackathon and brought to life by some amazing students and engineers. Thank you for trying our website and please feel free to [send us feedback](mailto:marhamil@microsoft.com).
+Our goal is to inspire others to explore the world of art and the world of AI. We hope that publishing this website will help anyone with an internet connection discover or create works of art they love. Art captures humanity's intricate structure, from great struggles, and triumphs to the beautifully commonplace. We hope that by using the GAN as a tool, you too can feel the rush of creation that has driven so many great artists and creators throughout the ages. This project was prototyped by a passionate group during a two day hackathon and brought to life by some amazing students and engineers. Thank you for trying our website and please feel free to send us feedback at [genstudio@microsoft.com](mailto:genstudio@microsoft.com).
 
 # The Website
 
