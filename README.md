@@ -14,7 +14,7 @@ You can also learn more about [the collaboration](https://www.microsoft.com/incu
 
 # Goal of the Project
 
-Our goal is to inspire others to explore the world of art and the world of AI. We hope that publishing this website will help anyone with an internet connection discover or create works of art they love. Art captures humanity's intricate structure, from great struggles, and triumphs to the beautifully commonplace. We hope that by using the GAN as a tool, you too can feel the rush of creation that has driven so many great artists and creators throughout the ages. This project was prototyped by a passionate group during a two day hackathon and brought to life by some amazing students and engineers. Thank you for trying our website and please feel free to send us feedback at [genstudio@microsoft.com](mailto:genstudio@microsoft.com).
+Our goal is to inspire others to explore the world of art and the world of AI. We hope that publishing this website will help anyone with an internet connection discover and create works of art they love. Art captures humanity's intricate structure, from great struggles and triumphs, to the beautifully commonplace. We hope that by using the GAN as a tool, you too can feel the rush of creation that has driven so many great artists and creators throughout the ages. This project was prototyped by a passionate group during a two day hackathon and brought to life by some amazing students and engineers over a month. Thank you for trying our website and please feel free to send us feedback at [genstudio@microsoft.com](mailto:genstudio@microsoft.com).
 
 # The Website
 
@@ -28,15 +28,15 @@ Once you have found an inspiring piece you can explore related works through an 
 
 ### Generative Adversarial Networks (GANs)
 
-GANs are a special kind of deep network capable of modeling the distribution of a variety of types of data. What this means is that GANs can learn to "sample" or "create" new data that looks like an existing dataset.
+GANs are a special kind of deep network capable of modeling distributions of data. More explicitly, GANs can learn to "sample" or "create" new data that looks like an existing dataset.
 
-In our case we use a GAN to sample from the space of art in [The Metropolitan Museum of Art's Open Access Collection](https://www.metmuseum.org/about-the-met/policies-and-documents/open-access).
+In [Gen Studio](https://gen.studio/) we use a GAN to sample from the space of art in [The Metropolitan Museum of Art's Open Access Collection](https://www.metmuseum.org/about-the-met/policies-and-documents/open-access).
 
 <p align="center">
   <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/gan-architecture.jpg">
 </p>
 
-GANs consist of two components: A Generator and a Discriminator. The generator aims to create new art, and the discriminator aims to critique the art and discover ways to tell generated art from existing art. Both networks are trained in competition until the generator can create realistic works of art, and the discriminator can no longer tell the difference. 
+A GAN is made up of two dueling deep networks: A Generator and a Discriminator. The generator aims to create new art, and the discriminator aims to critique the art and distinguish it from existing art. Both networks are trained in competition until the generator can fool the descriminator and create realistic works of art. 
 
 <p align="center">
   <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/training.gif">
@@ -51,7 +51,7 @@ GANs consist of two components: A Generator and a Discriminator. The generator a
   <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/semantic-inversion.jpg">
 </p>
 
-GANs are great at generating new works of art, but we wanted to see if the GAN could recreate existing works in The MET's collection. To achieve this, we used a technique called neural network inversion. Instead of learning the weights of a generator network, we keep those weights constant and instead learn the noise pattern  to maximize the similarity between the GAN output and a target work. We discovered that one needs to match both the target image's pixels as well as its "high-level" semantic content to be successful.
+GANs are great at generating new works of art, but we wanted to see if the GAN could recreate existing works in The MET's collection. To achieve this, we used a technique called neural network inversion. Instead of learning the weights of a generator network, we keep those weights constant and instead learn the noise pattern to maximize the similarity between the GAN output and a target work. We discovered that one needs to match both the target image's pixels as well as its "high-level" semantic content to be successful.
 
 <p align="center">
   <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/inversion.gif">
@@ -64,7 +64,7 @@ GANs are great at generating new works of art, but we wanted to see if the GAN c
   <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/code-space-interp.jpg">
 </p>
 
-To explore the spaces between objects in our GAN we first invert the objects to get their positions in "latent" space. This latent space is learned by the network, and each point in it corresponds to a unique artwork when mapped through the generator network. To interpolate between the points we use plain-old vector interpolation, though depending on the noise you train your GAN with, you might get better performance by transforming to spherical coordinates before the interpolation (because of [the magic of high dimensional gaussians](https://www.cs.cmu.edu/~avrim/598/chap2only.pdf)). 
+To explore the spaces between objects in our GAN, we first invert the objects to get their positions in "latent" space. This latent space is learned by the network, and each point in it corresponds to a unique artwork when mapped through the generator network. To interpolate between the points we use plain-old vector interpolation, though depending on the noise you train your GAN with, you might get better performance by transforming to spherical coordinates before the interpolation (because of [the magic of high dimensional gaussians](https://www.cs.cmu.edu/~avrim/598/chap2only.pdf)). 
 
 
 <p align="center">
@@ -77,7 +77,7 @@ To explore the spaces between objects in our GAN we first invert the objects to 
   <img width="80%" src="https://deepartstorage.blob.core.windows.net/public/assets/nn-lookup.jpg">
 </p>
 
-To create a reverse image search engine, we first map the MET's images into a space where distance is more meaningful, aka the output of a truncated pretrained ResNet50 model. In this space, images that seem similar to us are close together and their positions are roughly invariant to small transformations like scaling, brightness, rotations etc. This is starkly opposed to pixel space, where imperceptibly small translations like scaling or rotating can completely change the distance between images. Once we have all of the Met's images featurized, we create an efficient Nearest Neighbor lookup tree frequently referred to as a [k-d tree](https://en.wikipedia.org/wiki/K-d_tree). This lets us lookup approximate nearest neighbors in feature space without comparing our vector to all other image features. At each node of this tree, we store the pointer to the MET image so that we can quickly return it to the caller. We use [the annoy library](https://github.com/spotify/annoy) for fast NN indexes. 
+To create a reverse image search engine, we first map the MET's images into a space where distance is more meaningful, aka the output of a truncated pretrained ResNet50 model. In this space, images that seem similar to us are close together. Furthermore, their positions are roughly invariant to small image transformations like scaling, brightness, rotations etc. This is starkly opposed to pixel space, where imperceptibly small translations like scaling or rotating can completely change the distance between images. Once we have all of the Met's images featurized, we create an efficient nearest neighbor lookup tree frequently referred to as a [k-d tree](https://en.wikipedia.org/wiki/K-d_tree). This lets us lookup approximate nearest neighbors in feature space without comparing our image to the entirty of the MET collection. At each node of this tree, we store the pointer to the MET image so that we can quickly return it to the caller. We use [the annoy library](https://github.com/spotify/annoy) for fast NN indexes. 
 
 <p align="center">
   <img width="80%" src="https://deepartstorage.blob.core.windows.net/public/assets/nearest_neighbors.jpg">
@@ -92,8 +92,6 @@ To create a reverse image search engine, we first map the MET's images into a sp
 
 ### Frontend:
 The frontend serves as the portal to the backend services. The website is built using React for the layout and styling, and plotly for the map exploration UX. The content is hosted as an azure web-app using [Azure App Services](https://azure.microsoft.com/en-us/services/app-service/).  
-
-
 
 ### Backend:
 The backend for the site uses the following services:
