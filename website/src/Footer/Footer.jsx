@@ -11,7 +11,7 @@ function NavBar({ t }) {
     return (
       <footer className="footer">
         <p className="footer__description">
-          <span>Gen Studio is an experimental collaboration across The Met, Microsoft, and MIT. Learn more about the <a href="https://www.microsoft.com/inculture/arts/met-microsoft-mit-ai-open-access-hack/" target="_blank" rel="noopener noreferrer"> collaboration</a> and The Met’s <a href="https://www.metmuseum.org/blogs/now-at-the-met/2019/met-microsoft-mit-art-open-data-artificial-intelligence" target="_blank" rel="noopener noreferrer"> Open Access Program</a>. View the source code <a href="https://github.com/Microsoft/deep-art" target="_blank" rel="noopener noreferrer">here</a>.</span>
+          <span>Gen Studio is an experimental collaboration across The Met, Microsoft, and MIT. Learn more about the <a href="https://www.microsoft.com/inculture/arts/met-microsoft-mit-ai-open-access-hack/" target="_blank" rel="noopener noreferrer"> collaboration</a> and The Met’s <a href="https://www.metmuseum.org/blogs/now-at-the-met/2019/met-microsoft-mit-art-open-data-artificial-intelligence" target="_blank" rel="noopener noreferrer"> Open Access Program</a>. View the source code <a href="https://github.com/Microsoft/GenStudio" target="_blank" rel="noopener noreferrer">here</a>.</span>
           {/* <a className="footer__link footer__link--strong" href={'https://www.microsoft.com/inculture/arts/met-microsoft-mit-ai-open-access-hack'} target="_blank" rel="noopener noreferrer">
             {t('global.learn_more')}
           </a> */}
