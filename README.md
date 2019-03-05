@@ -1,14 +1,14 @@
 # Gen Studio
 
 <p align="center">
-  <a href="https://ms-genstudio-dev.azurewebsites.net/">
+  <a href="https://gen.studio/">
     <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/gen_studio.gif">
   </a>
 </p>
 
-[Gen Studio](https://ms-genstudio-dev.azurewebsites.net/) is a prototype created by collaborators from The Metropolitan Museum of Art (The Met), Microsoft, and Massachusetts Institute of Technology (MIT). This site allows users to visually explore Generative Adversarial Networks (GANs) for high resolution art creation. 
+[Gen Studio](https://gen.studio/) is a prototype created by collaborators from The Metropolitan Museum of Art (The Met), Microsoft, and Massachusetts Institute of Technology (MIT). This site allows users to visually explore Generative Adversarial Networks (GANs) for high resolution art creation. 
 
-Try it for yourself and create your own unique neural artworks [here!](https://ms-genstudio-dev.azurewebsites.net/)
+Try it for yourself and create your own unique neural artworks [here!](https://gen.studio/)
 
 You can also learn more about [the collaboration](https://www.microsoft.com/inculture/arts/met-microsoft-mit-ai-open-access-hack/) and [The Met’s Open Access Program](https://www.metmuseum.org/blogs/now-at-the-met/2019/met-microsoft-mit-art-open-data-artificial-intelligence). 
 
