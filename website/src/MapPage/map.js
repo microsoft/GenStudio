@@ -5,7 +5,6 @@ export function setupPlotly(stateHolder, objIDs, firstID) {
     const divName = 'myPlot'
     const myPlot = document.getElementById(divName);
     const d3 = Plotly.d3;
-    //const nNeighbors = 5;
     const nNeighbors = objIDs.length;
     const firstGenID = firstID;
     const startCoords = [.7, .7];
@@ -17,6 +16,8 @@ export function setupPlotly(stateHolder, objIDs, firstID) {
     const CLOSE_DIST = .05;
     const thumbnailRoot = "https://deepartstorage.blob.core.windows.net/public/thumbnails4/";
     var lastTimeCalled = Date.now();
+
+    var isMobile = (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
 
     const paintingIds = objIDs;
     const idToIndex = paintingIds.map((x,i) => [x,i]).reduce(function (map, obj) {
@@ -383,7 +384,7 @@ export function setupPlotly(stateHolder, objIDs, firstID) {
      * @param {int[]} point - the point of the marker
      */
     function updatePOI(point) {
-        Plotly.restyle(divName, { 'x': [[point[0]]], 'y': [[point[1]]] }, 1);
+        Plotly.restyle(divName, { 'x': [[point[0]]], 'y': [[point[1]]] }, 1).catch(function(e) {});
         let roundedX = Math.round(1000.0*point[0])/1000.0;
         let roundedY = Math.round(1000.0*point[1])/1000.0;
         stateHolder.setState({
@@ -440,61 +441,18 @@ export function setupPlotly(stateHolder, objIDs, firstID) {
         return Math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2);
     }
 
-    // function coordToObjID(plotlyCoord) {
-    //     let index = locations.indexOf(plotlyCoord);
-    //     console.log("INDEX: "+index);
-    //     let ID = paintingIds[index];
-    //     console.log("ID: "+ID);
-    //     return ID
-    // }
-
-
     function attach() {
-        startDragBehavior()
-        myPlot.addEventListener('click', function (evt) {
-            updatePOI(toPlotlyCoords(evt.pageX, evt.pageY))
-        });
+        if(isMobile){
+            myPlot.addEventListener('touchstart', function (evt) {
+                updatePOI(toPlotlyCoords(Math.floor(evt.touches[0].pageX), Math.floor(evt.touches[0].pageY)))
+            });
+        } else {
+            startDragBehavior()
+            myPlot.addEventListener('click', function (evt) {
+                updatePOI(toPlotlyCoords(evt.pageX, evt.pageY))
+            });
+        }
 
-        // myPlot.addEventListener('touchstart', function (evt) {
-        //     // nozoom();
-        //     updatePOI(toPlotlyCoords(evt.pageX, evt.pageY))
-        // });
-
-        // myPlot.addEventListener('touchmove', function (evt) {
-        //     // nozoom();
-        //     updatePOI(toPlotlyCoords(evt.pageX, evt.pageY))
-        // });
-
-        // myPlot.addEventListener('enter', function (evt) {
-        //     nozoom();
-        //     updatePOI(toPlotlyCoords(evt.pageX, evt.pageY))
-        // });
-
-
-        // d3.on("touchstart", nozoom).call(drag);
-            // d3.on("touchmove", nozoom).call(drag);
-            // d3.enter().call(drag);
-
-        // myPlot.on('plotly_click', function(data) {
-        //     //console.log(JSON.stringify(data.points));
-        //     let coord = null;
-        //     let index = null;
-
-        //     let thing = data.points.map(point => (
-        //         {pointNumber: point.pointNumber, x: point.x, y: point.y}
-        //     ))
-        //     console.log(JSON.stringify(thing));
-        //     for (let i = data.points.length-1; i > -1; i--){
-        //         coord = [data.points[i].x, data.points[i].y];
-        //         index = data.points[i].pointNumber
-        //     }
-        //     console.log("INDEX: "+index);
-        //     console.log("Coord: "+coord);
-        //     //let id = coordToObjID(coord);
-        //     let id = paintingIds[index];
-        //     console.log("ID: "+id);
-        //     firstTimeGenImage(id);
-        // })
     };
 }
 
