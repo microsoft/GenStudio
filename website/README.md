@@ -3,7 +3,7 @@ Follow these steps to build the website. Note that many of the APIs are referenc
 
 ## Available Scripts
 
-The first time you work with the code, navigate to `website\deep-art` and install our dependencies with:
+The first time you work with the code, navigate to `website` and install our dependencies with:
 
 ### `npm install`
 
