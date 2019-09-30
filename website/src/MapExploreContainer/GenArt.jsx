@@ -43,8 +43,8 @@ export default class GenArt extends Component {
 
     //const apiURL = 'https://imagedocker2.azurewebsites.net/FindSimilarImages/Byte';
     //const apiURL = 'https://metimagesearch.azurewebsites.net/neighbors?neighbors=1';
-    const apiURL = 'https://methack-api.azure-api.net/ImageSimilarity/FindSimilarImages/Byte';
-    const key = '?subscription-key=43d3f563ea224c4c990e437ada74fae8&neighbors=1';
+    const apiURL = 'https://gen-studio-apim.azure-api.net/met-reverse-search/FindSimilarImages/Byte';
+    const key = '?subscription-key=7c02fa70abb8407fa552104e0b460c50&neighbors=1';
     const Http = new XMLHttpRequest();
     const data = new FormData();
     data.append('image', file);

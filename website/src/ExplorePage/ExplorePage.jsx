@@ -141,7 +141,7 @@ export default class ExplorePage extends Component {
     labels = `[[${labels}]]`;
 
     const apiURL =
-      "https://methack-api.azure-api.net/biggan/labels?subscription-key=43d3f563ea224c4c990e437ada74fae8";
+      "https://gen-studio-apim.azure-api.net/labels?subscription-key=7c02fa70abb8407fa552104e0b460c50";
     const Http = new XMLHttpRequest();
     const data = new FormData();
     data.append("seed", seedArr);
