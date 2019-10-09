@@ -22,7 +22,7 @@ export default class ResultBox extends Component {
           height={500}
           placeholder={<CircularProgress style={{ color: '#6A6A6A' }} />}
         >
-          <img className="grid-card__img" src={this.props.data.PrimaryImageUrl}/>
+          <img className="grid-card__img" src={"https://mmlsparkdemo.blob.core.windows.net/met/thumbnails/" + this.props.data.ObjectID + ".jpg"}/>
         </LazyLoad>
       ) : (
         <CircularProgress style={{ color: '#6A6A6A' }} />
