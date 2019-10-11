@@ -14,8 +14,9 @@
     padding-top: $space-l;
     
     @media (max-width: $mq-m){
-      padding-left: $space-l;
-      padding-right: $space-l;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      padding-top: 1.5rem;
     }
   }
 
@@ -67,6 +68,11 @@
     display: flex;
     margin-bottom: $space-s;
     margin-top: $space-m;
+    
+    @media (max-width: $mq-m){
+      margin-bottom: $space-s;
+      margin-top: $space-s;
+    }
   }
 
   &__checkbox {

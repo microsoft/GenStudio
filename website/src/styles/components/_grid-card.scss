@@ -1,17 +1,19 @@
 .grid-card {
   margin-bottom: $space-l;
-  width: 100%;
+  width: 20%;
 
-  @media (min-width: $mq-s) {
-    width: 49%;
+  @media (max-width: $mq-m) {
+    width: 60%;
+  }
+
+  @media (max-width: $mq-l) {
+    width: 40%;
   }
 
   @media (min-width: $mq-l) {
-    width: 32%;
-  }
+    padding-left: 1rem;
+    padding-right: 1rem;
 
-  @media (min-width: $mq-xl) {
-    width: 24%;
   }
 
   &__img {
@@ -23,8 +25,8 @@
     object-fit: contain;
     width: 100%;
 
-    @media (max-width: $mq-s){
-      height: 15rem;
+    @media (max-width: $mq-m){
+      height: 8rem;
     }
   }
 
@@ -42,10 +44,22 @@
     font-size: $font-l;
     font-weight: $font-weight-semibold;
     margin-bottom: $space-xs;
+    @media (max-width: $mq-m) {
+      font-size: $font-s;
+    }
+    @media (max-width: $mq-l) {
+      font-size: $font-m;
+    }
   }
 
   &__text {
     color: $color-primary;
     margin-bottom: 0;
+    @media (max-width: $mq-m) {
+      font-size: $font-s;
+    }
+    @media (max-width: $mq-l) {
+      font-size: $font-m;
+    }
   }
 }

@@ -68,6 +68,11 @@
     box-shadow: initial;
   }
 
+  @media (max-width: $mq-m){
+    font-size: $font-s;
+    margin-bottom: 0;
+  }
+
   &__actions {
     margin-top: .5em;
     width: 100%;
