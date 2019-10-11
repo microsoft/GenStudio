@@ -7,7 +7,12 @@
   display: flex;
   height: $nav-unit;
   justify-content: space-between;
-  margin-bottom: $space-xl;
+  margin-bottom: $space-l;
+
+  @media (max-width: $mq-s) {
+    margin-bottom: $space-m;
+    height: $nav-unit-s;
+  }
 
   &__link {
     align-items: center;
@@ -20,7 +25,10 @@
     width: $nav-unit;
 
     img{
-      max-height: 6rem;
+      max-height: $nav-unit;
+      @media (max-width: $mq-s) {
+        max-height: $nav-unit-s;
+      }
     }
 
     span {

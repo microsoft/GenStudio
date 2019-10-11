@@ -10,7 +10,7 @@ export default class SearchGrid extends Component {
     return (
       <React.Fragment>
         {this.props.results.map(result => (
-          <ResultBox key={result.ObjectID} data={result} />
+          <ResultBox key={result.Object_ID} data={result} />
         ))}
       </React.Fragment>
     );

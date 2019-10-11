@@ -15,39 +15,38 @@ export default class GenArt extends Component {
 
     this.state = {
       image: 0,
-      objID: 0,
+      objIDs: [],
       redirect: false
     };
     this.getSimilarArtID = this.getSimilarArtID.bind(this);
     this.saveImage = this.saveImage.bind(this);
   }
 
+  
+  jsonToURI(json){ return encodeURIComponent(JSON.stringify(json)); }
+
   getSimilarArtID() {
     let file = this.props.image;
 
-    const apiURL = 'https://gen-studio-apim.azure-api.net/met-reverse-search/FindSimilarImages/Byte';
-    const key = '?subscription-key=7c02fa70abb8407fa552104e0b460c50&neighbors=1';
+    const apiURL = 'https://gen-studio-apim.azure-api.net/met-reverse-search-2/FindSimilarImages/Byte';
+    const key = '?subscription-key=7c02fa70abb8407fa552104e0b460c50&neighbors=20';
     const Http = new XMLHttpRequest();
     const data = new FormData();
-    data.append("image", file);
+    data.append('image', file);
 
-    Http.open("POST", apiURL + key);
+    Http.open('POST', apiURL + key);
     Http.send(data);
     Http.onreadystatechange = e => {
       if (Http.readyState === 4) {
         try {
           let response = JSON.parse(Http.responseText);
-          let id = response.results[0].ObjectID;
-          if (id === undefined || id === null) {
-            id = 0;
-          }
-
+          let ids = response.results.map(result => result.ObjectID);
           this.setState({
-            objID: id,
-            redirect: true
+            objIDs: ids,
+            redirect: true,
           });
         } catch (e) {
-          console.log("malformed request:" + Http.responseText);
+          console.log('malformed request:' + Http.responseText);
         }
       }
     };
@@ -80,7 +79,7 @@ export default class GenArt extends Component {
     let smMessage = "Look at the new art that I've just created";
 
     if (this.state.redirect) {
-      let link = `/search/${this.state.objID}`;
+      let link = `/search/${this.jsonToURI(this.state.objIDs)}`;
       return <Redirect push to={link} />;
     } else {
       return (

@@ -9,9 +9,9 @@
   &__content {
     display: flex;
     padding-bottom: 6rem;
-    padding-left: $space-xl;
-    padding-right: $space-xl;
-    padding-top: $space-xl;
+    padding-left: $space-l;
+    padding-right: $space-l;
+    padding-top: $space-l;
     
     @media (max-width: $mq-m){
       padding-left: $space-l;
@@ -26,9 +26,13 @@
     background-repeat: no-repeat;
     background-size: 2.5rem;
     border: 0;
-    height: 6rem;
+    height: 5rem;
     padding-left: 5rem;
     width: 100%;
+
+    @media (max-width: $mq-s) {
+      height: 4rem;
+    }
 
     &::-webkit-input-placeholder {
       color: $color-primary;
@@ -55,10 +59,18 @@
 
   &__row {
     display: flex;
-    margin-bottom: 1.25rem;
+    margin-left: $space-s;
+    margin-bottom: $space-s;
+  }
+
+  &__row_category {
+    display: flex;
+    margin-bottom: $space-s;
+    margin-top: $space-m;
   }
 
   &__checkbox {
+    margin-top: $space-s;
     margin-right: $space-s;
   }
 
@@ -75,8 +87,8 @@
     max-width: 15rem;
 
     @media (max-width: $mq-s){
-      margin-right: $space-xl;
-      max-width: 8.5rem;
+      margin-right: $space-l;
+      max-width: 25vw;
     }
   }
 
@@ -87,7 +99,7 @@
     width: calc(100% - #{$space-l} - 15rem);
 
     @media (max-width: $mq-s){
-      width: calc(100% - #{$space-l} - 10.5rem);
+      width: calc(100% - #{$space-l} - 5rem);
     }
   }
 }

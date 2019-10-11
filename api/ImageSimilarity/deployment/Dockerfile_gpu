@@ -22,4 +22,4 @@ EXPOSE 5000
 ENV NAME ImageSimilarity
 
 # Run app.py when the container launches
-CMD ["python", "app.py", "-t","./targets.pkl","-a","./annoyIndex2.ann"]
+CMD ["python", "app.py", "-t","./ids.pkl","-a","./met_1k.annoy"]

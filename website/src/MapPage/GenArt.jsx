@@ -15,7 +15,7 @@ export default class GenArt extends Component {
 
     this.state = {
       image: 0,
-      objID: 0,
+      objIDs: [],
       redirect: false,
     };
     this.saveImage = this.saveImage.bind(this);
@@ -37,14 +37,13 @@ export default class GenArt extends Component {
     return pairing;
   }
 
+  jsonToURI(json){ return encodeURIComponent(JSON.stringify(json)); }
+
   getSimilarArtID() {
-    //let file = new File([this.props.data], "image.jpeg", {type: "image/jpeg"});
     let file = this.props.image;
 
-    //const apiURL = 'https://imagedocker2.azurewebsites.net/FindSimilarImages/Byte';
-    //const apiURL = 'https://metimagesearch.azurewebsites.net/neighbors?neighbors=1';
-    const apiURL = 'https://gen-studio-apim.azure-api.net/met-reverse-search/FindSimilarImages/Byte';
-    const key = '?subscription-key=7c02fa70abb8407fa552104e0b460c50&neighbors=1';
+    const apiURL = 'https://gen-studio-apim.azure-api.net/met-reverse-search-2/FindSimilarImages/Byte';
+    const key = '?subscription-key=7c02fa70abb8407fa552104e0b460c50&neighbors=20';
     const Http = new XMLHttpRequest();
     const data = new FormData();
     data.append('image', file);
@@ -55,13 +54,9 @@ export default class GenArt extends Component {
       if (Http.readyState === 4) {
         try {
           let response = JSON.parse(Http.responseText);
-          let id = response.results[0].ObjectID;
-          if (id === undefined || id === null) {
-            id = 0;
-          }
-
+          let ids = response.results.map(result => result.ObjectID);
           this.setState({
-            objID: id,
+            objIDs: ids,
             redirect: true,
           });
         } catch (e) {
@@ -88,7 +83,7 @@ export default class GenArt extends Component {
     let loadOrImage = this.props.image === 0 || this.props.image === null || this.props.image === undefined ? (<CircularProgress style={{ color: '#6A6A6A' }} />) : (<ImageBox />);
     let message = this.props.point === null ? ('') : (<p>{this.props.message}</p>);
     if (this.state.redirect) {
-      let link = `/search/${this.state.objID}`;
+      let link = `/search/${this.jsonToURI(this.state.objIDs)}`;
       return <Redirect push to={link} />;
     } else {
       return (

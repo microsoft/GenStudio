@@ -349,7 +349,9 @@
   border: 5px solid #fff;
   display: block;
   margin: auto;
-  max-width: 80%;
+  max-width: 100%;
+  padding-left: 5%;
+  padding-right: 5%;
   object-fit: cover;
   height: 100%;
   z-index: calc(#{$z-index-s} * -1);

@@ -5,13 +5,10 @@ import TagList from './TagList.jsx';
 import SearchGrid from './SearchGrid.jsx';
 import {AppInsights} from "applicationinsights-js"
 
-const maxSearchResults = 30;
-const minTagLength = 2;
-const maxTagLength = 60;
-const urlRegEx = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
+const facetNames = ["Culture","Department"];
 const azureSearchUrl =
-  'https://metartworksindex.search.windows.net/indexes/met-items/docs?api-version=2017-11-11&search=';
-const apiKey = '11A584ECD13C39D335F57939D502673D';
+  'https://met-search.search.windows.net/indexes/met-index/docs?api-version=2019-05-06&';
+const apiKey = 'E05256A72E0904582D2B7671DD7E2E3E';
 
 /**
  * Page for searching the MET collection
@@ -20,189 +17,125 @@ export default class SearchPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchValue: '', // Current search query to be displayed
-      tags: [], // All current tags to be displayed
-      tagData: {}, // On/Off state of all tags currently displayed
-      results: [], // All current search query results to be displayed
+      terms: ['*'], // Current search query to be displayed
+      searchFields: null,
+      selectedFilters: {},
+      activeFilters: {},
+      facets: {},
+      results: []
     };
-    this.extractValidObjects = this.extractValidObjects.bind(this);
-    this.updateGridDisplay = this.updateGridDisplay.bind(this);
-    this.getTagChange = this.getTagChange.bind(this);
-    this.updateTags = this.updateTags.bind(this);
-    this.isValidUrl = this.isValidUrl.bind(this);
-    this.getSearch = this.getSearch.bind(this);
+    this.updateTerms = this.updateTerms.bind(this);
+    this.clearActiveFilters = this.clearActiveFilters.bind(this);
+    this.toggleFilter = this.toggleFilter.bind(this);
+    this.applySelectedFilters = this.applySelectedFilters.bind(this);
+
     AppInsights.downloadAndSetup({ instrumentationKey: "7ca0d69b-9656-4f4f-821a-fb1d81338282" });
     AppInsights.trackPageView("Search Page");
   }
 
-  componentDidMount() {
-    //Does an initial search if given an ObjID
-    let self = this;
-    let { id } = this.props.match.params; // The ID of the image to search on
-    if (id != null && id !== 0) {
-      // Do not update for null or '0' ids
-      fetch(azureSearchUrl + id, { headers: { 'api-key': apiKey } })
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(responseJson) {
-          if (responseJson.value.length > 0) {
-            // Only display searches with one or more results
-            let initSearchQuery = responseJson.value[0].Title;
-            const titleTokens = initSearchQuery.match(/\w+(?:'\w+)*/g); // Extract all individual words from the initial search query
-
-            if (titleTokens != null) {
-              // Some art have no titles
-              initSearchQuery += '||';
-
-              for (let i = 0; i < titleTokens.length; i++) {
-                // Or operator between all words in the search query
-                initSearchQuery += titleTokens[i] + '||';
-              }
-
-              initSearchQuery = initSearchQuery.substring(0, initSearchQuery.length - 2); // Trim off extra Or operator
-              initSearchQuery = encodeURIComponent(initSearchQuery);
-              self.getSearch(initSearchQuery);
-              return;
-            }
-          }
-          self.getSearch('*'); // Search for anything
-        });
-    }
+  filterTerm(col, values) {
+    return `search.in(${col},  '${[...values].join("|")}', '|')`
   }
 
-  /**
+   /**
    * This function creates a brand new search query request and refreshes all tags and results in the current state
-   * @param newSearchValue the new search query
+   * @param query the new search query
    */
-  getSearch(newSearchValue) {
-    let self = this;
-    fetch(azureSearchUrl + newSearchValue, { headers: { 'api-key': apiKey } })
+  executeSearch() {
+    let query= "&search="+this.state.terms.join('|')
+
+    if (this.state.searchFields!=null){
+      query = query+ "&searchFields=" + this.state.searchFields.join(",")
+    }
+    query = query+facetNames.map(f => "&facet="+f+",count:5").join("")
+    
+    let filtersToSearch = Object.entries(this.state.activeFilters)
+      .filter( ([col, values],) => 
+        values.size > 0
+      )
+
+    if (filtersToSearch.length !== 0){
+      query = query + "&$filter=" +  filtersToSearch.map( ([col, values],) =>
+          this.filterTerm(col, values)
+        ).join(" or ")
+    }
+
+    console.log(query)
+    let self = this
+    fetch(azureSearchUrl + query, { headers: { 'api-key': apiKey } })
       .then(function(response) {
         return response.json();
       })
       .then(function(responseJson) {
-        let objectList = self.extractValidObjects(responseJson);
-        self.updateGridDisplay(objectList);
-        self.updateTags(objectList);
-        self.setState(oldState => {
-          return (oldState.searchValue = newSearchValue);
-        });
+        self.setState({facets:responseJson["@search.facets"], results:responseJson.value})
       });
   }
 
-  /**
-   * This function takes in a JSON object returned from an Azure search index request and extracts the results
-   * list of objects that have valid image and resource URLs
-   * @param responseJson a JSON object from an Azure search index query
-   * @returns a list of objects with valid URLs
-   */
-  extractValidObjects(responseJson) {
-    let objectList = [];
-    for (let i = 0; i < responseJson.value.length && objectList.length < maxSearchResults; i++) {
-      if (
-        this.isValidUrl(responseJson.value[i].PrimaryImageUrl) &&
-        this.isValidUrl(responseJson.value[i].LinkResource)
-      ) {
-        // Extract all objects with a valid image and resource Urls
-        objectList.push(responseJson.value[i]);
-      }
+  componentDidMount() {
+    const ids = this.props.match.params.id; // The IDs of the images found by NN
+    if (ids != null) {
+      this.setState({terms:this.uriToJSON(ids), searchFields:["Object_ID"]}, this.executeSearch)
+    } else {
+      this.setState({terms:["*"]}, this.executeSearch)
     }
-    return objectList;
   }
 
-  /**
-   * This function returns true iff the passed in string is a valid URL
-   * @param string the string to be analyzed
-   * @returns true iff the string is a URL, otherwise false
-   */
-  isValidUrl(string) {
-    return urlRegEx.test(string);
+  uriToJSON(urijson) { return JSON.parse(decodeURIComponent(urijson)); }
+
+  updateTerms(newTerms) {
+    this.setState({terms: newTerms, searchFields:null}, this.executeSearch)
   }
 
-  /**
-   * This function updates the result prop in the current state to the passed in object list
-   * @param objectList the new result list of objects to be displayed
-   */
-  updateGridDisplay(objectList) {
-    this.setState(oldState => {
-      return (oldState.results = objectList);
-    });
+  clearActiveFilters() {
+    this.setState({activeFilters: {}}, this.executeSearch)
   }
-
-  /**
-   * This function creates and updates the tags and tagData props in the state to reflect the results in the objectList param
-   * @param objectList the list of objects to source the new tags from
-   */
-  updateTags(objectList) {
-    let self = this;
-    const newTags = [];
-    const newTagData = {};
-    for (let i = 0; i < objectList.length; i++) {
-      const data = [objectList[i].Culture, objectList[i].Medium, objectList[i].Classification]; // New tags dynamically created from objects' culture, medium, and classification data
-      for (let j = 0; j < data.length; j++) {
-        if (
-          data[j] != null &&
-          minTagLength < data[j].length &&
-          data[j].length < maxTagLength &&
-          !(data[j] in newTagData)
-        ) {
-          // Filter out unwanted tags
-          newTags.push(data[j]);
-          newTagData[data[j]] = false;
-        }
-      }
+  
+  toggleFilter(col, value) {
+    let oldFilters = this.state.selectedFilters
+    if (oldFilters[col] == null){
+      oldFilters[col] = new Set()
     }
-    self.setState({ tags: newTags, tagData: newTagData });
+    if (oldFilters[col].has(value)){
+      oldFilters[col].delete(value)
+      if (oldFilters[col].size === 0){
+        delete oldFilters[col]
+      }
+    }else{
+      oldFilters[col].add(value)
+    }
+    this.setState({selectedFilters: oldFilters})
+
   }
 
-  /**
-   * This function is called when a user selects a tag to indlude/exclude in a new search query. This function updates the UI to reflect
-   * that tag change and then creates a new search request including/excluding that tag, updating the state's tag, tagData, and results list
-   * props according to the new results.
-   * @param label the tag that was selected by the user
-   * @param value set to true to include this tag in the new search query, false to exclude
-   */
-  getTagChange(label, value) {
-    let self = this;
-    let searchTags = '';
-    const oldTagData = this.state.tagData;
-    oldTagData[label] = value;
-    self.setState({ tagData: oldTagData });
+  setUnion(a, b){
+    return new Set([...a, ...b])
+  }
 
-    for (const [key, value] of Object.entries(this.state.tagData)) {
-      if (value) {
-        const searchTokens = key.match(/\w+(?:'\w+)*/g); // Extract all individual words from tags
-        searchTags += '&&(';
-        for (let i = 0; i < searchTokens.length; i++) {
-          searchTags += searchTokens[i] + '||'; // Concat all individual words in a selected tag with 'Or' operator
-        }
-        searchTags = searchTags.substring(0, searchTags.length - 2); // Trim off extra 'Or' operator
-        searchTags += ')';
-        searchTags = encodeURIComponent(searchTags);
+  applySelectedFilters(){
+    let af = this.state.activeFilters
+    let sf = this.state.selectedFilters
+    Object.entries(sf).forEach(([filter, values],) => {
+      if (!Object.keys(af).includes(filter)) {
+        af[filter] = []
       }
-    }
-
-    fetch(azureSearchUrl + this.state.searchValue + searchTags, { headers: { 'api-key': apiKey } })
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(responseJson) {
-        let objectList = self.extractValidObjects(responseJson);
-        self.updateGridDisplay(objectList);
-      });
+      af[filter] = this.setUnion(af[filter], values)
+    })
+    this.setState({activeFilters: af, selectedFilters: {}}, this.executeSearch())
   }
 
   render() {
     return (
       <div className="search">
-        <SearchControl sendChange={this.getSearch} />
+        <SearchControl updateTerms={this.updateTerms} />
         <div className="search__content">
           <div className="search__tags">
             <TagList
-              tags={this.state.tags}
-              tagData={this.state.tagData}
-              tagChange={this.getTagChange}
+              selectedFilters={this.state.selectedFilters}
+              activeFilters={this.state.activeFilters}
+              facets={this.state.facets}
+              toggleFilter={this.toggleFilter}
+              applySelectedFilters={this.applySelectedFilters}
+              clearActiveFilters={this.clearActiveFilters}
             />
           </div>
           <div className="search__grid">

@@ -10,7 +10,7 @@ export default class SearchControl extends Component {
 
   onChange = event => {
     this.setState({ value: event.target.value });
-    this.props.sendChange(event.target.value);
+    this.props.updateTerms([event.target.value]);
   };
 
   render() {

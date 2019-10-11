@@ -20,16 +20,17 @@ export default class ResultBox extends Component {
         <LazyLoad
           throttle={250}
           height={500}
+          offset={100}
           placeholder={<CircularProgress style={{ color: '#6A6A6A' }} />}
         >
-          <img className="grid-card__img" src={"https://mmlsparkdemo.blob.core.windows.net/met/thumbnails/" + this.props.data.ObjectID + ".jpg"}/>
+          <img className="grid-card__img" alt="met search result" src={"https://mmlsparkdemo.blob.core.windows.net/met/thumbnails/" + this.props.data.Object_ID + ".jpg"}/>
         </LazyLoad>
       ) : (
         <CircularProgress style={{ color: '#6A6A6A' }} />
       );
 
     return (
-      <div class="grid-card">
+      <div className="grid-card">
         <a className="grid-card__link" href={this.props.data.LinkResource} target="_blank" rel="noopener noreferrer">{media}</a>
         <p className="grid-card__title">{this.props.data.Title}</p>
         <p className="grid-card__text">{this.props.data.Department}</p>

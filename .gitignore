@@ -107,3 +107,4 @@ venv.bak/
 node_modules/
 .vs
 *.package-lock.json
+*.idea
