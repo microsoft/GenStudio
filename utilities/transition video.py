@@ -99,13 +99,13 @@ def generate(label_A, label_B, seed_A, seed_B, num_interps=5):
 
 def getData(objectID):
   print("getting data")
-  URL = "https://deepartstorage.blob.core.windows.net/public/inverted/biggan1/seeds/{}.json".format(objectID)
+  URL = "https://mmlsparkdemo.blob.core.windows.net/met/inverted/biggan1/seeds/{}.json".format(objectID)
   response = urlopen(URL)
   data = json.load(response)
   return data
 
 def getInversion(objectID):
-  URL = "https://deepartstorage.blob.core.windows.net/public/inverted/biggan1/images/{}.png".format(objectID)
+  URL = "https://mmlsparkdemo.blob.core.windows.net/met/inverted/biggan1/images/{}.png".format(objectID)
   with urlopen(URL) as url:
     f = BytesIO(url.read())
   img = Image.open(f)
@@ -119,7 +119,7 @@ def makeSquare(img):
   return layer
 
 def getOriginal(objectID):
-  URL = "https://deepartstorage.blob.core.windows.net/public/thumbnails4/{}.jpg".format(objectID)
+  URL = "https://mmlsparkdemo.blob.core.windows.net/met/thumbnails/{}.jpg".format(objectID)
   with urlopen(URL) as url:
     f = BytesIO(url.read())
   img = Image.open(f)

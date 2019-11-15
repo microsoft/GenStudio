@@ -36,7 +36,7 @@ export default class ExplorePage extends Component {
    */
   objIDsToImages(objIDs) {
     const baseURL =
-      "https://deepartstorage.blob.core.windows.net/public/thumbnails3/";
+      "https://mmlsparkdemo.blob.core.windows.net/met/thumbnails";
 
     let apiURLs = objIDs.map(ID => ({
       url: baseURL + ID.toString(),
@@ -102,7 +102,7 @@ export default class ExplorePage extends Component {
           });
 
           const imageToSeedUrl =
-            "https://deepartstorage.blob.core.windows.net/public/inverted/biggan1/seeds/";
+            "https://mmlsparkdemo.blob.core.windows.net/met/inverted/biggan1/seeds/";
           const fileName = response.objectID.toString() + ".json";
           const Http2 = new XMLHttpRequest();
           Http2.open("GET", imageToSeedUrl + fileName);

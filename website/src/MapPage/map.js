@@ -14,7 +14,7 @@ export function setupPlotly(stateHolder, objIDs, firstID) {
     const maxX = 1.3;
     const TIME_TILL_CALL = 350;
     const CLOSE_DIST = .05;
-    const thumbnailRoot = "https://deepartstorage.blob.core.windows.net/public/thumbnails4/";
+    const thumbnailRoot = "https://mmlsparkdemo.blob.core.windows.net/met/thumbnails/";
     var lastTimeCalled = Date.now();
 
     var isMobile = (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
@@ -190,7 +190,7 @@ export function setupPlotly(stateHolder, objIDs, firstID) {
     * @param {Int[]} paintingIds - Array of art ID's
     */
     function populateImageSeeds(paintingIds){
-        const imageToSeedUrl = "https://deepartstorage.blob.core.windows.net/public/inverted/biggan1/seeds/";
+        const imageToSeedUrl = "https://mmlsparkdemo.blob.core.windows.net/met/inverted/biggan1/seeds/";
         var prealloc = [];
         paintingIds.forEach(function (id, i) {
             prealloc[i] = { latents: [], labels: [] };
@@ -244,7 +244,7 @@ export function setupPlotly(stateHolder, objIDs, firstID) {
                         apiData: response
                     })
 
-                    const imageToSeedUrl = "https://deepartstorage.blob.core.windows.net/public/inverted/biggan1/seeds/";
+                    const imageToSeedUrl = "https://mmlsparkdemo.blob.core.windows.net/met/inverted/biggan1/seeds/";
                     const fileName = response.objectID.toString() + ".json";
                     const Http2 = new XMLHttpRequest();
                     Http2.open("GET", imageToSeedUrl + fileName);
@@ -300,7 +300,6 @@ export function setupPlotly(stateHolder, objIDs, firstID) {
 
         if (checkIfNotSuperClose(ids, distances)) {
             const ratios = Softmax(scalarMultiplyVector(distances, -6));
-            //console.log(ratios);
             let totalLatent = new Array(140).fill(0);
             let totalLabel = new Array(1000).fill(0);
             ratios.forEach(function (r, i) {

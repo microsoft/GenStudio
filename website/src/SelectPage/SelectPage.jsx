@@ -209,7 +209,7 @@ class SelectPage extends Component {
    * @param {Int[]} objIDs - An array of object IDs from the met API to convert to an array of image urls
    */
   objIDsToImages(objIDs) {
-    const baseURL = 'https://deepartstorage.blob.core.windows.net/public/thumbnails4/';
+    const baseURL = 'https://mmlsparkdemo.blob.core.windows.net/met/thumbnails/';
 
     let imgObjs = objIDs.map(ID => ({ img: baseURL + ID.toString() + '.jpg', id: ID, key: ID }));
 

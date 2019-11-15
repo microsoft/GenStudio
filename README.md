@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://gen.studio/">
-    <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/gen_studio.gif">
+    <img width="512" src="https://mmlsparkdemo.blob.core.windows.net/met/assets/gen_studio.gif">
   </a>
 </p>
 
@@ -33,13 +33,13 @@ GANs are a special kind of deep network capable of modeling distributions of dat
 In [Gen Studio](https://gen.studio/) we use a GAN to sample from the space of art in [The Metropolitan Museum of Art's Open Access Collection](https://www.metmuseum.org/about-the-met/policies-and-documents/open-access).
 
 <p align="center">
-  <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/gan-architecture.jpg">
+  <img width="512" src="https://mmlsparkdemo.blob.core.windows.net/met//assets/gan-architecture.jpg">
 </p>
 
 A GAN is made up of two dueling deep networks: A Generator and a Discriminator. The generator aims to create new art, and the discriminator aims to critique the art and distinguish it from existing art. Both networks are trained in competition until the generator can fool the descriminator and create realistic works of art. 
 
 <p align="center">
-  <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/training.gif">
+  <img width="512" src="https://mmlsparkdemo.blob.core.windows.net/met/assets/training.gif">
 </p>
 
 
@@ -48,45 +48,45 @@ A GAN is made up of two dueling deep networks: A Generator and a Discriminator. 
 
 
 <p align="center">
-  <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/semantic-inversion.jpg">
+  <img width="512" src="https://mmlsparkdemo.blob.core.windows.net/met/assets/semantic-inversion.jpg">
 </p>
 
 GANs are great at generating new works of art, but we wanted to see if the GAN could recreate existing works in The MET's collection. To achieve this, we used a technique called neural network inversion. Instead of learning the weights of a generator network, we keep those weights constant and instead learn the noise pattern to maximize the similarity between the GAN output and a target work. We discovered that one needs to match both the target image's pixels as well as its "high-level" semantic content to be successful.
 
 <p align="center">
-  <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/inversion.gif">
+  <img width="512" src="https://mmlsparkdemo.blob.core.windows.net/met/assets/inversion.gif">
 </p>
 
 
 ### GAN Latent Space Traversal
 
 <p align="center">
-  <img width="512" src="https://deepartstorage.blob.core.windows.net/public/assets/code-space-interp.jpg">
+  <img width="512" src="https://mmlsparkdemo.blob.core.windows.net/met/assets/code-space-interp.jpg">
 </p>
 
 To explore the spaces between objects in our GAN, we first invert the objects to get their positions in "latent" space. This latent space is learned by the network, and each point in it corresponds to a unique artwork when mapped through the generator network. To interpolate between the points we use plain-old vector interpolation, though depending on the noise you train your GAN with, you might get better performance by transforming to spherical coordinates before the interpolation (because of [the magic of high dimensional gaussians](https://www.cs.cmu.edu/~avrim/598/chap2only.pdf)). 
 
 
 <p align="center">
-  <img width="80%" src="https://deepartstorage.blob.core.windows.net/public/assets/interpolation.gif">
+  <img width="80%" src="https://mmlsparkdemo.blob.core.windows.net/met/assets/interpolation.gif">
 </p>
 
 ### Reverse Image Search
 
 <p align="center">
-  <img width="80%" src="https://deepartstorage.blob.core.windows.net/public/assets/nn-lookup.jpg">
+  <img width="80%" src="https://mmlsparkdemo.blob.core.windows.net/met/assets/nn-lookup.jpg">
 </p>
 
 To create a reverse image search engine, we first map the MET's images into a space where distance is more meaningful, aka the output of a truncated pretrained ResNet50 model. In this space, images that seem similar to us are close together. Furthermore, their positions are roughly invariant to small image transformations like scaling, brightness, rotations etc. This is starkly opposed to pixel space, where imperceptibly small translations like scaling or rotating can completely change the distance between images. Once we have all of the Met's images featurized, we create an efficient nearest neighbor lookup tree frequently referred to as a [k-d tree](https://en.wikipedia.org/wiki/K-d_tree). This lets us lookup approximate nearest neighbors in feature space without comparing our image to the entirty of the MET collection. At each node of this tree, we store the pointer to the MET image so that we can quickly return it to the caller. We use [the annoy library](https://github.com/spotify/annoy) for fast NN indexes. 
 
 <p align="center">
-  <img width="80%" src="https://deepartstorage.blob.core.windows.net/public/assets/nearest_neighbors.jpg">
+  <img width="80%" src="https://mmlsparkdemo.blob.core.windows.net/met/assets/nearest_neighbors.jpg">
 </p>
 
 # Architecture
 
 <p align="center">
-  <img width="100%" src="https://deepartstorage.blob.core.windows.net/public/assets/architecture.svg">
+  <img width="100%" src="https://mmlsparkdemo.blob.core.windows.net/met/assets/architecture.svg">
 </p>
 
 

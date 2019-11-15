@@ -42,7 +42,7 @@ export default class PaletteBox extends Component {
     }
 
     getSeed(){
-        const imageToSeedUrl="https://deepartstorage.blob.core.windows.net/public/inverted/biggan1/seeds/";
+        const imageToSeedUrl="https://mmlsparkdemo.blob.core.windows.net/met/inverted/biggan1/seeds/";
         const fileName = this.props.id.toString()+".json";
         const Http = new XMLHttpRequest();
         Http.open("GET", imageToSeedUrl+fileName);
