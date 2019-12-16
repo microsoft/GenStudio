@@ -33,7 +33,7 @@ GANs are a special kind of deep network capable of modeling distributions of dat
 In [Gen Studio](https://gen.studio/) we use a GAN to sample from the space of art in [The Metropolitan Museum of Art's Open Access Collection](https://www.metmuseum.org/about-the-met/policies-and-documents/open-access).
 
 <p align="center">
-  <img width="512" src="https://mmlsparkdemo.blob.core.windows.net/met//assets/gan-architecture.jpg">
+  <img width="512" src="https://mmlsparkdemo.blob.core.windows.net/met/assets/gan-architecture.jpg">
 </p>
 
 A GAN is made up of two dueling deep networks: A Generator and a Discriminator. The generator aims to create new art, and the discriminator aims to critique the art and distinguish it from existing art. Both networks are trained in competition until the generator can fool the descriminator and create realistic works of art. 
