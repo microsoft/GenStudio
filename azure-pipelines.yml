@@ -1,0 +1,42 @@
+trigger:
+  branches:
+    include:
+    - master
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: master
+jobs:
+- job: Phase_1
+  displayName: Deploy Generist Art Site -- Dev Build
+  cancelTimeoutInMinutes: 1
+  pool:
+    name: Hosted Windows Container
+  steps:
+  - checkout: self
+  - task: Npm@1
+    displayName: npm install
+    inputs:
+      workingDir: website
+      verbose: false
+  - task: PowerShell@2
+    displayName: PowerShell Script
+    inputs:
+      targetType: inline
+      script: >-
+        # Write your PowerShell commands here.
+
+        $env:NODE_OPTIONS = "--max_old_space_size=4096"
+
+        cd website
+
+        npm run build
+  - task: AzureRmWebAppDeployment@4
+    inputs:
+      ConnectionType: 'AzureRM'
+      azureSubscription: 'Microsoft AI Lab(9d010d9f-ac48-4bc2-b5ec-bd0481011ed7)'
+      appType: 'webApp'
+      WebAppName: 'gen-studio'
+      Package: website/build
+...
