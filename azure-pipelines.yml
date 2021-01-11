@@ -9,10 +9,10 @@ resources:
     ref: master
 jobs:
 - job: Phase_1
-  displayName: Deploy Generist Art Site -- Dev Build
+  displayName: GenStudio Build
   cancelTimeoutInMinutes: 1
   pool:
-    name: Hosted Windows Container
+    name: windows-2019
   steps:
   - checkout: self
   - task: Npm@1
