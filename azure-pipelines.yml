@@ -13,7 +13,7 @@ jobs:
   displayName: GenStudio Build
   cancelTimeoutInMinutes: 1
   pool:
-    name: windows-latest
+    name: 'Hosted Windows 2019 with VS2019'
   steps:
   - checkout: self
   - task: Npm@1
