@@ -8,11 +8,14 @@ resources:
     type: git
     ref: master
 jobs:
+  pool:
+
+jobs:
 - job: Phase_1
   displayName: GenStudio Build
   cancelTimeoutInMinutes: 1
   pool:
-    name: windows-2019
+    name: windows-latest
   steps:
   - checkout: self
   - task: Npm@1
