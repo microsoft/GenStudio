@@ -36,35 +36,21 @@ export default class ExplorePage extends Component {
    */
   objIDsToImages(objIDs) {
     const baseURL =
-      "https://mmlsparkdemo.blob.core.windows.net/met/thumbnails";
+      "https://mmlsparkdemo.blob.core.windows.net/met/thumbnails/";
 
     let apiURLs = objIDs.map(ID => ({
-      url: baseURL + ID.toString(),
+      url: baseURL + ID.toString() + ".jpg",
       id: ID
     }));
 
     for (let i = 0; i < apiURLs.length; i++) {
-      const Http = new XMLHttpRequest();
-      Http.responseType = "arraybuffer";
-      Http.open("GET", apiURLs[i].url);
-      Http.send();
-      Http.onreadystatechange = e => {
-        if (Http.readyState === 4) {
-          try {
-            this.setState(oldState => {
-              return oldState.imgObjectsExplore.push({
-                img: btoa(
-                  String.fromCharCode.apply(null, new Uint8Array(Http.response))
-                ),
-                id: apiURLs[i].id,
-                key: i
-              });
-            });
-          } catch (e) {
-            console.log("malformed request:" + Http.responseText);
-          }
-        }
-      };
+      this.setState(oldState => {
+        oldState.imgObjectsExplore.push({
+          img: apiURLs[i].url,
+          id: apiURLs[i].id,
+          key: i
+        })
+      });
     }
   }
 

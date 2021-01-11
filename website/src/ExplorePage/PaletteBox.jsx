@@ -88,9 +88,9 @@ export default class PaletteBox extends Component {
                 width="small"
             >
             <Stack anchor="bottom" fill>
-                <Box>
+                <Box style={{"height":"100%"}}>
                     <Image
-                        src={"data:image/jpeg;base64,"+this.props.img}
+                        src={this.props.img}
                         fit="contain"
                         style={{ height: '100%', zIndex: "-1"}}
                     />
