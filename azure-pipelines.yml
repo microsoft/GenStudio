@@ -7,8 +7,6 @@ resources:
   - repository: self
     type: git
     ref: master
-jobs:
-  pool:
 
 jobs:
 - job: Phase_1
