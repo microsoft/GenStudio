@@ -5,7 +5,7 @@ Pillow==5.3.0
 azure_common==1.1.16
 scikit_learn==0.19.1
 click==6.7
-Flask==1.0.2
+Flask==2.3.2
 itsdangerous==0.24
 Jinja2==2.10
 MarkupSafe==1.0
